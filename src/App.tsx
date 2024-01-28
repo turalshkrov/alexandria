@@ -5,6 +5,7 @@ import Home from './pages/home/Home';
 import Search from './pages/search/Search';
 import Blogs from './pages/blogs/Blogs';
 import Profile from './pages/profile.tsx/Profile';
+import Footer from './components/footer/Footer';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/blogs' element={<Blogs />} />
         <Route path='/profile' element={<Profile />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

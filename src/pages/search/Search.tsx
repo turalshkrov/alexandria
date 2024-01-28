@@ -2,6 +2,10 @@ import React from 'react'
 
 export default function Search() {
   return (
-    <div>Search</div>
+    <div>
+      <div className="container">
+        <h1>Search</h1>
+      </div>
+    </div>
   )
 }
