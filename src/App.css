@@ -3,3 +3,6 @@
 .nav-logo {
   font-family: 'Merriweather', serif;
 }
+.nav-logo span {
+  color: #FFF !important;
+}
