@@ -1,9 +1,12 @@
+import { useContext } from "react";
+import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import { NavLink } from "react-router-dom";
 import { MdHomeFilled, MdSearch, MdArticle, MdPerson } from "react-icons/md";
 
 export default function Navbar() {
+  const theme = useContext(ThemeContext);
   return (
-    <header className="navbar navbar-mobile navbar-mobile-dark" id="header">
+    <header className={`navbar navbar-mobile navbar-mobile-${theme?.theme}`} id="header">
       <div className="container">
         <div className="nav-logo">
           <span>Alexandria</span>

@@ -1,25 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,900;1,700&display=swap');
 
 body {
-  background-color: #141e33;
-  color: #DDD;
+  font-family: Arial;
 }
 
-#header, #footer {
-  background-color: #010c1f !important;
-}
 .nav-logo {
   font-family: 'Merriweather', serif;
 }
-.nav-logo span {
-  color: #FFF !important;
-}
+
 #footer hr {
   border: 1px solid #555;
 }
-
-@media screen and (max-width: 767px) {
-  #header {
-    border-top: 1px solid #FFCA42;
-  }
+#about .page-title{
+  font-family: 'Merriweather', serif;
 }

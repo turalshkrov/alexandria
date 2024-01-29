@@ -1,33 +1,36 @@
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa";
+import { useContext } from "react";
+import { ThemeContext } from "../../contexts/theme/ThemeContext";
 
 export default function Footer() {
+  const theme = useContext(ThemeContext)
   return (
-    <footer className='footer footer-dark pb-5 pb-md-3' id="footer">
+    <footer className={`footer footer-${theme?.theme} pb-5 pb-md-3`} id="footer">
       <div className="container">
         <div className="row">
           <div className="col-12 col-md-4 pb-2 pb-md-0">
             <h3 className="footer-header">Pages</h3>
             <ul className="footer-social-list">
               <li>
-                <Link to="">
+                <a href="/">
                   <FaFacebookF />
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="">
+                <a href="/">
                   <FaTwitter />
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="">
+                <a href="/">
                   <FaLinkedinIn />
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="">
+                <a href="/">
                   <FaInstagram />
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -38,13 +41,13 @@ export default function Footer() {
                 <Link to='/about'>About Us</Link>
               </li>
               <li>
-                <Link to='/about'>Services</Link>
+                <Link to='/services'>Services</Link>
               </li>
               <li>
-                <Link to='/about'>Appointments</Link>
+                <Link to='/appointments'>Appointments</Link>
               </li>
               <li>
-                <Link to='/about'>Contact Us</Link>
+                <Link to='/contact'>Contact Us</Link>
               </li>
             </ul>
           </div>
