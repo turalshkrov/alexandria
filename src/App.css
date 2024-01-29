@@ -1,8 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 
+body {
+  background-color: #141e33;
+  color: #DDD;
+}
+
+#header, #footer {
+  background-color: #010c1f !important;
+}
 .nav-logo {
   font-family: 'Merriweather', serif;
 }
 .nav-logo span {
   color: #FFF !important;
+}
+#footer hr {
+  border: 1px solid #555;
+}
+
+@media screen and (max-width: 767px) {
+  #header {
+    border-top: 1px solid #FFCA42;
+  }
 }

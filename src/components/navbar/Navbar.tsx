@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
-import { MdHomeFilled, MdSearch, MdFormatQuote, MdPerson } from "react-icons/md";
+import { MdHomeFilled, MdSearch, MdArticle, MdPerson } from "react-icons/md";
 
 export default function Navbar() {
   return (
-    <header className="navbar navbar-mobile navbar-mobile-dark">
+    <header className="navbar navbar-mobile navbar-mobile-dark" id="header">
       <div className="container">
         <div className="nav-logo">
           <span>Alexandria</span>
@@ -24,7 +24,7 @@ export default function Navbar() {
             </li>
             <li>
               <NavLink to="/blogs" className="nav-link">
-                <MdFormatQuote className='nav-mobile-icon'/>
+                <MdArticle className='nav-mobile-icon'/>
                 <span>Blogs</span>
               </NavLink>
             </li>

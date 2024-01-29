@@ -3,7 +3,7 @@ import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/f
 
 export default function Footer() {
   return (
-    <footer className='footer bg-light'>
+    <footer className='footer footer-dark pb-5 pb-md-3' id="footer">
       <div className="container">
         <div className="row">
           <div className="col-12 col-md-4 pb-2 pb-md-0">
@@ -60,6 +60,10 @@ export default function Footer() {
             </div>
           </div>
         </div>
+        <hr className="my-2" />
+        <p className="text-center">
+          Designed and developed by <a href="/" className="fw-bold">turalshkrov</a>
+        </p>
       </div>
     </footer>
   )
