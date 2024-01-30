@@ -1,12 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,900;1,700&display=swap');
+@import "../src/styles/global/color";
+@import "../src/styles/components/Navbar.scss";
+@import "../src/styles/components/Footer.scss";
 
 body {
   font-family: Arial;
 }
-
-.nav-logo {
-  font-family: 'Merriweather', serif;
+.page-dark {
+  background-color: $secondary-dark-color;
+  color: $light-text-color;
+}
+.page-light {
+  background-color: $primary-light-color;
+  color: $dark-text-color;
 }
 
 #footer hr {

@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { ThemeProvider } from "./contexts/theme/ThemeContext";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar';
@@ -12,9 +12,9 @@ import ScrollToTop from './components/scrollTop/ScrollToTop';
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <ThemeProvider>
         <Navbar />
-        <ScrollToTop />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/search' element={<Search />} />

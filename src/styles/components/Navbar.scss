@@ -1,0 +1,31 @@
+.navbar-mobile-dark {
+  background-color: $primary-dark-color !important;
+  color: $secondary-light-text-color !important;
+  .nav-logo * {
+    color: $light-text-color !important;
+  }
+  a.nav-link * {
+    color: $secondary-light-text-color !important;
+  }
+  a.active * {
+    color: $light-text-color !important;
+  }
+}
+
+.navbar-mobile-light {
+  background-color: $secondary-light-color !important;
+  color: $secondary-dark-text-color !important;
+  .nav-logo * {
+    color: $dark-text-color !important;
+  }
+  a.nav-link * {
+    color: $secondary-dark-text-color !important;
+  }
+  a.active * {
+    color: $dark-text-color !important;
+  }
+}
+
+.nav-logo *{
+  font-family: 'Merriweather', serif;
+}
