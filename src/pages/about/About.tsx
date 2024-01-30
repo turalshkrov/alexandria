@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import Footer from "../../components/footer/Footer";
-import BurningLibrary from "../../img/burning-library.png";
+import { ThemeContext } from "../../contexts/theme/ThemeContext";
 
 export default function About() {
+  const theme = useContext(ThemeContext)
   return (
-    <div id="about">
+    <div className={`page-${theme?.theme}`} id="about">
       <div className="container p-2 p-md-4">
         <h1 className="page-title mb-3">Welcome to Alexandria</h1>
         <h2>About Us</h2>
@@ -19,7 +21,6 @@ export default function About() {
         <p><i>The name "Alexandria" pays homage to the ancient Library of Alexandria, a symbol of knowledge and learning in the ancient world.</i></p>
         <p className="mb-2">Just like its historical counterpart, our Alexandria aims to be a beacon of intellectual curiosity, a place where people can come together to share, discover, 
         and celebrate the written word. We believe that in the digital age, the spirit of the great libraries of the past can be reborn, fostering a global community connected by the love of books.</p>
-        {/* <img src={BurningLibrary} alt="Burning Library" /> */}
       </div>
       <Footer />
     </div>

@@ -10,10 +10,12 @@ body {
 .page-dark {
   background-color: $secondary-dark-color;
   color: $light-text-color;
+  min-height: 100vh;
 }
 .page-light {
   background-color: $primary-light-color;
   color: $dark-text-color;
+  min-height: 100vh;
 }
 
 #footer hr {

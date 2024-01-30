@@ -1,6 +1,27 @@
 .footer-dark {
   background-color: $secondary-dark-color !important;
+  .footer-links * {
+    color: $secondary-light-text-color;
+  }
 }
 .footer-light {
   background-color: $primary-light-color !important;
+}
+.footer-links {
+  width: fit-content;
+  margin: auto;
+  li {
+    font-size: .75rem;
+    a {
+      margin-bottom: 0;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .footer-logo {
+      font-size: 1rem;
+      font-family: 'Merriweather', serif;
+      user-select: none;
+    }
+  }
 }
