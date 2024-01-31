@@ -8,6 +8,7 @@ import Blogs from './pages/blogs/Blogs';
 import Profile from './pages/profile.tsx/Profile';
 import About from './pages/about/About';
 import ScrollToTop from './components/scrollTop/ScrollToTop';
+import ErrorPage from './pages/error/ErrorPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='*' element={<ErrorPage />} />
           <Route path='/search' element={<Search />} />
           <Route path='/blogs' element={<Blogs />} />
           <Route path='/profile' element={<Profile />} />

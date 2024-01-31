@@ -5,7 +5,7 @@ import { ThemeContext } from "../../contexts/theme/ThemeContext";
 export default function About() {
   const theme = useContext(ThemeContext)
   return (
-    <div className={`page-${theme?.theme}`} id="about">
+    <div className={`page page-${theme?.theme}`} id="about">
       <div className="container p-2 p-md-4">
         <h1 className="page-title mb-3">Welcome to Alexandria</h1>
         <h2>About Us</h2>
@@ -19,7 +19,7 @@ export default function About() {
           Alexandria is here to enhance your reading experience and help you discover new worlds within the pages of a book.</p>
         <h2>The Inspiration Behind Alexandria</h2>
         <p><i>The name "Alexandria" pays homage to the ancient Library of Alexandria, a symbol of knowledge and learning in the ancient world.</i></p>
-        <p className="mb-2">Just like its historical counterpart, our Alexandria aims to be a beacon of intellectual curiosity, a place where people can come together to share, discover, 
+        <p>Just like its historical counterpart, our Alexandria aims to be a beacon of intellectual curiosity, a place where people can come together to share, discover, 
         and celebrate the written word. We believe that in the digital age, the spirit of the great libraries of the past can be reborn, fostering a global community connected by the love of books.</p>
       </div>
       <Footer />

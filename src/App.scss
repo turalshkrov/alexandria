@@ -3,6 +3,7 @@
 @import "../src/styles/global/color";
 @import "../src/styles/components/Navbar.scss";
 @import "../src/styles/components/Footer.scss";
+@import "../src/styles/pages/ErrorPage.scss";
 
 body {
   font-family: Arial;
@@ -10,17 +11,18 @@ body {
 .page-dark {
   background-color: $secondary-dark-color;
   color: $light-text-color;
-  min-height: 100vh;
 }
 .page-light {
   background-color: $primary-light-color;
   color: $dark-text-color;
-  min-height: 100vh;
+}
+.page {
+  min-height: calc(100vh - 61px);
 }
 
-#footer hr {
-  border: 1px solid #555;
-}
-#about .page-title{
-  font-family: 'Merriweather', serif;
+@media (max-width: 767px) {
+  .page {
+    min-height: calc(100vh - 73px);
+    margin-bottom: 73px;
+  }
 }
