@@ -5,7 +5,6 @@
     display: flex;
     margin: auto;
     height: 200px;
-    border: 7px solid $primary-dark-color;
     border-radius: 5px;
     .book {
       position: absolute;
@@ -14,6 +13,7 @@
       left: 5px;
       bottom: 5px;
       border: 1px solid black;
+      border-radius: 2px;
     }
     #book-2 {
       left: 75px;
@@ -21,12 +21,13 @@
     }
     #book-3 {
       left: calc(100% - 115px);
-      bottom: -50px;
+      bottom: -55px;
       transform: rotate(90deg);
     }
     #book-4 {
-      left: calc(100% - 135px);
+      left: calc(100% - 145px);
       transform: rotate(90deg);
+      bottom: 0;
     }
     #empty-book {
       left: 145px;
@@ -97,7 +98,7 @@
 
 
 .shelf-light {
-  border: 7px solid $primary-dark-color;
+  border: 7px solid $dark-text-color;
   #book-1 {
     background-color: #F25C69;
   }
