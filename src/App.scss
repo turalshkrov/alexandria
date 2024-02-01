@@ -4,8 +4,9 @@
 @import "../src/styles/global/variables";
 @import "../src/styles/components/Navbar.scss";
 @import "../src/styles/components/Footer.scss";
-@import "../src/styles/components/Booton.scss";
+@import "../src/styles/components/Buttons.scss";
 @import "../src/styles/pages/ErrorPage.scss";
+@import "../src/styles/pages/Blogs.scss";
 @import "../src/styles/pages/SignIn.scss";
 
 body {
@@ -14,10 +15,34 @@ body {
 .page-dark {
   background-color: $secondary-dark-color;
   color: $light-text-color;
+  a {
+    color: $light-text-color;
+  }
+  .link-hover-primary {
+    color: $light-text-color;
+    &:hover {
+      color: $light-purple-color;
+    }
+  }
+  .text-secondary {
+    color: $secondary-light-text-color;
+  }
 }
 .page-light {
   background-color: $primary-light-color;
   color: $dark-text-color;
+  a {
+    color: $dark-text-color;
+  }
+  .link-hover-primary {
+    color: $dark-text-color;
+    &:hover {
+      color: $primary-pink-color;
+    }
+  }
+  .text-secondary {
+    color: $secondary-dark-text-color;
+  }
 }
 .page {
   min-height: calc(100vh - 61px);
