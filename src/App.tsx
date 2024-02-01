@@ -5,7 +5,7 @@ import Navbar from './components/navbar/Navbar';
 import Home from './pages/home/Home';
 import Search from './pages/search/Search';
 import Blogs from './pages/blogs/Blogs';
-import Profile from './pages/profile.tsx/Profile';
+import Profile from './pages/profile/Profile';
 import About from './pages/about/About';
 import ScrollToTop from './components/scrollTop/ScrollToTop';
 import ErrorPage from './pages/error/ErrorPage';

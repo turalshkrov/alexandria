@@ -7,8 +7,7 @@ export default function Home() {
   return (
     <div className={`page page-${theme?.theme}`} id='home'>
       <div className="container py-3">
-        <button className="btn-solid-light" onClick={() => { theme?.toggleTheme() }}>Theme</button>
-
+        <button className={theme?.theme === 'dark' ? 'btn-solid-light btn-sm' : 'btn-solid-dark btn-sm'} onClick={() => { theme?.toggleTheme() }}>Theme</button>
         <h1>Home</h1>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum accusantium fuga aliquam sunt repudiandae voluptate tempore illum eius maxime veritatis fugiat atque quisquam sapiente voluptas laboriosam repellendus eaque, sint molestias.</p>
         <h2 className='mt-3'>Subtitle</h2>

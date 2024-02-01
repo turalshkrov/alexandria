@@ -23,7 +23,7 @@ export default function ErrorPage() {
             <p>The page you're loking for can't be found</p>
           </div>
           <div className="mt-3 text-center">
-            <Link to="/" className="btn-solid-dark">
+            <Link to="/" className={theme?.theme === 'dark' ? 'btn-outline-light btn-sm' : 'btn-outline-dark btn-sm'}>
               Back to home
             </Link>
           </div>

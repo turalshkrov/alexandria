@@ -1,0 +1,33 @@
+.btn-solid-primary-dark {
+  background-color: $light-purple-color;
+  border-color: $light-purple-color;
+  color: #FFF;
+  &:hover {
+    background-color: darken($light-purple-color, 5%);
+  }
+}
+.btn-outline-primary-dark {
+  background-color: transparent;
+  border-color: $light-purple-color;
+  color: $light-purple-color;
+  &:hover {
+    background-color: $light-purple-color;
+  }
+}
+
+.btn-solid-primary-light {
+  background-color: $primary-pink-color;
+  border-color: $primary-pink-color;
+  color: #FFF;
+  &:hover {
+    background-color: darken($primary-pink-color, 5%);
+  }
+}
+.btn-outline-primary-light {
+  background-color: transparent;
+  border-color: $primary-pink-color;
+  color: $light-text-color;
+  &:hover {
+    background-color: $primary-pink-color;
+  }
+}

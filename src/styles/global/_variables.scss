@@ -1,0 +1,14 @@
+$base-padding: 0.75rem !default;
+$base-margin: 0.75rem !default;
+
+$base-border-radius: 1rem !default;
+$base-border-tickness: 1px !default;
+
+$base-box-shadow: 1px 3px 5px  rgba(0,0,0, 0.1) !default;
+
+$base-font-size: 1rem !default;
+$font-size-sm: $base-font-size * 0.75;
+$font-size-md: $base-font-size * 1.25;
+$font-size-lg: $base-font-size * 1.5;
+$font-size-xl: $base-font-size * 2;
+$font-size-xxl: $base-font-size * 2.5;

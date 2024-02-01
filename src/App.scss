@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,900;1,700&display=swap');
 @import "../src/styles/global/color";
+@import "../src/styles/global/variables";
 @import "../src/styles/components/Navbar.scss";
 @import "../src/styles/components/Footer.scss";
+@import "../src/styles/components/Booton.scss";
 @import "../src/styles/pages/ErrorPage.scss";
+@import "../src/styles/pages/SignIn.scss";
 
 body {
   font-family: Arial;
