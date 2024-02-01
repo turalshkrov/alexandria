@@ -9,12 +9,12 @@ export default function Profile() {
   const theme = useContext(ThemeContext)
   return (
     <div className={`page page-${theme?.theme}`}>
-      <div className="container">
+      <div className="container mb-2 mb-md-0">
         <div className="py-3 row d-f align-items-center signup-content">
           <div className="col-12 col-md-6 text-center">
             <img className='signup-illustrator' src={theme?.theme === "dark" ? readingDarkImg : readingImg} alt="" />
-            <p className='font-lg fw-bold signup-page-text'>Track films you’ve watched.</p>
-            <p className='font-lg fw-bold signup-page-text'>Save those you want to see.</p>
+            <p className='font-md font-md-lg fw-bold signup-page-text'>Track books you’ve read</p>
+            <p className='font-md font-md-lg fw-bold signup-page-text'>Save those you want to read</p>
           </div>
           <div className="col-12 col-md-6 align-items-center mt-3 mt-md-0 d-f signup-btn-group">
             <button className={`btn btn-solid-primary-${theme?.theme} w-75 w-xl-50 font-sm`}>Sign up free</button>
@@ -30,7 +30,7 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer/>
     </div>
   )
 }
