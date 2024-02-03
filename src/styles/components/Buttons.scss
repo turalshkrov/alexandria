@@ -1,7 +1,7 @@
 .btn-solid-primary-dark {
-  background-color: $light-purple-color;
-  border-color: $light-purple-color;
-  color: #FFF;
+  background-color: $light-purple-color !important;
+  border-color: $light-purple-color !important;
+  color: #FFF !important;
   &:hover {
     background-color: darken($light-purple-color, 5%);
   }
@@ -16,9 +16,9 @@
 }
 
 .btn-solid-primary-light {
-  background-color: $primary-pink-color;
-  border-color: $primary-pink-color;
-  color: #FFF;
+  background-color: $primary-pink-color !important;
+  border-color: $primary-pink-color !important;
+  color: #FFF !important;
   &:hover {
     background-color: darken($primary-pink-color, 5%);
   }
