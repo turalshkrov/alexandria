@@ -8,6 +8,8 @@
 @import "../src/styles/pages/ErrorPage.scss";
 @import "../src/styles/pages/Blogs.scss";
 @import "../src/styles/pages/SignIn.scss";
+@import "../src/styles/pages/Admin.scss";
+@import "../src/styles/pages/Search.scss";
 
 .page-dark {
   background-color: $secondary-dark-color;
@@ -15,10 +17,12 @@
   a {
     color: $light-text-color;
   }
-  .link-hover-primary {
+  .link-hover {
     color: $light-text-color;
+    transition: .3s;
     &:hover {
       color: $light-purple-color;
+      border-color: $light-purple-color;
     }
   }
   .text-secondary {
@@ -31,10 +35,13 @@
   a {
     color: $dark-text-color;
   }
-  .link-hover-primary {
+  .link-hover {
     color: $dark-text-color;
+    transition: .3s;
     &:hover {
+      transition: .3s;
       color: $primary-pink-color;
+      border-color: $primary-pink-color;
     }
   }
   .text-secondary {

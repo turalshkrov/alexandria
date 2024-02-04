@@ -1,25 +1,29 @@
 import { useContext } from 'react';
 import { ThemeContext } from '../../contexts/theme/ThemeContext';
+import { Link } from 'react-router-dom';
 
 interface BlogCardProps {
-  data: {
-    cover: string,
+  blog: {
+    id: number,
     title: string,
-    author: string,
+    tags: string[],
     date: string,
-    text: string
+    preview: string
   }
 }
 
-export default function BlogCard({ data }: BlogCardProps) {
+export default function BlogCard({ blog }: BlogCardProps) {
   const theme = useContext(ThemeContext);
   return (
-    <div className="col-12 col-sm-6 col-md-4 col-lg-3 p-1">
-      <div className={`blog-card blog-card-${theme?.theme} row`}>
-        <img src={data.cover} alt="" className="blog-cover w-100"/>
-        <div className="blog-details py-2">
-          <h2 className="blog-title">{data.title}</h2>
-          <p className="blog-author text-secondary fw-bold">{data.author}</p>
+    <div className="col-12  py-2">
+      <div className={`blog-card blog-card-${theme?.theme}`}>
+        <Link to={`/${blog.id}`} className="blog-title font-lg fw-bold link-hover">{blog.title}</Link>
+        <div className="blog-details my-1">
+          <span className="blog-date text-secondary pr-2 mr-2">{blog.date}</span>
+          { blog.tags && blog.tags.map(tag => <Link to='' key={tag} className='blog-tag link-hover text-secondary mr-1'>{tag}</Link>) }
+        </div>
+        <p className="blog-preview mt-1">{blog.preview}</p>
+        <div className="blog-details">
         </div>
       </div>
     </div>

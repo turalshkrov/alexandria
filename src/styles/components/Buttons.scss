@@ -3,7 +3,7 @@
   border-color: $light-purple-color !important;
   color: #FFF !important;
   &:hover {
-    background-color: darken($light-purple-color, 5%);
+    background-color: darken($light-purple-color, 5%) !important;
   }
 }
 .btn-outline-primary-dark {
@@ -20,7 +20,7 @@
   border-color: $primary-pink-color !important;
   color: #FFF !important;
   &:hover {
-    background-color: darken($primary-pink-color, 5%);
+    background-color: darken($primary-pink-color, 5%) !important;
   }
 }
 .btn-outline-primary-light {

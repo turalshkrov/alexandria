@@ -1,0 +1,15 @@
+.admin-page {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: $secondary-dark-color;
+  color: $light-text-color;
+  aside {
+    position: fixed;
+    width: 280px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    border-right: 1px solid lighten($secondary-dark-color, 5%);
+    box-shadow: 1px 0 10px darken($secondary-dark-color, 3%);
+  }
+}

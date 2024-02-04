@@ -1,23 +1,13 @@
 .page-title {
-  font-family: 'Merriweather', serif;
   h1 {
     text-transform: capitalize;
   }
 }
 .blogs {
   margin: auto;
-  .blog-title-link {
-    font-family: 'Merriweather', serif;
-    text-transform: capitalize;
-  }
-}
-.blog-card {
-  overflow: hidden;
-  .blog-title {
-    // font-family: ;
-    font-size: 1.1rem;
-  }
-  .blog-author {
-    font-size: .9rem;
+  .blog-card {
+    .blog-date {
+      border-right: 1px solid ;
+    }
   }
 }
