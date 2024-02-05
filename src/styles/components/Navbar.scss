@@ -1,28 +1,14 @@
-.navbar-mobile-dark {
-  background-color: $primary-dark-color !important;
-  color: $secondary-light-text-color !important;
+.navbar-mobile {
+  background-color: var(--secondary-bg-color);
+  color: var(--secondary-text-color);
   .nav-logo * {
-    color: $light-text-color !important;
+    color: var(--primary-text-color) !important;
   }
   a.nav-link * {
-    color: $secondary-light-text-color !important;
+    color: var(--secondary-text-color) !important;
   }
   a.active * {
-    color: $light-purple-color !important;
-  }
-}
-
-.navbar-mobile-light {
-  background-color: $secondary-light-color !important;
-  color: $secondary-dark-text-color !important;
-  .nav-logo * {
-    color: $dark-text-color !important;
-  }
-  a.nav-link * {
-    color: $secondary-dark-text-color !important;
-  }
-  a.active * {
-    color: $primary-pink-color !important;
+    color: var(--primary-color) !important;
   }
 }
 

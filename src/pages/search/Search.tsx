@@ -19,7 +19,7 @@ export default function Search() {
               : '#848D97' 
               : inputFocus ? '#1F2328'
               : '#656D76'}/>
-            <input type="text" 
+            <input type="text"
               placeholder='What do want to read?' 
               className="search-input mx-1"
               onFocus={() => setInputFocus(true)}

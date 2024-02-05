@@ -1,3 +1,19 @@
+:root {
+  --primary-bg-color: #FFF;
+  --secondary-bg-color: #F2F5F9;
+  --primary-text-color: #1F2328;
+  --secondary-text-color: #656D76;
+  --primary-color: #F44A65;
+}
+
+[theme='dark'] {
+  --primary-bg-color: #0d1117;
+  --secondary-bg-color: #010409;
+  --primary-text-color: #E6EDF3;
+  --secondary-text-color: #848D97;
+  --primary-color: #9309BF;
+}
+
 $primary-dark-color: #010409;
 $secondary-dark-color: #0d1117;
 $light-text-color: #E6EDF3;
@@ -10,6 +26,7 @@ $primary-light-color: #FFF;
 $secondary-light-color: #F2F5F9;
 $dark-text-color: #1F2328;
 $secondary-dark-text-color: #656D76;
-$light-pink-color: #FF7461;
 $primary-pink-color: #F44A65;
+$light-pink-color: #FF7461;
 $dark-pink-color: #E02C73;
+

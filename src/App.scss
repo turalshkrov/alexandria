@@ -11,43 +11,24 @@
 @import "../src/styles/pages/Admin.scss";
 @import "../src/styles/pages/Search.scss";
 
-.page-dark {
-  background-color: $secondary-dark-color;
-  color: $light-text-color;
+.page {
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
   a {
-    color: $light-text-color;
+    color: var(--primary-text-color);
   }
   .link-hover {
-    color: $light-text-color;
     transition: .3s;
     &:hover {
-      color: $light-purple-color;
-      border-color: $light-purple-color;
+      color: var(--primary-color);
+      border-color: var(--primary-color);
     }
   }
   .text-secondary {
     color: $secondary-light-text-color;
   }
 }
-.page-light {
-  background-color: $primary-light-color;
-  color: $dark-text-color;
-  a {
-    color: $dark-text-color;
-  }
-  .link-hover {
-    color: $dark-text-color;
-    transition: .3s;
-    &:hover {
-      transition: .3s;
-      color: $primary-pink-color;
-      border-color: $primary-pink-color;
-    }
-  }
-  .text-secondary {
-    color: $secondary-dark-text-color;
-  }
-}
+
 .page {
   min-height: calc(100vh - 61px);
 }
