@@ -1,12 +1,10 @@
-.footer-dark {
-  background-color: $secondary-dark-color !important;
+.footer {
+  background-color: var(--primary-bg-color) !important;
   .footer-links * {
-    color: $secondary-light-text-color;
+    color: var(--secondary-text-color) !important;
   }
 }
-.footer-light {
-  background-color: $primary-light-color !important;
-}
+
 .footer-links {
   width: fit-content;
   margin: auto;

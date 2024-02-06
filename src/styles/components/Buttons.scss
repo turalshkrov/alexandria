@@ -1,33 +1,8 @@
-.btn-solid-primary-dark {
-  background-color: $light-purple-color !important;
-  border-color: $light-purple-color !important;
-  color: #FFF !important;
+.btn-solid-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--primary-text-color) !important;
   &:hover {
-    background-color: darken($light-purple-color, 5%) !important;
-  }
-}
-.btn-outline-primary-dark {
-  background-color: transparent;
-  border-color: $light-purple-color;
-  color: $light-purple-color;
-  &:hover {
-    background-color: $light-purple-color;
-  }
-}
-
-.btn-solid-primary-light {
-  background-color: $primary-pink-color !important;
-  border-color: $primary-pink-color !important;
-  color: #FFF !important;
-  &:hover {
-    background-color: darken($primary-pink-color, 5%) !important;
-  }
-}
-.btn-outline-primary-light {
-  background-color: transparent;
-  border-color: $primary-pink-color;
-  color: $light-text-color;
-  &:hover {
-    background-color: $primary-pink-color;
+    background-color: var(--primary-hover-color) !important;
   }
 }

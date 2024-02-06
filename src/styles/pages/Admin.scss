@@ -1,8 +1,8 @@
 .admin-page {
   width: 100vw;
   min-height: 100vh;
-  background-color: $secondary-dark-color;
-  color: $light-text-color;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
   aside {
     position: fixed;
     width: 280px;

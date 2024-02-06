@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 
-export type Theme = 'dark' | 'light';
+type Theme = 'dark' | 'light';
 interface ThemeContextProps {
   theme: Theme;
   toggleTheme: () => void;
@@ -10,18 +10,18 @@ interface ThemeProviderProps {
 }
 
 export const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
+
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  // @ts-ig
   const [theme, setTheme] = useState<Theme>('dark');
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
   useEffect(() => {
     document.body.setAttribute('theme', theme);
-  }, [ theme ])
+  }, [ theme ]);
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      { children }
     </ThemeContext.Provider>
   );
 };

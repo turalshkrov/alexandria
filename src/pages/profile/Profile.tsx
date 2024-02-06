@@ -17,7 +17,7 @@ export default function Profile() {
             <p className='font-md font-md-lg fw-bold signup-page-text'>Save those you want to read</p>
           </div>
           <div className="col-12 col-md-6 align-items-center mt-3 mt-md-0 d-f signup-btn-group">
-            <button className={`btn btn-solid-primary-${theme?.theme} w-75 w-xl-50 font-sm`}>Sign up free</button>
+            <button className='btn btn-solid-primary w-75 w-xl-50 font-sm'>Sign up free</button>
             <button className={`btn-outline-${theme?.theme === 'dark' ? 'light' : 'dark'} p-relative w-75 w-xl-50 font-sm mt-1 d-f align-items-center justify-center`}>
               <FaGoogle className='signup-btn-icon'/>
               Continue with Google

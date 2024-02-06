@@ -13,36 +13,18 @@
   }
 }
 
-.page-dark {
-  .search-bar {
-    border: 1px solid $secondary-light-text-color;
-    .search-input {
-      background-color: $secondary-dark-color;
-      color: $light-text-color;
-    }
-  }
-  .input-focus-true {
-    border-color: $light-text-color;
-  }
-  .input-focus-false {
-    border-color: $secondary-light-text-color;
+.search-bar {
+  border: 1px solid var(--secondary-text-color);
+  .search-input {
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
   }
 }
-
-.page-light {
-  .search-bar {
-    border: 1px solid $secondary-dark-text-color;
-    .search-input {
-      background-color: $primary-light-color;
-      color: $dark-text-color;
-    }
-  }
-  .input-focus-true {
-    border-color: $dark-text-color;
-  }
-  .input-focus-false {
-    border-color: $secondary-dark-text-color;
-  }
+.input-focus-true {
+  border-color: var(--primary-text-color);
+}
+.input-focus-false {
+  border-color: var(--secondary-text-color);
 }
 
 @media (max-width: 767px) {
