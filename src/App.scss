@@ -32,7 +32,7 @@ input {
     }
   }
   .text-secondary {
-    color: $secondary-light-text-color;
+    color: var(--secondary-text-color);
   }
 }
 
