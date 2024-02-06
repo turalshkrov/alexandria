@@ -23,7 +23,7 @@ const blog2 = {
 }
 
 export default function Blogs() {
-  const theme = useAppSelector(state => state.theme.theme);
+  const theme = useAppSelector(state => state.ThemeSlice.theme);
   return (
     <div className='page'>
       <div className="container py-1">

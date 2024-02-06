@@ -4,7 +4,7 @@ import { useAppSelector } from "../../hooks/hook";
 
 export default function Search() {
   const [ inputFocus, setInputFocus ] = useState(false);
-  const theme = useAppSelector(state => state.theme.theme)
+  const theme = useAppSelector(state => state.ThemeSlice.theme)
   return (
     <div className='page'>
       <div className="container">

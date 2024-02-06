@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks/hook';
 import Button from '../../components/button/Button';
 
 export default function Profile() {
-  const theme = useAppSelector(state => state.theme.theme)
+  const theme = useAppSelector(state => state.ThemeSlice.theme)
   return (
     <div className='page'>
       <div className="container mb-2 mb-md-0">
