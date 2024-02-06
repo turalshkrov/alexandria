@@ -1,6 +1,6 @@
 .navbar-mobile {
-  background-color: var(--secondary-bg-color);
-  color: var(--secondary-text-color);
+  background-color: var(--secondary-bg-color) !important;
+  color: var(--secondary-text-color) !important;
   .nav-logo * {
     color: var(--primary-text-color) !important;
   }

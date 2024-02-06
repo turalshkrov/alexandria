@@ -1,10 +1,8 @@
-import { useContext } from 'react';
-import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import Footer from '../../components/footer/Footer';
-import peopleInLibrary from '../../img/people-in-library.jpg';
-import peopleInLibraryDark from '../../img/people-in-library-dark.jpg';
-// import { Link } from 'react-router-dom';
+import peopleInLibrary from '../../assets/images/people-in-library.jpg';
+import peopleInLibraryDark from '../../assets/images/people-in-library-dark.jpg';
 import BlogCard from '../../components/blog card/BlogCard';
+import { useAppSelector } from '../../hooks/hook';
 
 const blog = {
   id: 1,
@@ -25,12 +23,12 @@ const blog2 = {
 }
 
 export default function Blogs() {
-  const theme = useContext(ThemeContext);
+  const theme = useAppSelector(state => state.theme.theme);
   return (
-    <div className={`page page-${theme?.theme}`}>
+    <div className='page'>
       <div className="container py-1">
         <div className="blogs-page-main-img d-f justify-center mb-0 mb-md-2 my-3">
-          <img src={theme?.theme === 'dark' ? peopleInLibraryDark : peopleInLibrary} alt="" className="w-100 w-lg-75" />
+          <img src={theme === 'dark' ? peopleInLibraryDark : peopleInLibrary} alt="" className="w-100 w-lg-75" />
         </div>
         <div className="blogs pt-2 w-100 w-lg-75">
           <div className="page-title mb-3">

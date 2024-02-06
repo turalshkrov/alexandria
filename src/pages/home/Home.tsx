@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
-import Footer from '../../components/footer/Footer'
-import { ThemeContext } from '../../contexts/theme/ThemeContext'
+import Footer from '../../components/footer/Footer';
+import { useAppDispatch } from '../../hooks/hook';
+import { toggleTheme } from '../../slicers/theme/ThemeSlicer';
 
 export default function Home() {
-  const theme = useContext(ThemeContext);
+  const dispatch = useAppDispatch();
   return (
-    <div className={`page page-${theme?.theme}`} id='home'>
+    <div className='page' id='home'>
       <div className="container py-3">
-        <button className={theme?.theme === 'dark' ? 'btn-solid-light btn-sm' : 'btn-solid-dark btn-sm'} onClick={() => { theme?.toggleTheme() }}>Theme</button>
+        <button className='btn-solid-primary btn-sm' onClick={() => dispatch(toggleTheme())}>Theme</button>
         <h1>Home</h1>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum accusantium fuga aliquam sunt repudiandae voluptate tempore illum eius maxime veritatis fugiat atque quisquam sapiente voluptas laboriosam repellendus eaque, sint molestias.</p>
         <h2 className='mt-3'>Subtitle</h2>

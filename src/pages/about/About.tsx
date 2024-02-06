@@ -1,11 +1,8 @@
-import { useContext } from "react";
 import Footer from "../../components/footer/Footer";
-import { ThemeContext } from "../../contexts/theme/ThemeContext";
 
 export default function About() {
-  const theme = useContext(ThemeContext)
   return (
-    <div className={`page page-${theme?.theme}`} id="about">
+    <div className='page' id="about">
       <div className="container p-2 p-md-4">
         <h1 className="page-title mb-3">Welcome to Alexandria</h1>
         <h2>About Us</h2>

@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { ThemeContext } from "../../contexts/theme/ThemeContext";
 
 export default function Footer() {
-  const theme = useContext(ThemeContext);
   const year = new Date().getFullYear()
   return (
-    <footer className={`footer footer-${theme?.theme}`} id="footer">
+    <footer className='footer' id="footer">
       <div className="container">
         <ul className="footer-links d-f align-items-end">
           <li>

@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-import { ThemeContext } from '../../contexts/theme/ThemeContext';
 import { Link } from 'react-router-dom';
 
 interface BlogCardProps {
@@ -13,10 +11,9 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ blog }: BlogCardProps) {
-  const theme = useContext(ThemeContext);
   return (
     <div className="col-12  py-2">
-      <div className={`blog-card blog-card-${theme?.theme}`}>
+      <div className='blog-card' >
         <Link to={`/${blog.id}`} className="blog-title font-lg fw-bold link-hover">{blog.title}</Link>
         <div className="blog-details my-1">
           <span className="blog-date text-secondary pr-2 mr-2">{blog.date}</span>
