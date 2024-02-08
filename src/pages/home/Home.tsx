@@ -2,12 +2,18 @@ import Footer from '../../components/footer/Footer';
 import Button from '../../components/button/Button';
 import { useAppDispatch } from '../../hooks/hook';
 import { toggleTheme } from '../../redux/slices/ThemeSlice';
+// import libraryDay from '../../assets/images/library-day.jpg';
+// import libraryNight from '../../assets/images/library-night.jpg';
+import "./Home.scss";
+
 
 export default function Home() {
+  // const theme = useAppSelector(state => state.ThemeSlice.theme);
   const dispatch = useAppDispatch();
   return (
     <div className='page' id='home'>
-      <div className="container py-3">
+      <div className="container pt-1 p-b-3">
+      
         <Button size='sm' color='primary' type='solid' onClick={() => dispatch(toggleTheme())}>Theme</Button>
         <h1>Home</h1>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum accusantium fuga aliquam sunt repudiandae voluptate tempore illum eius maxime veritatis fugiat atque quisquam sapiente voluptas laboriosam repellendus eaque, sint molestias.</p>

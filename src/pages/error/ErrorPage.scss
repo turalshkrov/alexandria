@@ -1,0 +1,22 @@
+.error-content {
+  min-height: calc(100vh - 300px);
+  flex-direction: column;
+}
+
+.bookshelf {
+  margin: auto;
+  h1 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .bookshelf {
+    h1 {
+      font-size: 2.5rem;
+    }
+  }
+}

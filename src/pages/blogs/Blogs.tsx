@@ -6,7 +6,6 @@ import { useAppSelector } from '../../hooks/hook';
 
 const blog = {
   id: 1,
-  cover: 'https://images.gr-assets.com/blogs/1706218363p8/2718.jpg',
   title: '50 Books You Must Read Before You Die',
   tags: ['Must Read', 'Dostoyevsky'],
   date: '12 Feb 2019',
@@ -15,7 +14,6 @@ const blog = {
 
 const blog2 = {
   id: 2,
-  cover: 'https://images.gr-assets.com/blogs/1706290104p8/2730.jpg',
   title: 'Readers\' Most Anticipated Books of February',
   tags: ['Alexandria'],
   date: '12 Feb 2019',
