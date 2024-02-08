@@ -1,9 +1,6 @@
-import Footer from '../../components/footer/Footer';
 import Button from '../../components/button/Button';
 import { useAppDispatch } from '../../hooks/hook';
 import { toggleTheme } from '../../redux/slices/ThemeSlice';
-// import libraryDay from '../../assets/images/library-day.jpg';
-// import libraryNight from '../../assets/images/library-night.jpg';
 import "./Home.scss";
 
 
@@ -22,7 +19,6 @@ export default function Home() {
         <h2 className='mt-3'>Subtitle</h2>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum iure eveniet odio nobis quaerat libero voluptatibus sapiente adipisci culpa, cupiditate velit, repellat omnis quisquam distinctio alias perferendis nam ex in?</p>
       </div>
-      <Footer />
     </div>
   )
 }

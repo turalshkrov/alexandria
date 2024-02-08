@@ -1,4 +1,3 @@
-import Footer from '../../components/footer/Footer';
 import peopleInLibrary from '../../assets/images/people-in-library.jpg';
 import peopleInLibraryDark from '../../assets/images/people-in-library-dark.jpg';
 import BlogCard from '../../components/blog card/BlogCard';
@@ -40,7 +39,6 @@ export default function Blogs() {
           </div>
         </div>
       </div>
-      <Footer /> 
     </div>
   )
 }

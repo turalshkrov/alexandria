@@ -1,5 +1,3 @@
-import Footer from "../../components/footer/Footer";
-
 export default function About() {
   return (
     <div className='page' id="about">
@@ -19,7 +17,6 @@ export default function About() {
         <p>Just like its historical counterpart, our Alexandria aims to be a beacon of intellectual curiosity, a place where people can come together to share, discover, 
         and celebrate the written word. We believe that in the digital age, the spirit of the great libraries of the past can be reborn, fostering a global community connected by the love of books.</p>
       </div>
-      <Footer />
     </div>
   )
 }

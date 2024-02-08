@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import ThemeSwitcherComponent from './components/theme switcher/ThemeSwitcherComponent';
 import Navbar from './components/navbar/Navbar';
@@ -7,6 +7,7 @@ import ScrollToTop from './utils/helpers/ScrollToTop';
 import Admin from './pages/admin/Admin';
 import PrivateRoute from './router/PrivateRoute';
 import './App.scss';
+import Footer from './components/footer/Footer';
 
 const Search = lazy(() => import('./pages/search/Search'));
 const Blogs = lazy(() => import('./pages/blogs/Blogs'));
@@ -25,6 +26,7 @@ function App() {
               <>
               <Navbar />
               <Outlet />
+              <Footer />
               </>
             )}>
             <Route path='/' element={<Home />} />

@@ -2,7 +2,6 @@
 @import "../src/styles/global/color";
 @import "../src/styles/global/variables";
 @import "../src/styles/components/Navbar.scss";
-@import "../src/styles/components/Footer.scss";
 @import "../src/styles/pages/SignIn.scss";
 @import "../src/styles/pages/Admin.scss";
 @import "../src/styles/pages/Search.scss";
@@ -17,7 +16,7 @@ input {
 .page {
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
-  min-height: calc(100vh - 61px);
+  min-height: calc(100vh - 148px);
   a {
     color: var(--primary-text-color);
   }
@@ -35,7 +34,6 @@ input {
 
 @media (max-width: 767px) {
   .page {
-    min-height: calc(100vh - 73px);
-    margin-bottom: 73px;
+    min-height: calc(100vh - 136px);
   }
 }

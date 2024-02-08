@@ -1,6 +1,5 @@
 import readingImg from '../../../src/assets/images/reading.jpg';
 import readingDarkImg from '../../../src/assets/images/reading-dark.jpg';
-import Footer from '../../components/footer/Footer';
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { useAppSelector } from '../../hooks/hook';
 import Button from '../../components/button/Button';
@@ -44,7 +43,6 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <Footer/>
     </div>
   )
 }
