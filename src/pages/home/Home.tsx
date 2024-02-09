@@ -1,4 +1,4 @@
-import Button from '../../components/button/Button';
+import Button from '../../shared/components/button/Button';
 import { useAppDispatch } from '../../hooks/hook';
 import { toggleTheme } from '../../redux/slices/ThemeSlice';
 import "./Home.scss";

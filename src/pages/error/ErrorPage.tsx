@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/hook';
 import booksImg from '../../assets/images/bookshelf.jpg';
 import booksDarkImg from '../../assets/images/bookshelf-dark.jpg';
-import Button from '../../components/button/Button';
+import Button from '../../shared/components/button/Button';
 import "./ErrorPage.scss";
 
 export default function ErrorPage() {
