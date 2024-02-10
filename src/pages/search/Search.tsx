@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { useAppSelector } from "../../hooks/hook";
+import "./Search.scss";
 
 export default function Search() {
   const [ inputFocus, setInputFocus ] = useState(false);

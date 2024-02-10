@@ -3,6 +3,7 @@ import readingDarkImg from '../../../src/assets/images/reading-dark.jpg';
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { useAppSelector } from '../../hooks/hook';
 import Button from '../../shared/components/button/Button';
+import "./SignIn.scss";
 
 export default function Profile() {
   const theme = useAppSelector(state => state.ThemeSlice.theme)

@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 @import "../src/styles/global/color";
 @import "../src/styles/global/variables";
-@import "../src/styles/components/Navbar.scss";
-@import "../src/styles/pages/SignIn.scss";
-@import "../src/styles/pages/Admin.scss";
-@import "../src/styles/pages/Search.scss";
 
 input {
   background-color: var(--primary-bg-color);
