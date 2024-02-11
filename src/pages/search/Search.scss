@@ -13,6 +13,17 @@
   }
 }
 
+.filter-btn:hover {
+  background-color: transparent;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.filter-btn-active {
+  background-color: transparent;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
 .search-bar {
   border: 1px solid var(--secondary-text-color);
   .search-input {
