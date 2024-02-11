@@ -1,13 +1,13 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
-import ThemeSwitcherComponent from './shared/components/theme switcher/ThemeSwitcherComponent';
-import Navbar from './shared/layout/navbar/Navbar';
-import Home from './pages/home/Home';
-import ScrollToTop from './utils/helpers/ScrollToTop';
-import Admin from 'pages/admin/Admin';
-import PrivateRoute from './routes/PrivateRoute';
-import Footer from './shared/layout/footer/Footer';
-import Preloader from './shared/components/preloader/Preloader';
+import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
+import Navbar from '@/shared/layout/navbar/Navbar';
+import Home from '@/pages/home/Home';
+import ScrollToTop from '@/utils/helpers/ScrollToTop';
+import Admin from '@/pages/admin/Admin';
+import PrivateRoute from '@/routes/PrivateRoute';
+import Footer from '@/shared/layout/footer/Footer';
+import Preloader from '@/shared/components/preloader/Preloader';
 import './App.scss';
 
 const Search = lazy(() => import('./pages/search/Search'));

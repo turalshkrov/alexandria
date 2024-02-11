@@ -1,5 +1,5 @@
 import { Oval } from "react-loader-spinner";
-import { useAppSelector } from "../../../hooks/hook";
+import { useAppSelector } from "@/hooks/hook";
 import "./Preloader.scss";
 
 export default function Preloader() {

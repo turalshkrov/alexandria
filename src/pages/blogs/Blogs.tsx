@@ -1,7 +1,7 @@
-import peopleInLibrary from '../../assets/images/people-in-library.jpg';
-import peopleInLibraryDark from '../../assets/images/people-in-library-dark.jpg';
-import BlogCard from '../../shared/components/blog card/BlogCard';
-import { useAppSelector } from '../../hooks/hook';
+import peopleInLibrary from '@/assets/images/people-in-library.jpg';
+import peopleInLibraryDark from '@/assets/images/people-in-library-dark.jpg';
+import BlogCard from '@/shared/components/blog card/BlogCard';
+import { useAppSelector } from '@/hooks/hook';
 import "./Blogs.scss";
 
 const blog = {

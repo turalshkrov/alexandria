@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useAppSelector } from '../../../hooks/hook';
+import { useAppSelector } from '@/hooks/hook';
 
 type ThemeSwitcherComponentProps = {
   children: React.ReactNode

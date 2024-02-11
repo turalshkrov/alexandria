@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import ThemeSlice from './slices/ThemeSlice';
+import SearchSlice from './slices/SearchSlice';
 
 const store = configureStore({
   reducer: {
     ThemeSlice,
+    SearchSlice,
   },
 })
 

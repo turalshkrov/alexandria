@@ -1,6 +1,6 @@
-import Button from '../../shared/components/button/Button';
-import { useAppDispatch } from '../../hooks/hook';
-import { toggleTheme } from '../../redux/slices/ThemeSlice';
+import Button from '@/shared/components/button/Button';
+import { useAppDispatch } from '@/hooks/hook';
+import { toggleTheme } from '@/redux/slices/ThemeSlice';
 import "./Home.scss";
 
 
