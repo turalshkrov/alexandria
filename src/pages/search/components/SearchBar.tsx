@@ -21,11 +21,11 @@ export default function SearchBrar() {
       <input
         value={searchKeyword}
         type="text"
-        placeholder='What do want to read?' 
+        placeholder='What do you want to read?' 
         className="search-input mx-1"
         onFocus={() => setInputFocus(true)}
         onBlur={() => setInputFocus(false)}
-        onChange={(e) => dispatch(setSearchKeyword(e.target.value))}/>
+        onChange={(e) => dispatch(setSearchKeyword(e.target.value.trim()))}/>
     </div>
   )
 }

@@ -1,0 +1,46 @@
+.genres {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.genre-card {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  overflow: hidden;
+  background-color: var(--card-bg-color);
+  .genre-content {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    .genre-title {
+      text-transform: capitalize;
+      font-size: 1.1rem;
+      font-family: 'Merriweather';
+    }
+    .genre-book {
+      width: 60%;
+      position: absolute;
+      right: 0;
+      transform: rotate(-25deg) translateY(10%);
+    }
+  }
+}
+
+@media (max-width: 1199px) {
+  .genres {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 991px) {
+  .genres {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .genres {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

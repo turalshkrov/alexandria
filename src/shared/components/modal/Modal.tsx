@@ -1,11 +1,18 @@
-// import { useAppSelector } from "hooks/hook";
 import "./Modal.scss";
 
-export default function Modal() {
-  // const theme = useAppSelector(state => state.ThemeSlice.theme);
-  return (
-    <div className="">
+type ModalProps = {
+  id: string,
+  children?: React.ReactNode,
+}
 
+export default function Modal({ id, children }: ModalProps) {
+  return (
+    <div className="modal" id={id}>
+      <div className="modal-dialog">
+        <div className="modal-content">
+          {children}
+        </div>
+      </div>
     </div>
   )
 }
