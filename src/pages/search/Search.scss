@@ -13,6 +13,9 @@
   }
 }
 
+.filter-btn {
+  text-transform: capitalize;
+}
 .filter-btn:hover {
   background-color: transparent;
   color: var(--primary-color);

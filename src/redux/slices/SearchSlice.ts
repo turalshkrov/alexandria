@@ -7,7 +7,7 @@ interface SearchState {
 
 const initialState: SearchState = {
   searchKeyword: "",
-  searchFilter: "All"
+  searchFilter: "all"
 }
 
 const SearchSlice = createSlice({
