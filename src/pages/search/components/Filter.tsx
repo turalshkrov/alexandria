@@ -12,7 +12,7 @@ export default function Filter() {
   const searchKeyword = useAppSelector(state => state.SearchSlice.searchKeyword);
   const dispatch = useAppDispatch();
   return (
-    <div className="filter">
+    <div className="filter d-f">
       {
         searchKeyword && searchType.map(type => {
           return(

@@ -42,6 +42,9 @@
 }
 
 @media (max-width: 767px) {
+  .filter {
+    justify-content: center;
+  }
   .search-bar {
     width: 100%;
   }
