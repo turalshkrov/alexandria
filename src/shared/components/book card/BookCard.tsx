@@ -21,7 +21,7 @@ const BookCard: React.FC<bookCardProps> = ({ data }) => {
         <div className="book-card p-md-1 w-100 text-center">
           <img src={data.cover} alt={data.title} className="book-cover w-75 w-md-50" />
           <div className="book-info mt-1">
-            <h3 className='book-card-title'>
+            <h3 className='book-card-title link-hover'>
               {data.title}
             </h3>
             <p className='book-card-author'>

@@ -17,7 +17,7 @@ export default function WriterCard({ data }: WriterCardProps) {
           <img src={data.image} alt={data.fullName}  className="card-cover w-75 w-md-50 br-full"/>
         </Link>
         <div className="witer-card-info mt-1">
-          <Link to={`writers/${data.id}`}>
+          <Link to={`writers/${data.id}`} className="link-hover">
             <h3 className='writer-card-fullname'>
               {data.fullName}
             </h3>

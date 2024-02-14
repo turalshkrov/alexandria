@@ -5,7 +5,7 @@ import { setSearchFilter } from "@/redux/slices/SearchSlice";
 export default function Filter() {
   const theme = useAppSelector(state => state.ThemeSlice.theme);
   const searchType: string[] = [
-    "all", "books", "writers", "users"
+    "all", "books", "writers", "list", "articrles"
   ];
 
   const searchFilter = useAppSelector(state => state.SearchSlice.searchFilter);
