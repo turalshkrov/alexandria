@@ -15,7 +15,7 @@ const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs/Blogs'));
 const Profile = lazy(() => import('./pages/profile'));
 const About = lazy(() => import('./pages/about/About'));
-const ErrorPage =  lazy(() => import('./pages/error/ErrorPage'));
+const ErrorPage =  lazy(() => import('./pages/error'));
 
 function App() {
   return (

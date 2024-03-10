@@ -3,7 +3,7 @@ import { useAppSelector } from '@/hooks/hook';
 import booksImg from '@/assets/images/bookshelf.jpg';
 import booksDarkImg from '@/assets/images/bookshelf-dark.jpg';
 import Button from '@/shared/components/button';
-import "./ErrorPage.scss";
+import "./index.scss";
 
 export default function ErrorPage() {
   const theme = useAppSelector(state => state.ThemeSlice.theme);
