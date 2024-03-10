@@ -1,7 +1,7 @@
 import Button from '@/shared/components/button';
 import { useAppDispatch } from '@/hooks/hook';
 import { toggleTheme } from '@/redux/slices/ThemeSlice';
-import "./Home.scss";
+import "./index.scss";
 
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
     <div className='page' id='home'>
       <div className="container pt-1 p-b-3">
       
-        <Button size='sm' color='primary' type='solid' onClick={() => dispatch(toggleTheme())}>Theme</Button>
+        <Button size='sm' color='primary' style='solid' onClick={() => dispatch(toggleTheme())}>Theme</Button>
         <h1>Home</h1>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum accusantium fuga aliquam sunt repudiandae voluptate tempore illum eius maxime veritatis fugiat atque quisquam sapiente voluptas laboriosam repellendus eaque, sint molestias.</p>
         <h2 className='mt-3'>Subtitle</h2>

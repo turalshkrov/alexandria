@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
 import Navbar from '@/shared/layout/navbar';
-import Home from '@/pages/home/Home';
+import Home from '@/pages/home';
 import ScrollToTop from '@/utils/helpers/ScrollToTop';
 import Admin from '@/pages/admin/Admin';
 import PrivateRoute from '@/routes/PrivateRoute';
