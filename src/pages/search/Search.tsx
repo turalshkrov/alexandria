@@ -5,7 +5,6 @@ import BookCard from "@/shared/components/book card/BookCard";
 import "./Search.scss";
 import WriterCard from "@/shared/components/writer card/WriterCard";
 import { useAppSelector } from "@/hooks/hook";
-import Modal from "@/shared/components/modal/Modal";
 
 const books = [
   {
@@ -74,10 +73,6 @@ export default function Search() {
   return (
     <div className='page'>
       <div className="container">
-        <Modal 
-          id="1"
-          title="Modal title"
-          />
         <SearchBrar />
         <Filter />
         <BrowseGenres />

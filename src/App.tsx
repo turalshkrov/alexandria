@@ -8,11 +8,12 @@ import Admin from '@/pages/admin/Admin';
 import PrivateRoute from '@/routes/PrivateRoute';
 import Footer from '@/shared/layout/footer/Footer';
 import Preloader from '@/shared/components/preloader/Preloader';
+import SignUp from '@/pages/signup';
 import './App.scss';
 
 const Search = lazy(() => import('./pages/search/Search'));
 const Blogs = lazy(() => import('./pages/blogs/Blogs'));
-const Profile = lazy(() => import('./pages/profile/Profile'));
+const Profile = lazy(() => import('./pages/profile'));
 const About = lazy(() => import('./pages/about/About'));
 const ErrorPage =  lazy(() => import('./pages/error/ErrorPage'));
 
@@ -30,12 +31,13 @@ function App() {
               <Footer />
               </>
             )}>
-            <Route path='/' element={<Home />} />
-            <Route path='*' element={<ErrorPage />} />
-            <Route path='/search' element={<Search />} />
-            <Route path='/blogs' element={<Blogs />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/about' element={<About />} />
+              <Route path='/' element={<Home />} />
+              <Route path='*' element={<ErrorPage />} />
+              <Route path='/search' element={<Search />} />
+              <Route path='/blogs' element={<Blogs />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/about' element={<About />} />
+              <Route path='/register' element={<SignUp />}/>
             </Route>
             <Route element={<PrivateRoute isAuthenticated={true} />}>
               <Route path='/admin' element={<Admin />}></Route>

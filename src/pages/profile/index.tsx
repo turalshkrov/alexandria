@@ -3,7 +3,8 @@ import readingDarkImg from '@/assets/images/reading-dark.jpg';
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { useAppSelector } from '@/hooks/hook';
 import Button from '@/shared/components/button/Button';
-import "./SignIn.scss";
+import { Link } from 'react-router-dom';
+import "./index.scss";
 
 export default function Profile() {
   const theme = useAppSelector(state => state.ThemeSlice.theme)
@@ -17,12 +18,14 @@ export default function Profile() {
             <p className='font-md font-md-lg fw-bold signup-page-text'>Save those you want to read</p>
           </div>
           <div className="col-12 col-md-6 align-items-center mt-3 mt-md-0 d-f signup-btn-group">
-            <Button 
-              color='primary'
-              type='solid'
-              className='w-75 w-xl-50 font-sm'>
-              Sign up free
-            </Button>
+            <Link to='/register' className='d-b w-100 text-center'>
+              <Button 
+                color='primary'
+                type='solid'
+                className='w-75 w-xl-50 font-sm'>
+                Sign up free
+              </Button>
+            </Link>
             <Button 
               type='outline'
               color={theme === 'dark' ? 'light' : 'dark'}
