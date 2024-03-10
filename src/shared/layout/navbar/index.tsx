@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { MdHomeFilled, MdSearch, MdArticle, MdPerson } from "react-icons/md";
-import "./Navbar.scss";
+import "./index.scss";
 
 export default function Navbar() {
   return (

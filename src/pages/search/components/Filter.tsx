@@ -1,4 +1,4 @@
-import Button from "@/shared/components/button/Button";
+import Button from "@/shared/components/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { setSearchFilter } from "@/redux/slices/SearchSlice";
 

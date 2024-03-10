@@ -22,8 +22,17 @@
 input {
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
-  border: 1px solid var(--secondary-text-color);
+  border: 1px solid var(--secondary-text-color) !important;
   outline: none;
+}
+
+.logo-title {
+  font-family: var(--logo-font);
+}
+
+button {
+  font-weight: normal !important;
+  font-size: .9rem !important;
 }
 
 .page {

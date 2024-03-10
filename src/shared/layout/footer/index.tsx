@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./Footer.scss";
+import "./index.scss";
 
 export default function Footer() {
   const year = new Date().getFullYear()

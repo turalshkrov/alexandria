@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/hooks/hook";
 import genres from "./genres.json";
-import GenreCard from "@/shared/components/genre card/GenreCard";
+import GenreCard from "@/shared/components/genre card";
 
 export default function BrowseGenres() {
   const searchKeyword = useAppSelector(state => state.SearchSlice.searchKeyword);

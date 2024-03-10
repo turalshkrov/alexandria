@@ -1,10 +1,10 @@
 import SearchBrar from "./components/SearchBar";
 import Filter from "./components/Filter";
 import BrowseGenres from "./components/BrowseGenres";
-import BookCard from "@/shared/components/book card/BookCard";
-import "./Search.scss";
+import BookCard from "@/shared/components/book card";
 import WriterCard from "@/shared/components/writer card/WriterCard";
 import { useAppSelector } from "@/hooks/hook";
+import "./index.scss";
 
 const books = [
   {

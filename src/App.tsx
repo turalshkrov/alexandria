@@ -1,17 +1,17 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
-import Navbar from '@/shared/layout/navbar/Navbar';
+import Navbar from '@/shared/layout/navbar';
 import Home from '@/pages/home/Home';
 import ScrollToTop from '@/utils/helpers/ScrollToTop';
 import Admin from '@/pages/admin/Admin';
 import PrivateRoute from '@/routes/PrivateRoute';
-import Footer from '@/shared/layout/footer/Footer';
+import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
 import SignUp from '@/pages/signup';
 import './App.scss';
 
-const Search = lazy(() => import('./pages/search/Search'));
+const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs/Blogs'));
 const Profile = lazy(() => import('./pages/profile'));
 const About = lazy(() => import('./pages/about/About'));
@@ -37,6 +37,13 @@ function App() {
               <Route path='/blogs' element={<Blogs />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/about' element={<About />} />
+            </Route>
+            <Route element={(
+              <>
+              <Outlet />
+              <Footer />
+              </>
+            )}>
               <Route path='/register' element={<SignUp />}/>
             </Route>
             <Route element={<PrivateRoute isAuthenticated={true} />}>

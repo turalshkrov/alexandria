@@ -12,3 +12,8 @@ $font-size-md: $base-font-size * 1.25;
 $font-size-lg: $base-font-size * 1.5;
 $font-size-xl: $base-font-size * 2;
 $font-size-xxl: $base-font-size * 2.5;
+
+:root {
+  --logo-font: 'Merriweather', serif;
+
+}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./GenreCard.scss";
+import "./index.scss";
 
 type GenreCardProps = {
   id: string | number,

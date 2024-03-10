@@ -1,23 +1,23 @@
-import "./Buttons.scss";
+import "./index.scss";
 
-type ButtonType = 'solid' | 'outline' | 'link';
+type ButtonStyle = 'solid' | 'outline' | 'link';
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xxl';
 type ButtonColor = 'primary' | 'dark' | 'light';
 
 type ButtonProps = {
   size?: ButtonSize,
   color?: ButtonColor,
-  type?: ButtonType,
+  style?: ButtonStyle,
   children?: React.ReactNode,
   className?: string,
   onClick?: () => void,
 }
 
-export default function Button({ size, color='primary', type='solid', className='', children, onClick }: ButtonProps) {
+export default function Button({ size, color='primary', style='solid', className='', children, onClick }: ButtonProps) {
   className += size ? ' btn-' + size : ' ';
   return (
     <button 
-      className={`${className} btn-${type}-${color}`} 
+      className={`${className} btn-${style}-${color}`} 
       onClick={() => onClick?.()}>
       {children}
     </button>
