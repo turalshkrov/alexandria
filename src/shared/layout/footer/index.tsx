@@ -4,7 +4,7 @@ import "./index.scss";
 export default function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className='footer' id="footer">
+    <footer className='footer d-n d-md-b' id="footer">
       <div className="container">
         <ul className="footer-links d-f align-items-end">
           <li>

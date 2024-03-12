@@ -1,8 +1,8 @@
-import peopleInLibrary from '@/assets/images/people-in-library.jpg';
-import peopleInLibraryDark from '@/assets/images/people-in-library-dark.jpg';
+import booksDark from '@/assets/images/book-dark.jpg';
+import books from '@/assets/images/book.jpg';
 import BlogCard from '@/pages/blogs/blog card/BlogCard';
 import { useAppSelector } from '@/hooks/hook';
-import "./Blogs.scss";
+import "./index.scss";
 
 const blog = {
   id: 1,
@@ -25,11 +25,14 @@ export default function Blogs() {
   return (
     <div className='page'>
       <div className="container py-1">
-        <div className="blogs-page-main-img d-f justify-center mb-0 mb-md-2 my-3">
-          <img src={theme === 'dark' ? peopleInLibraryDark : peopleInLibrary} alt="" className="w-100 w-lg-75" />
+        <div className="blogs-page-header w-lg-75 d-f align-items-center my-1">
+          <div className="blogs-page-header-text mt-2 px-2 px-md-4 w-100 w-md-50 text-center">
+            <h1>Discover & Read More</h1>
+          </div>
+          <img src={theme === 'dark' ? booksDark : books} alt="" className="w-100 w-md-50" />
         </div>
         <div className="blogs pt-2 w-100 w-lg-75">
-          <div className="page-title mb-3">
+          <div className="page-title mb-md-2">
             <h1 className='font-xxl'>Blogs</h1>
           </div>
           <div className="blogs-row row">

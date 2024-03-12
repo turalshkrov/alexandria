@@ -1,7 +1,3 @@
-.page-without-navbar {
-  min-height: calc(100vh - 87px) !important;
-}
-
 .register-form {
   flex-direction: column;
 
@@ -66,10 +62,4 @@
     font-size: 1.25rem;
     color: var(--primary-text-color);
   }
-}
-
-@media (max-width: 767px) {
-  .page-without-navbar {
-    min-height: calc(100vh - 63px) !important;
-  }  
 }

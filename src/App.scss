@@ -37,7 +37,8 @@ input {
 .page {
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
-  min-height: calc(100vh - 148px);
+  min-height: 100vh;
+
   a {
     color: var(--primary-text-color);
   }
@@ -53,8 +54,16 @@ input {
   }
 }
 
+.page-vertical-center {
+  display: flex;
+  align-items: center;
+  .container {
+    margin: 0 auto;
+  }
+}
+
 @media (max-width: 767px) {
   .page {
-    min-height: calc(100vh - 136px);
+    padding-bottom: 74px;
   }
 }

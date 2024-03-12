@@ -18,13 +18,17 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors }
   } = useForm<Form>();
-  const onSubmit: SubmitHandler<Form> = (data) => console.log(data);
   const [ showPassword, setshowPassword ] = useState(false);
-
+  const [ userData, setUserData ] = useState<Form | undefined>(undefined);
+  const onSubmit: SubmitHandler<Form> = (data) => { 
+    setUserData(data);
+    console.log(userData);
+  };
+  
   return (
-    <div className="page page-without-navbar page-vertical-center">
+    <div className="page page-vertical-center">
       <div className="container mb-md-0">
-        <div className="py-3 register-content text-center">
+        <div className="register-content py-4 py-md-3 text-center">
           <h1 className="logo-title">Alexandria</h1>
           <h1 className="mt-2">Create Account</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="register-form form-control mt-2">
@@ -81,7 +85,8 @@ const SignUp = () => {
                 {...register("password", { required: true,
                   minLength: 8,
                   maxLength: 30,
-                  pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/ })} 
+                  pattern: /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/ 
+                })} 
               />
               <span 
                 className="show-password"
