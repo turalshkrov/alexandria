@@ -13,7 +13,7 @@
 
     label {
       font-weight: normal !important;
-      font-size: .8rem;
+      font-size: .9rem;
     }
 
     input {
@@ -21,7 +21,7 @@
       width: 300px;
       padding: 10px 20px !important;
     }
-
+    
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus,
@@ -30,6 +30,12 @@
       -webkit-text-fill-color: var(--primary-text-color);
       transition: background-color 5000s ease-in-out 0s;
       box-shadow: inset 0 0 20px 20px var(--primary-bg-color);
+    }
+  }
+  .password-item {
+    position: relative;
+    input {
+      padding: 10px 40px 10px 20px !important;
     }
   }
   button {
@@ -45,6 +51,20 @@
   }
   a {
     text-decoration: underline;
+  }
+}
+
+.show-password {
+  position: absolute;
+  right: 14px;
+  top: 39px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--primary-bg-color);
+  svg {
+    font-size: 1.25rem;
+    color: var(--primary-text-color);
   }
 }
 
