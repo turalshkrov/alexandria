@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
-@import "../src/styles/global/color";
-@import "../src/styles/global/variables";
+@import "@/styles/global/color";
+@import "@/styles/global/variables";
+
+body {
+  background: var(--primary-bg-color);
+}
 
 ::-webkit-scrollbar {
   width: 6px;
@@ -28,11 +32,6 @@ input {
 
 .logo-title {
   font-family: var(--logo-font);
-}
-
-button {
-  font-weight: normal !important;
-  font-size: .9rem !important;
 }
 
 .page {

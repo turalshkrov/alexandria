@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const SignUp = () => {
   return (
-    <div className="page page-without-navbar">
+    <div className="page page-without-navbar page-vertical-center">
       <div className="container mb-md-0">
         <div className="py-3 register-content text-center">
           <h1 className="logo-title">Alexandria</h1>
@@ -28,7 +28,7 @@ const SignUp = () => {
               <input type="password" name="password" id="password"/>
             </div>
             <p className="mt-2">
-            By creating an account, you agree to the Alexandria <Link to='/terms'>Terms of Service</Link> and <Link to='/privacy'>Privacy Policy</Link>
+              By creating an account, you agree to the Alexandria <Link to='/terms'>Terms of Service</Link> and <Link to='/privacy'>Privacy Policy</Link>
             </p>
             <Button
               className="mt-2">

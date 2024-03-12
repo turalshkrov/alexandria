@@ -9,7 +9,7 @@ export default function Home() {
   const dispatch = useAppDispatch();
   return (
     <div className='page' id='home'>
-      <div className="container pt-1 p-b-3">
+      <div className="container py-1 p-b-3">
       
         <Button size='sm' color='primary' style='solid' onClick={() => dispatch(toggleTheme())}>Theme</Button>
         <h1>Home</h1>

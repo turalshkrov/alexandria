@@ -9,7 +9,7 @@ import "./index.scss";
 export default function Profile() {
   const theme = useAppSelector(state => state.ThemeSlice.theme)
   return (
-    <div className='page'>
+    <div className='page page-vertical-center'>
       <div className="container mb-2 mb-md-0">
         <div className="py-3 row d-f align-items-center signup-content">
           <div className="col-12 col-md-6 text-center">

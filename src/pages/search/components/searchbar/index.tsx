@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { setSearchKeyword } from "@/redux/slices/SearchSlice";
+import { FaSearch } from "react-icons/fa";
+import { FaXmark } from "react-icons/fa6";
 
 export default function SearchBrar() {
   const [ inputFocus, setInputFocus ] = useState(false);
@@ -27,6 +28,12 @@ export default function SearchBrar() {
           onFocus={() => setInputFocus(true)}
           onBlur={() => setInputFocus(false)}
           onChange={(e) => dispatch(setSearchKeyword(e.target.value.trim()))}/>
+        {
+          searchKeyword && 
+          <FaXmark 
+            className="clear-input"
+            onClick={() => dispatch(setSearchKeyword(""))}/>
+        }
       </div>
     </div>
   )

@@ -1,15 +1,31 @@
+.page-vertical-center {
+  display: flex;
+  align-items: center;
+  .container {
+    margin: 0 auto !important;
+  }
+}
+
 .search-bar {
-  width: max-content;
+  position: relative;
+  width: 310px;
   border-radius: 22px;
   transition: .3s;
   .search-input {
-    width: 200px;
+    min-width: 200px;
     border: none;
     outline: none;
     font-size: 1rem;
+    border: none !important;
   }
   .search-icon {
     transition: .3s;
+  }
+  .clear-input {
+    cursor: pointer;
+    position: absolute;
+    right: 24px;
+    font-size: 1.1rem;
   }
 }
 
