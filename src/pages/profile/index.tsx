@@ -40,10 +40,14 @@ export default function Profile() {
               <FaFacebook className='signup-btn-icon'/>
               Continue with Facebook
             </Button>
-            <Button 
-              style='outline'
-              color={theme === 'dark' ? 'light' : 'dark'}
-              className='w-75 w-xl-50 mt-1'>Log in</Button>
+            <Link to='/login' className='d-b w-100 text-center'>
+              <Button 
+                style='outline'
+                color={theme === 'dark' ? 'light' : 'dark'}
+                className='w-75 w-xl-50 mt-1'>
+                Log in
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

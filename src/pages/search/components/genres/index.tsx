@@ -5,7 +5,7 @@ import GenreCard from "@/shared/components/genre card";
 export default function BrowseGenres() {
   const searchKeyword = useAppSelector(state => state.SearchSlice.searchKeyword);
   return (
-    <div className="mt-2">
+    <div className="my-2">
       {
         !searchKeyword &&
         <>

@@ -64,6 +64,7 @@ input {
 
 @media (max-width: 767px) {
   .page {
+    min-height: calc(100vh - 74px);
     padding-bottom: 74px;
   }
 }
