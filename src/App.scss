@@ -37,7 +37,7 @@ input {
 .page {
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
-  min-height: 100vh;
+  min-height: calc(100vh - 148px);
 
   a {
     color: var(--primary-text-color);

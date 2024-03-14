@@ -58,10 +58,15 @@
 }
 
 @media (max-width: 767px) {
-  .filter {
-    justify-content: center;
-  }
   .search-bar {
     width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .filter {
+    #articles {
+      display: none;
+    }
   }
 }

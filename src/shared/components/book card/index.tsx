@@ -19,7 +19,7 @@ const BookCard: React.FC<bookCardProps> = ({ data }) => {
     <div className="book-item col-6 col-md-4 col-lg-3 p-md-1">
       <Link to={`/books/${data.id}`}>
         <div className="book-card p-md-1 w-100 text-center">
-          <img src={data.cover} alt={data.title} className="book-cover w-75 w-md-50" />
+          <img src={data.cover} alt={data.title} className="book-cover px-1 px-md-0 w-100 w-md-50" />
           <div className="book-info mt-1">
             <h3 className='book-card-title link-hover'>
               {data.title}

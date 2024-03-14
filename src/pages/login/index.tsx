@@ -26,8 +26,8 @@ const Login = () => {
   };
   return (
     <div className='page' id='login-page'>
-      <div className="container py-3">
-        <div className="login-content text-center">
+      <div className="container">
+        <div className="login-content text-center py-4 py-md-3">
           <h1 className="logo-title">Alexandria</h1>
           <h1 className="mt-2">Sign in</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="register-form form-control mt-2">
@@ -65,7 +65,7 @@ const Login = () => {
               className="mt-2">
               Sign in
             </Button>
-            <p className="mt-3">
+            <p className="mt-2">
               New in Alexandria? <Link to='/register'>Sign up</Link>
             </p>
           </form>
@@ -75,4 +75,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

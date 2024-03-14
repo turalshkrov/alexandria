@@ -12,13 +12,15 @@ type ButtonProps = {
   children?: React.ReactNode,
   className?: string,
   type?: ButtonType,
+  id?: string,
   onClick?: () => void,
 }
 
-export default function Button({ size, color='primary', style='solid', className='', type='button', children, onClick }: ButtonProps) {
+export default function Button({ size, color='primary', style='solid', className='', type='button', id='', children, onClick }: ButtonProps) {
   className += size ? ' btn-' + size : ' ';
   return (
     <button
+      id={id}
       type={type}
       className={`${className} btn-${style}-${color}`} 
       onClick={() => onClick?.()}>

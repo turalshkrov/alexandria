@@ -73,7 +73,7 @@ const SearchResult = () => {
       {
         searchKeyword &&
         <>
-          <div className="row">
+          <div className="row px-0 px-md-3 mb-3">
             {
               searchFilter === 'books' || searchFilter === 'all' ? books.map(book => {
                 return(
@@ -86,7 +86,7 @@ const SearchResult = () => {
               : null
             }
           </div>
-          <div className="row">
+          <div className="row px-0 px-md-3">
             {
               searchFilter === 'writers' || searchFilter === 'all' ? writers.map(writer => {
                 return(

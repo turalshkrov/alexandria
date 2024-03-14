@@ -116,7 +116,7 @@ const SignUp = () => {
               className="mt-2">
               Create Account
             </Button>
-            <p className="mt-3">
+            <p className="mt-2">
               Already have an account? <Link to='/login'>Sign in</Link>
             </p>
           </form>
