@@ -1,5 +1,5 @@
 import BookCard from "@/shared/components/book card";
-import WriterCard from "@/shared/components/writer card/WriterCard";
+import WriterCard from "@/shared/components/writer card";
 import { useAppSelector } from "@/hooks/hook";
 
 const books = [
@@ -110,32 +110,42 @@ const SearchResult = () => {
       {
         searchKeyword &&
         <>
-          <div className="row books-container px-0 mb-3">
-            {
-              searchFilter === 'books' || searchFilter === 'all' ? books.map(book => {
-                return(
-                <BookCard
-                  key={book.id}
-                  data={book}
-                />
-                )
-              })
-              : null
-            }
-          </div>
-          <div className="row px-0">
-            {
-              searchFilter === 'writers' || searchFilter === 'all' ? writers.map(writer => {
-                return(
-                <WriterCard 
-                  key={writer.id}
-                  data={writer}
-                />
-                )
-              })
-              : null
-            }
-          </div>
+          {
+            (searchFilter === 'books' || searchFilter === 'all') &&
+            <>
+              <h1>Books</h1>
+              <div className="row books-container mb-3">
+                {
+                  books.map(book => {
+                    return (
+                      <BookCard
+                        key={book.id}
+                        data={book}
+                      />
+                    )
+                  })
+                }
+              </div>
+            </>
+          }
+          {
+            (searchFilter === 'writers' || searchFilter === 'all') &&
+            <>
+              <h1>Writers</h1>
+              <div className="row">
+                {
+                  writers.map(writer => {
+                    return (
+                      <WriterCard
+                        key={writer.id}
+                        data={writer}
+                      />
+                    )
+                  })
+                }
+              </div>
+            </>
+          }
         </>
       }
     </div>

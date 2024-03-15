@@ -11,7 +11,9 @@ export default function Search() {
         <SearchBrar />
         <Filter />
         <BrowseGenres />
-        <SearchResult />
+        <div className="mt-3">
+          <SearchResult />
+        </div>
       </div>
     </div>
   )

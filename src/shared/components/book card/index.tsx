@@ -36,20 +36,24 @@ const BookCard: React.FC<bookCardProps> = ({ data }) => {
             <span className='rating-value'>{data.rating && Number.isInteger(data.rating) ? data.rating + '.0' : data.rating}</span>
             {
               data.userRating
-                ? <span className='ml-1 d-f align-items-center'>
+                ? <span className='ml-1 d-f align-items-center user-rating'>
                   <IoIosStar size={17} className='' color={theme === 'dark' ? '#9309BF' : '#F44A65'} />
                   <span className='rating-value'>{data.userRating}</span>
                 </span>
-                : <IoIosStarOutline size={17} className='ml-1' color={theme === 'dark' ? '#9309BF' : '#F44A65'} />
+                : <span className='ml-1 user-rating'>
+                  <IoIosStarOutline size={17} className='ml-1' color={theme === 'dark' ? '#9309BF' : '#F44A65'} />
+                </span>
             }
           </p>
-          <h3 className='book-card-title link-hover'>
-            <Link to={`/books/${data.id}`}>
+          <h3 className='book-card-title'>
+            <Link className='link-hover' to={`/books/${data.id}`}>
               {data.title}
             </Link>
           </h3>
           <p className='book-card-author'>
-            {data.author.fullName}
+            <Link className='link-hover text-secondary' to={`/writers/${data.author.id}`}>
+              {data.author.fullName}
+            </Link>
           </p>
         </div>
         <div
