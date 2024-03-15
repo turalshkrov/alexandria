@@ -6,7 +6,7 @@ interface SearchState {
 }
 
 const initialState: SearchState = {
-  searchKeyword: "",
+  searchKeyword: "Dostoyevsky",
   searchFilter: "all"
 }
 

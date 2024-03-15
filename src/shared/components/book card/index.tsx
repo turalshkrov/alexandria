@@ -1,11 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { IoIosStar, IoIosStarOutline } from "react-icons/io";
+import { IoIosAdd } from "react-icons/io";
 import "./index.scss";
+import { useAppSelector } from '@/hooks/hook';
 
 interface bookCardProps {
   data: {
     id: string,
     title: string,
+    rating?: number,
+    userRating?: number,
     author: {
       id: string,
       fullName: string,
@@ -15,21 +20,45 @@ interface bookCardProps {
 }
 
 const BookCard: React.FC<bookCardProps> = ({ data }) => {
+  const theme = useAppSelector(state => state.ThemeSlice.theme);
+  const clickHandle: (id: string) => void = (id) => {
+    console.log(id);
+  }
   return (
-    <div className="book-item col-6 col-md-4 col-lg-3 p-md-1">
-      <Link to={`/books/${data.id}`}>
-        <div className="book-card p-md-1 w-100 text-center">
-          <img src={data.cover} alt={data.title} className="book-cover px-1 px-md-0 w-100 w-md-50" />
-          <div className="book-info mt-1">
-            <h3 className='book-card-title link-hover'>
+    <div className="book-item col-6 col-md-4 col-lg-2 p-md-1">
+      <div className="book-card p-md-1 w-100">
+        <Link to={`/books/${data.id}`}>
+          <img src={data.cover} alt={data.title} className="book-cover px-1 w-100" />
+        </Link>
+        <div className="book-info mt-2 px-1">
+          <p className="book-card-rating d-f align-items-center">
+            <IoIosStar size={17} color='#f5c518' />
+            <span className='rating-value'>{data.rating && Number.isInteger(data.rating) ? data.rating + '.0' : data.rating}</span>
+            {
+              data.userRating
+                ? <span className='ml-1 d-f align-items-center'>
+                  <IoIosStar size={17} className='' color={theme === 'dark' ? '#9309BF' : '#F44A65'} />
+                  <span className='rating-value'>{data.userRating}</span>
+                </span>
+                : <IoIosStarOutline size={17} className='ml-1' color={theme === 'dark' ? '#9309BF' : '#F44A65'} />
+            }
+          </p>
+          <h3 className='book-card-title link-hover'>
+            <Link to={`/books/${data.id}`}>
               {data.title}
-            </h3>
-            <p className='book-card-author'>
-              {data.author.fullName}
-            </p>
-          </div>
+            </Link>
+          </h3>
+          <p className='book-card-author'>
+            {data.author.fullName}
+          </p>
         </div>
-      </Link>
+        <div
+          onClick={() => clickHandle(data.id)}
+          className="add-to-library">
+          <IoIosAdd size={18} />
+          <span>Add to library</span>
+        </div>
+      </div>
     </div>
   )
 }
