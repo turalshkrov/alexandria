@@ -26,7 +26,7 @@ const SignUp = () => {
   };
   
   return (
-    <div className="page page-vertical-center">
+    <div className="page page-vertical-center" id="signup-page">
       <div className="container mb-md-0">
         <div className="register-content py-4 py-md-3 text-center">
           <h1 className="logo-title">Alexandria</h1>

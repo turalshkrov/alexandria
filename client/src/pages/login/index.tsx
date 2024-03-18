@@ -25,7 +25,7 @@ const Login = () => {
     console.log(userData);
   };
   return (
-    <div className='page' id='login-page'>
+    <div className='page page-vertical-center' id='login-page'>
       <div className="container">
         <div className="login-content text-center py-4 py-md-3">
           <h1 className="logo-title">Alexandria</h1>
