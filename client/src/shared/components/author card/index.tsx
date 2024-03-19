@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./index.scss";
 
-interface WriterCardProps {
+interface AuthorCardProps {
   data: {
     id: string,
     fullName: string,
@@ -9,16 +9,16 @@ interface WriterCardProps {
   }
 }
 
-export default function WriterCard({ data }: WriterCardProps) {
+export default function AuthorCard({ data }: AuthorCardProps) {
   return (
     <div className="card-item col-6 col-md-4 col-lg-2 p-1">
-      <div className="writer-card py-1 w-100 text-center">
-        <Link to={`writers/${data.id}`}>
+      <div className="author-card py-1 w-100 text-center">
+        <Link to={`authors/${data.id}`}>
           <img src={data.image} alt={data.fullName} className="card-cover px-2 w-100 br-full" />
         </Link>
-        <div className="witer-card-info mt-1">
-          <h3 className='writer-card-fullname'>
-            <Link to={`writers/${data.id}`} className="link-hover">
+        <div className="author-card-info mt-1">
+          <h3 className='author-card-fullname'>
+            <Link to={`authors/${data.id}`} className="link-hover">
               {data.fullName}
             </Link>
           </h3>

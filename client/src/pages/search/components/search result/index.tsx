@@ -1,5 +1,5 @@
 import BookCard from "@/shared/components/book card";
-import WriterCard from "@/shared/components/writer card";
+import WriterCard from "@/shared/components/author card";
 import { useAppSelector } from "@/hooks/hook";
 
 const books = [
@@ -27,7 +27,7 @@ const books = [
   {
     id: '3',
     title: 'The Brothers Karamazov',
-    rating: 3.9,
+    rating: 4.9,
     author: {
       id: '1',
       fullName: 'F. M. Dostoyevsky'
