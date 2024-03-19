@@ -12,7 +12,7 @@ const books = [
       id: '1',
       fullName: 'F. M. Dostoyevsky'
     },
-    cover: 'https://m.media-amazon.com/images/I/61k2zPRyOiL._AC_UF894,1000_QL80_.jpg'
+    cover: 'https://rb.gy/3c40cl'
   },
   {
     id: '2',

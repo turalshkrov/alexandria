@@ -15,7 +15,7 @@ mongoose.connect(process.env.DATABASE_SERVER_URL)
     console.log('Connection failed!');
   })
 
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Welcome Alexandria API');
 });
 

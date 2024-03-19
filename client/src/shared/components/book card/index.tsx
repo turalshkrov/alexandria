@@ -28,9 +28,9 @@ const BookCard: React.FC<bookCardProps> = ({ data }) => {
     <div className="book-item col-6 col-md-4 col-lg-2 p-md-1">
       <div className="book-card p-md-1 w-100">
         <Link to={`/books/${data.id}`}>
-          <img src={data.cover} alt={data.title} className="book-cover px-1 w-100" />
+          <img src={data.cover} alt={data.title} className="book-cover w-100" />
         </Link>
-        <div className="book-info mt-2 px-1">
+        <div className="book-info mt-2">
           <p className="book-card-rating d-f align-items-center">
             <IoIosStar size={17} color='#f5c518' />
             <span className='rating-value'>{data.rating && Number.isInteger(data.rating) ? data.rating + '.0' : data.rating}</span>
