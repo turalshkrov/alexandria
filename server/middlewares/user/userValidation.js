@@ -6,9 +6,9 @@ const userValidation = (req, res, next) => {
     return next();
   }
   const extractedErrors = errors.array().map(err => ({ [err.path]: err.msg }));
-  return res.status(400).json({
+  return res.status(409).json({
     errors: extractedErrors
-  })
+  });
 }
 
 module.exports = userValidation;
