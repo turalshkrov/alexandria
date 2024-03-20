@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcyrpt = require('bcryptjs');
+const capitalize = require('../helpers/Capitalize');
 
 const User = new mongoose.Schema({
   name: {
@@ -39,9 +40,15 @@ const User = new mongoose.Schema({
   updatedAt: {
     type: Date
   },
+  active: {
+    type: Boolean,
+    default: false,
+  }
 }, { collection: 'user', versionKey: false });
 
 User.pre('save', async function(next) {
+  this.name = capitalize(this.name);
+  this.username = this.username.trim().toLowerCase();
   this.password = await bcyrpt.hash(this.password, 8);
   this.updatedAt = Date.now();
   next();
