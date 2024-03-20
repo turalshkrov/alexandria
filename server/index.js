@@ -19,5 +19,9 @@ app.get('/', (req, res) => {
   res.send('Welcome Alexandria API');
 });
 
+const userRouter = require('./routes/Users');
+
+app.use('/users', userRouter);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => { console.log(`server running on port ${PORT}`) });
