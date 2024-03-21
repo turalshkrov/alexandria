@@ -150,6 +150,23 @@ router.patch('/:id/delete-bookshelf', async (req, res) => {
   }
 });
 
+// UPDATE BOOKSHELF NAME
+router.patch('/:id/update-bookshelf', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { bookshelfId, title } = req.body;
+    const user = await User.findById(userId);
+    user.bookshelves.find(bookshelf => bookshelf._id.toString() === bookshelfId).title = title;
+    user.markModified('bookshelves');
+    await user.save();
+    res.status(200).json({
+      message: "Bookshelf created"
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 // ADD BOOK TO BOOKSHELF
 router.patch('/:id/add-to-bookshelf', async (req, res) => {
   try {
