@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcyrpt = require('bcryptjs');
 const capitalize = require('../helpers/Capitalize');
 
-const User = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -21,15 +21,7 @@ const User = new mongoose.Schema({
     type: String,
     required: true,
   },
-  favorites: {
-    type: Array,
-    default: [],
-  },
-  ratings: {
-    type: Array,
-    default: [],
-  },
-  lists: {
+  bookshelves: {
     type: Array,
     default: [],
   },
@@ -46,7 +38,7 @@ const User = new mongoose.Schema({
   }
 }, { collection: 'user', versionKey: false });
 
-User.pre('save', async function(next) {
+UserSchema.pre('save', async function(next) {
   this.name = capitalize(this.name);
   this.username = this.username.trim().toLowerCase();
   this.password = await bcyrpt.hash(this.password, 8);
@@ -54,4 +46,4 @@ User.pre('save', async function(next) {
   next();
 });
 
-module.exports = mongoose.model('user', User);
+module.exports = mongoose.model('user', UserSchema);

@@ -9,10 +9,12 @@ const userValidationRules = require('../validations/userValidationRules');
 const userPasswordValidationRules = require('../validations/userPasswordValidationRules');
 const checkEmail = require('../middlewares/user/checkEmail');
 const checkUsername = require('../middlewares/user/checkUsername');
+const Bookshelf = require('../models/Bookshelf');
 const router = express.Router();
 require('dotenv').config();
 const cryptr = new Cryptr(process.env.CRYPTR_SECRETKEY);
 
+// CREATE USER
 router.post('/register', userValidationRules(), userValidation, checkEmail, checkUsername, async (req, res) => {
   try {
     const { name, username, email, password } = req.body;
@@ -27,6 +29,7 @@ router.post('/register', userValidationRules(), userValidation, checkEmail, chec
   }
 });
 
+// VERIFY EMAIL ADDRESS
 router.get('/register/verify/:hashid', async (req, res) => {
   try {
     const hashId = req.params.hashid;
@@ -42,6 +45,7 @@ router.get('/register/verify/:hashid', async (req, res) => {
   }
 });
 
+// GET USERS
 router.get('/', async (req, res) => {
   try {
     const searchKey = req.query.search || "";
@@ -56,6 +60,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET USER BY ID
 router.get('/:id', getUser, async (req, res) => {
   try {
     const user = res.user;
@@ -65,6 +70,7 @@ router.get('/:id', getUser, async (req, res) => {
   }
 });
 
+// UPDATE USER NAME AND USERNAME
 router.patch('/:id', getUser, userValidationRules(), userValidation, checkUsername, async (req, res) => {
   try {
     const { name, username } = req.body;
@@ -72,37 +78,128 @@ router.patch('/:id', getUser, userValidationRules(), userValidation, checkUserna
     res.user.username = username;
     await res.user.save();
     res.status(200).json({
-      message: "User updated successfully"
+      message: "User updated"
     });
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
+// UPDATE PASSWORD
 router.patch('/update-password/:id', getUser, userPasswordValidationRules(), userValidation, async (req, res) => {
   try {
     const password = req.body.password;
-    if(!(await bcrypt.compare(password, res.user.password))) {
+    if (!(await bcrypt.compare(password, res.user.password))) {
       res.status(401).json({ message: 'Password is incorrect' });
     } else {
       res.user.password = req.body.newPassword;
       await res.user.save();
-      res.status(200).json({ message: 'Password updated successfully' });
+      res.status(200).json({ 
+        message: 'Password updated' 
+      });
     }
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
+// DELETE USER
 router.delete('/:id', getUser, async (req, res) => {
   try {
-    await User.deleteOne(res.user);
+    res.user.active = false;
+    await res.user.save();
     res.status(200).json({
-      message: "User deleted successfully"
-    })
+      message: "User deleted"
+    });
   } catch (error) {
     res.status(500).json(error);
   }
-})
+});
+
+// CRAETE BOOKSHELF
+router.patch('/:id/create-bookshelf', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { title } = req.body;
+    const user = await User.findById(userId);
+    const bookshelf = new Bookshelf({ title });
+    user.bookshelves.push(bookshelf);
+    await user.save();
+    res.status(200).json({
+      message: "Bookshelf created"
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// DELETE BOOKSHELF
+router.patch('/:id/delete-bookshelf', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { bookshelfId } = req.body;
+    const user = await User.findById(userId);
+    user.bookshelves = [ ...user.bookshelves.filter(bookshelf => bookshelf._id.toString() !== bookshelfId) ];
+    console.log(bookshelfId, user.bookshelves);
+    await user.save();
+    res.status(200).json({
+      message: "Bookshelf deleted"
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// ADD BOOK TO BOOKSHELF
+router.patch('/:id/add-to-bookshelf', async (req, res) => {
+  try {
+    let bookshelfTitle;
+    const userId = req.params.id;
+    const { bookshelfId, bookId } = req.body;
+    const user = await User.findById(userId);
+    user.bookshelves.map(bookshelf => {
+      if (bookshelf._id.toString() === bookshelfId) {
+        const index = bookshelf.books.indexOf(bookId);
+        if (index > -1) {
+          bookshelf.books.push(bookId);
+          bookshelfTitle = bookshelf.title;
+        }
+      }
+    });
+    user.markModified('bookshelves');
+    await user.save();
+    res.status(200).json({
+      message: `Added to ${bookshelfTitle}`,
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// REMOVE BOOK FROM BOOKSHELF
+router.patch('/:id/remove-from-bookshelf', async (req, res) => {
+  try {
+    let bookshelfTitle;
+    const userId = req.params.id;
+    const { bookshelfId, bookId } = req.body;
+    const user = await User.findById(userId);
+    user.bookshelves.map(bookshelf => {
+      if (bookshelf._id.toString() === bookshelfId) {
+        const index = bookshelf.books.indexOf(bookId);
+        if (index > -1) {
+          bookshelf.books.splice(index, 1);
+          bookshelfTitle = bookshelf.title;
+        }
+      }
+    });
+    user.markModified('bookshelves');
+    await user.save();
+    res.status(200).json({
+      message: `Removed from ${bookshelfTitle}`,
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 module.exports = router;
