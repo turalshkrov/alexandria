@@ -9,6 +9,6 @@ const BookshelfSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-}, { versionKey: false });
+}, { collection: 'user', versionKey: false });
 
 module.exports = mongoose.model('bookshelf', BookshelfSchema);

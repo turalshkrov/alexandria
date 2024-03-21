@@ -171,23 +171,25 @@ router.patch('/:id/update-bookshelf', async (req, res) => {
 router.patch('/:id/add-to-bookshelf', async (req, res) => {
   try {
     let bookshelfTitle;
+    let message;
     const userId = req.params.id;
     const { bookshelfId, bookId } = req.body;
     const user = await User.findById(userId);
     user.bookshelves.map(bookshelf => {
       if (bookshelf._id.toString() === bookshelfId) {
         const index = bookshelf.books.indexOf(bookId);
-        if (index > -1) {
+        bookshelfTitle = bookshelf.title;
+        if (index < 0) {
           bookshelf.books.push(bookId);
-          bookshelfTitle = bookshelf.title;
+          message = `Added to ${bookshelfTitle}`;
+        } else {
+          message = `This is already on ${bookshelfTitle}`;
         }
       }
     });
     user.markModified('bookshelves');
     await user.save();
-    res.status(200).json({
-      message: `Added to ${bookshelfTitle}`,
-    });
+    res.status(200).json({ message });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -202,10 +204,10 @@ router.patch('/:id/remove-from-bookshelf', async (req, res) => {
     const user = await User.findById(userId);
     user.bookshelves.map(bookshelf => {
       if (bookshelf._id.toString() === bookshelfId) {
+        bookshelfTitle = bookshelf.title;
         const index = bookshelf.books.indexOf(bookId);
         if (index > -1) {
           bookshelf.books.splice(index, 1);
-          bookshelfTitle = bookshelf.title;
         }
       }
     });
