@@ -9,6 +9,7 @@ const userValidationRules = require('../validations/user/userValidationRules');
 const userPasswordValidationRules = require('../validations/user/userPasswordValidationRules');
 const checkEmail = require('../middlewares/user/checkEmail');
 const checkUsername = require('../middlewares/user/checkUsername');
+const authenticationToken = require('../middlewares/auth/authenticationToken');
 const router = express.Router();
 require('dotenv').config();
 const cryptr = new Cryptr(process.env.CRYPTR_SECRETKEY);
@@ -34,7 +35,7 @@ router.get('/register/verify/:hashid', async (req, res) => {
     await User.findByIdAndUpdate(id, {
       active: true,
     });
-    res.status(200).json({ message: "Email verifed successfully" })
+    res.status(200).json({ message: "Email verifed successfully" });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -66,7 +67,7 @@ router.get('/:id', getUser, async (req, res) => {
 });
 
 // UPDATE USER NAME AND USERNAME
-router.patch('/:id', getUser, userValidationRules(), validation, checkUsername, async (req, res) => {
+router.patch('/:id', authenticationToken, getUser, userValidationRules(), validation, checkUsername, async (req, res) => {
   try {
     const { name, username } = req.body;
     res.user.name = name;
@@ -81,7 +82,7 @@ router.patch('/:id', getUser, userValidationRules(), validation, checkUsername, 
 });
 
 // UPDATE PASSWORD
-router.patch('/update-password/:id', getUser, userPasswordValidationRules(), validation, async (req, res) => {
+router.patch('/update-password/:id', getUser, authenticationToken, userPasswordValidationRules(), validation, async (req, res) => {
   try {
     const password = req.body.password;
     if (!(await bcrypt.compare(password, res.user.password))) {

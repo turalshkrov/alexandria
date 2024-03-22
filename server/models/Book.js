@@ -15,6 +15,10 @@ const Book = new mongoose.Schema({
     ref: 'Author',
     required: true,
   },
+  coverUrl: {
+    type: String,
+    default: "",
+  },
   published: {
     type: String,
     required: true,
@@ -32,7 +36,6 @@ const Book = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
   },
   format: {
     type: String,
@@ -61,6 +64,9 @@ Book.pre('save', function(next) {
   this.title = capitalize(this.title.trim());
   this.originalTitle = capitalize(this.originalTitle.trim());
   this.language = capitalize(this.language.trim());
+  this.coverUrl = this.coverUrl.trim();
+  this.published = this.published.trim();
+  this.format = this.format.trim();
   this.description = this.description.trim();
   next();
 });

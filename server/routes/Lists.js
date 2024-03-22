@@ -1,5 +1,7 @@
 const express = require('express');
 const List = require('../models/List');
+const User = require('../models/User');
+const authenticationToken = require('../middlewares/auth/authenticationToken');
 const getUser = require('../middlewares/list/getUser');
 const listValidationRules = require('../validations/list/listValidationRules');
 const validation = require('../middlewares/validation');
@@ -8,10 +10,10 @@ const checkBookId = require('../middlewares/list/checkBookId');
 const router = express.Router();
 
 // CREATE LIST
-router.post('/create', getUser, listValidationRules(), validation, async (req, res) => {
+router.post('/create', authenticationToken, getUser, listValidationRules(), validation, async (req, res) => {
   try {
-    const { user, title } = req.body;
-    const list = new List({ user, title });
+    const { title } = req.body;
+    const list = new List({ user: req.user.userId, title });
     res.user.lists.push(list._id);
     await list.save();
     await res.user.save();
@@ -26,7 +28,7 @@ router.get('/', async (req, res) => {
   try {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
-    const lists = await List.find().populate('user');
+    const lists = await List.find().populate('user').populate('books');
     const filteredLists = lists.filter(list => list.title.toLowerCase().includes(searchKey));
     res.status(200).json(filteredLists);
   } catch (error) {
@@ -44,9 +46,10 @@ router.get('/:id', getList, async (req, res) => {
 });
 
 // UPDATE LIST TITLE
-router.patch('/:id', getList, listValidationRules(), validation, async (req, res) => {
+router.patch('/:id', authenticationToken, getList, listValidationRules(), validation, async (req, res) => {
   try {
     const { title } = req.body;
+    if(res.list.user !== req.user.userId) return res.status(401).json({ message: "Access denied" });
     res.list.title = title;
     await res.list.save();
     res.status(200).json({ message: "List updated" });
@@ -56,8 +59,9 @@ router.patch('/:id', getList, listValidationRules(), validation, async (req, res
 });
 
 // DELETE LIST
-router.delete('/:id', getList, async (req, res) => {
+router.delete('/:id', authenticationToken, getList, async (req, res) => {
   try {
+    if(res.list.user !== req.user.userId) return res.status(401).json({ message: "Access denied" });
     await List.deleteOne(res.list);
     res.status(200).json({ message: "List deleted" });
   } catch (error) {
@@ -66,10 +70,12 @@ router.delete('/:id', getList, async (req, res) => {
 });
 
 // ADD TO LIST
-router.patch('/:id/add-book', getList, checkBookId, async (req, res) => {
+router.patch('/:id/add-book', authenticationToken, getList, checkBookId, async (req, res) => {
   try {
+    console.log(res.list, req.user);
+    if(res.list.user.toString() !== req.user.userId) return res.status(401).json({ message: "Access denied" });
     const bookId = req.body.bookId;
-    res.list.bookIds.push(bookId);
+    res.list.books.push(bookId);
     await res.list.save();
     res.status(200).json({
       message: `Added to ${res.list.title}`,
@@ -80,8 +86,9 @@ router.patch('/:id/add-book', getList, checkBookId, async (req, res) => {
 });
 
 // REMOVE FROM LIST
-router.patch('/:id/remove-book', getList, checkBookId, async (req, res) => {
+router.patch('/:id/remove-book',authenticationToken, getList, checkBookId, async (req, res) => {
   try {
+    if(res.list.user !== req.user.userId) return res.status(401).json({ message: "Access denied" });
     const bookId = req.body.bookId;
     res.list.bookIds = [ ...res.list.bookIds.filter(_id => _id.toString() !== bookId) ];
     await res.list.save();

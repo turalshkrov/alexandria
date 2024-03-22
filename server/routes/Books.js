@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
   try {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
-    const books = await Book.find();
+    const books = await Book.find().populate('author');
     const filteredBooks = books.filter(book => book.title.includes(searchKey) ||
     book.originalTitle.includes(searchKey));
     res.status(200).json(filteredBooks);

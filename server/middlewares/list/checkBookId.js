@@ -1,7 +1,7 @@
 const checkBookId = async (req, res, next) => {
   try {
     const { bookId } = req.body;
-    if (res.list.bookIds.find(_id => _id.toString() === bookId)) {
+    if (res.list.books.find(_id => _id.toString() === bookId)) {
       res.hasBookId = true;
     }
     if(req.originalUrl.includes('add-book')){

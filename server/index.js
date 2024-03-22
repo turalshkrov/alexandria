@@ -19,10 +19,12 @@ app.get('/', (req, res) => {
   res.send('Welcome Alexandria API');
 });
 
+const authRouter = require('./routes/Auth');
 const userRouter = require('./routes/Users');
 const listRouter = require('./routes/Lists');
 const bookRouter = require('./routes/Books');
 
+app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/lists', listRouter);
 app.use('/books', bookRouter);
