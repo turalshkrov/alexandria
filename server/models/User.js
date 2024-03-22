@@ -21,9 +21,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  bookshelves: {
-    type: Array,
-    default: [],
+  lists: {
+    type: [{
+      type: mongoose.Types.ObjectId,
+      ref: 'List',
+    }],
+    default: []
   },
   createdAt: {
     type: Date,
@@ -36,7 +39,7 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   }
-}, { collection: 'user', versionKey: false });
+}, { collection: 'User', versionKey: false });
 
 UserSchema.pre('save', async function(next) {
   this.name = capitalize(this.name);
@@ -46,4 +49,4 @@ UserSchema.pre('save', async function(next) {
   next();
 });
 
-module.exports = mongoose.model('user', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

@@ -4,7 +4,7 @@ const capitalize = (str) => {
   array.forEach(elm => {
     str += elm[0].toUpperCase() + elm.slice(1) + ' ';
   });
-  return str;
+  return str.trim();
 }
 
 module.exports = capitalize;
