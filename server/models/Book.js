@@ -43,12 +43,10 @@ const Book = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: true,
     default: 0,
   },
   ratingsCount: {
     type: Number,
-    required: true,
     default: 0,
   },
   reviews: {
