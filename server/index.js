@@ -29,7 +29,7 @@ app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/lists', listRouter);
 app.use('/books', bookRouter);
-app.use('/authors', authRouter);
+app.use('/authors', authorRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => { console.log(`server running on port ${PORT}`) });

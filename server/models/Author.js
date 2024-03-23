@@ -36,10 +36,10 @@ const Author = new mongoose.Schema({
 Author.pre('save', function(next) {
   this.name = capitalize(this.name);
   this.nativeName = capitalize(this.nativeName);
-  this.authorInfo = this.authorInfo.trim();
-  this.imageUrl = this.imageUrl.trim();
-  this.born = this.born.trim();
-  this.died = this.died.trim();
+  if (this.authorInfo) this.authorInfo = this.authorInfo.trim();
+  if (this.imageUrl) this.imageUrl = this.imageUrl.trim();
+  if (this.born) this.born = this.born.trim();
+  if (this.died) this.died = this.died.trim();
   next();
 });
 
