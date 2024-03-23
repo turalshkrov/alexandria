@@ -4,11 +4,13 @@ const bookValidationRules = require('../validations/book/bookValidationRules');
 const validation = require('../middlewares/validation');
 const getBook = require('../middlewares/book/getBook');
 const capitalize = require('../helpers/Capitalize');
+const authenticationToken = require('../middlewares/auth/authenticationToken');
 const router = express.Router();
 
 // CREATE BOOK
-router.post('/create', bookValidationRules(), validation, async (req, res) => {
+router.post('/create', authenticationToken, bookValidationRules(), validation, async (req, res) => {
   try {
+    if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
     const { title, originalTitle, author, published, genres, language, description, format } = req.body;
     const book = new Book({ title, originalTitle, author, published, genres, language, description, format });
     console.log(book);
@@ -25,8 +27,9 @@ router.get('/', async (req, res) => {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
     const books = await Book.find().populate('author');
-    const filteredBooks = books.filter(book => book.title.includes(searchKey) ||
-    book.originalTitle.includes(searchKey));
+    const filteredBooks = books.filter(book => book.title.toLowerCase().includes(searchKey) ||
+    book.originalTitle.toLowerCase().includes(searchKey) ||
+    book.description.toLowerCase().includes(searchKey));
     res.status(200).json(filteredBooks);
   } catch (error) {
     res.status(500).json(error);
@@ -67,8 +70,9 @@ router.get('/genre/:genre', async (req, res) => {
 });
 
 // UPDATE BOOK
-router.patch('/:id', getBook, bookValidationRules(), validation, async (req, res) => {
+router.patch('/:id', authenticationToken, getBook, bookValidationRules(), validation, async (req, res) => {
   try {
+    if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
     const { title, originalTitle, author, published, genres, language, description, format } = req.body;
     res.book.title = title;
     res.book.originalTitle = originalTitle;
@@ -86,8 +90,9 @@ router.patch('/:id', getBook, bookValidationRules(), validation, async (req, res
 });
 
 // DELETE BOOK BY ID
-router.delete('/:id', getBook, async (req, res) => {
+router.delete('/:id', authenticationToken, getBook, async (req, res) => {
   try {
+    if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
     await Book.deleteOne(res.book);
     res.status(200).json({ message: "Book deleted" });
   } catch (error) {

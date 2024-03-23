@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const UserRole = require('../models/UserRole');
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
@@ -11,6 +12,10 @@ router.post('/login', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "Couldn't find your account" });
     }
+    if (!user.active) {
+      const userRole = UserRole.findOne({ userId: user._id });
+      if (userRole === 'user') return res.status(401).json({ message: "Please verify your email address" });
+    }
     if (!(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "Incorrect password" });
     }
@@ -18,9 +23,7 @@ router.post('/login', async (req, res) => {
     const tokenOptions = {
       expiresIn: '30d',
     }
-    const token = jwt.sign({
-      userId: user._id
-    }, process.env.CRYPTR_SECRETKEY, tokenOptions);
+    const token = jwt.sign({ id: user._id }, process.env.CRYPTR_SECRETKEY, tokenOptions);
 
     res.status(200).json({ 
       message: "Login success",
@@ -29,6 +32,6 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
-})
+});
 
 module.exports = router;

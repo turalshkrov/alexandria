@@ -3,7 +3,7 @@ const { body } = require('express-validator');
 const userValidationRules = () => [
   body('name')
     .notEmpty().withMessage('Name is required')
-    .isLength({ max: 32 }).withMessage('Name  can be at most 32 characters long')
+    .isLength({ max: 64 }).withMessage('Name  can be at most 64 characters long')
     .matches(/[a-zA-Z\s]/).withMessage('Name can only contain letters and spaces'),
   body('username')
     .notEmpty().withMessage('Username is required')

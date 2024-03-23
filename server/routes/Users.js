@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const Cryptr = require('cryptr');
 const User = require('../models/User');
+const UserRole = require('../models/UserRole');
 const List = require('../models/List');
 const getUser = require('../middlewares/user/getUser');
 const sendVerifyMail = require('../services/mail/verifyEmail');
@@ -20,7 +21,9 @@ router.post('/register', userValidationRules(), validation, checkEmail, checkUse
   try {
     const { name, username, email, password } = req.body;
     const user = new User({ name, username, email, password });
+    const userRole = new UserRole({ userId: user._id });
     const newUser = await user.save();
+    await userRole.save();
     res.status(201).json({ message: "User created successfully, Please verify email address" });
     sendVerifyMail(newUser.email, newUser._id);
   } catch (error) {
@@ -47,7 +50,7 @@ router.get('/', async (req, res) => {
   try {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
-    const users = await User.find();
+    const users = await User.find({ active: true });
     const filteredUsers = users.filter(user =>
       user.name.toLowerCase().includes(searchKey) ||
       user.username.toLowerCase().includes(searchKey) ||
@@ -61,6 +64,7 @@ router.get('/', async (req, res) => {
 // GET USER BY ID
 router.get('/:id', getUser, async (req, res) => {
   try {
+    if (!res.user.active) return res.status(404).json({ message: "User not found" });
     res.status(200).json(res.user);
   } catch (error) {
     res.status(500).json(error);
@@ -81,7 +85,8 @@ router.get('/:id/lists', getUser, async (req, res) => {
 // UPDATE USER NAME AND USERNAME
 router.patch('/update', authenticationToken, userValidationRules(), validation, checkUsername, async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
+    if (req.userRole !== 'user') return res.status(401).json({ message: "Access denied" });
+    const user = await User.findById(req.user);
     const { name, username } = req.body;
     user.name = name;
     user.username = username;
@@ -97,7 +102,8 @@ router.patch('/update', authenticationToken, userValidationRules(), validation, 
 // UPDATE PASSWORD
 router.patch('/update-password', authenticationToken, userPasswordValidationRules(), validation, async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
+    if (req.userRole !== 'user') return res.status(401).json({ message: "Access denied" });
+    const user = await User.findById(req.user);
     const password = req.body.password;
     if (!(await bcrypt.compare(password, user.password))) {
       res.status(401).json({ message: 'Password is incorrect' });
@@ -116,7 +122,8 @@ router.patch('/update-password', authenticationToken, userPasswordValidationRule
 // DELETE USER
 router.delete('/:id', authenticationToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
+    if (req.userRole !== 'user') return res.status(401).json({ message: "Access denied" });
+    const user = await User.findById(req.user);
     user.active = false;
     await user.save();
     res.status(200).json({ message: "User deleted" });

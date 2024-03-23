@@ -44,7 +44,7 @@ router.get('/:id', getList, async (req, res) => {
 // UPDATE LIST TITLE
 router.patch('/:id', authenticationToken, getList, listValidationRules(), validation, async (req, res) => {
   try {
-    if(res.list.user.toString() !== req.user.userId) return res.status(401).json({ message: "Access denied" });
+    if(res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     const { title } = req.body;
     res.list.title = title;
     await res.list.save();
@@ -57,7 +57,7 @@ router.patch('/:id', authenticationToken, getList, listValidationRules(), valida
 // DELETE LIST
 router.delete('/:id', authenticationToken, getList, async (req, res) => {
   try {
-    if(res.list.user.toString() !== req.user.userId) return res.status(401).json({ message: "Access denied" });
+    if(res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     await List.deleteOne(res.list);
     res.status(200).json({ message: "List deleted" });
   } catch (error) {
@@ -68,7 +68,7 @@ router.delete('/:id', authenticationToken, getList, async (req, res) => {
 // ADD TO LIST
 router.patch('/:id/add-book', authenticationToken, checkBookId, async (req, res) => {
   try {
-    if(res.list.user.toString() !== req.user.userId) return res.status(401).json({ message: "Access denied" });
+    if(res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     const bookId = req.body.bookId;
     res.list.books.push(bookId);
     await res.list.save();
@@ -83,7 +83,7 @@ router.patch('/:id/add-book', authenticationToken, checkBookId, async (req, res)
 // REMOVE FROM LIST
 router.patch('/:id/remove-book', authenticationToken, checkBookId, async (req, res) => {
   try {
-    if(res.list.user.toString() !== req.user.userId) return res.status(401).json({ message: "Access denied" });
+    if(res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     const bookId = req.body.bookId;
     res.list.books = [ ...res.list.books.filter(_id => _id.toString() !== bookId) ];
     await res.list.save();
