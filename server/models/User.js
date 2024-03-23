@@ -21,13 +21,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lists: {
-    type: [{
-      type: mongoose.Types.ObjectId,
-      ref: 'List',
-    }],
-    default: []
-  },
   createdAt: {
     type: Date,
     default: Date.now(),

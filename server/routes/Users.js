@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const Cryptr = require('cryptr');
 const User = require('../models/User');
+const List = require('../models/List');
 const getUser = require('../middlewares/user/getUser');
 const sendVerifyMail = require('../services/mail/verifyEmail');
 const validation = require('../middlewares/validation');
@@ -46,7 +47,7 @@ router.get('/', async (req, res) => {
   try {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
-    const users = await User.find().populate('lists');
+    const users = await User.find();
     const filteredUsers = users.filter(user =>
       user.name.toLowerCase().includes(searchKey) ||
       user.username.toLowerCase().includes(searchKey) ||
@@ -66,13 +67,25 @@ router.get('/:id', getUser, async (req, res) => {
   }
 });
 
-// UPDATE USER NAME AND USERNAME
-router.patch('/:id', authenticationToken, getUser, userValidationRules(), validation, checkUsername, async (req, res) => {
+// GET LISTS BY USER
+router.get('/:id/lists', getUser, async (req, res) => {
   try {
+    const userId = req.params.id
+    const listsByUser = await List.find({ user: userId });
+    res.status(200).json(listsByUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// UPDATE USER NAME AND USERNAME
+router.patch('/update', authenticationToken, userValidationRules(), validation, checkUsername, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
     const { name, username } = req.body;
-    res.user.name = name;
-    res.user.username = username;
-    await res.user.save();
+    user.name = name;
+    user.username = username;
+    await user.save();
     res.status(200).json({
       message: "User updated"
     });
@@ -82,14 +95,15 @@ router.patch('/:id', authenticationToken, getUser, userValidationRules(), valida
 });
 
 // UPDATE PASSWORD
-router.patch('/update-password/:id', getUser, authenticationToken, userPasswordValidationRules(), validation, async (req, res) => {
+router.patch('/update-password', authenticationToken, userPasswordValidationRules(), validation, async (req, res) => {
   try {
+    const user = await User.findById(req.user.userId);
     const password = req.body.password;
-    if (!(await bcrypt.compare(password, res.user.password))) {
+    if (!(await bcrypt.compare(password, user.password))) {
       res.status(401).json({ message: 'Password is incorrect' });
     } else {
-      res.user.password = req.body.newPassword;
-      await res.user.save();
+      user.password = req.body.newPassword;
+      await user.save();
       res.status(200).json({ 
         message: 'Password updated' 
       });
@@ -100,10 +114,11 @@ router.patch('/update-password/:id', getUser, authenticationToken, userPasswordV
 });
 
 // DELETE USER
-router.delete('/:id', getUser, async (req, res) => {
+router.delete('/:id', authenticationToken, async (req, res) => {
   try {
-    res.user.active = false;
-    await res.user.save();
+    const user = await User.findById(req.user.userId);
+    user.active = false;
+    await user.save();
     res.status(200).json({ message: "User deleted" });
   } catch (error) {
     res.status(500).json(error);
