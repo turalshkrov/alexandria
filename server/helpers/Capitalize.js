@@ -1,7 +1,8 @@
 const capitalize = (str) => {
-  const array = str.toLowerCase().trim().split(' ');
+  const splittedStr = str.toLowerCase().trim().split(' ');
   str = "";
-  array.forEach(elm => {
+  splittedStr.forEach(elm => {
+    if(elm.includes('.')) elm = elm.toUpperCase();
     str += elm[0].toUpperCase() + elm.slice(1) + ' ';
   });
   return str.trim();

@@ -3,7 +3,7 @@ const Book = require('../../models/Book');
 const getBook = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const book = await Book.findById(id).populate('author');
+    const book = await Book.findById(id).populate('author').populate('series');
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
     }

@@ -15,6 +15,10 @@ const Book = new mongoose.Schema({
     ref: 'Author',
     required: true,
   },
+  series: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Series',
+  },
   coverUrl: {
     type: String,
     default: "",
@@ -37,10 +41,6 @@ const Book = new mongoose.Schema({
   description: {
     type: String,
   },
-  format: {
-    type: String,
-    required: true,
-  },
   rating: {
     type: Number,
     default: 0,
@@ -48,13 +48,6 @@ const Book = new mongoose.Schema({
   ratingsCount: {
     type: Number,
     default: 0,
-  },
-  reviews: {
-    type:[{
-      type: mongoose.Types.ObjectId,
-      ref: 'Reviews',
-    }],
-    default: [],
   },
 }, { collection: 'Book', versionKey: false });
 
@@ -64,7 +57,6 @@ Book.pre('save', function(next) {
   this.language = capitalize(this.language.trim());
   this.coverUrl = this.coverUrl.trim();
   this.published = this.published.trim();
-  this.format = this.format.trim();
   this.description = this.description.trim();
   next();
 });

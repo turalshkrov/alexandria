@@ -24,12 +24,18 @@ const userRouter = require('./routes/Users');
 const listRouter = require('./routes/Lists');
 const bookRouter = require('./routes/Books');
 const authorRouter = require('./routes/Authors');
+const seriesRouter = require('./routes/Series');
+const blogRouter = require('./routes/Blogs');
+const genreRouter = require('./routes/Genres');
 
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/lists', listRouter);
 app.use('/books', bookRouter);
 app.use('/authors', authorRouter);
+app.use('/series', seriesRouter);
+app.use('/blogs', blogRouter);
+app.use('/genres', genreRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => { console.log(`server running on port ${PORT}`) });

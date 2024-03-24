@@ -34,10 +34,12 @@ const User = new mongoose.Schema({
   }
 }, { collection: 'User', versionKey: false });
 
-User.pre('save', async function(next) {
+User.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    this.password = await bcyrpt.hash(this.password, 8);
+  }
   this.name = capitalize(this.name);
   this.username = this.username.trim().toLowerCase();
-  this.password = await bcyrpt.hash(this.password, 8);
   this.updatedAt = Date.now();
   next();
 });

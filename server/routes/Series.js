@@ -1,5 +1,6 @@
 const express = require('express');
 const Series = require('../models/Series');
+const Book = require('../models/Book');
 const authenticationToken = require('../middlewares/auth/authenticationToken');
 const getSeries = require('../middlewares/series/getSeries');
 const getBooks = require('../middlewares/series/getBooks');
@@ -21,13 +22,12 @@ router.post('/create', authenticationToken, seriesValidationRules(), validation,
   }
 });
 
-// UPDATE SERIES
+// UPDATE SERIES TITLE
 router.patch('/:id', authenticationToken, getSeries, seriesValidationRules(), validation, getBooks, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
-    const { title, books } = req.body;
+    const { title } = req.body;
     res.series.title = title;
-    res.series.books = books;
     await res.series.save();
     res.status(200).json({ message: "Series updated" });
   } catch (error) {
@@ -40,8 +40,12 @@ router.patch('/:id/add-book', authenticationToken, getSeries, checkBookId, async
   try {
     if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
     const { bookId } = req.body;
+    const book = await Book.findById(bookId);
+    if (book.series) return res.status(409).json({ message: "Book is already another series" });
     res.series.books.push(bookId);
+    book.series = res.series._id;
     await res.series.save();
+    await book.save();
     res.status(200).json({ message: "Book added" });
   } catch (error) {
     res.status(500).json(error);
@@ -53,8 +57,11 @@ router.patch('/:id/remove-book', authenticationToken, getSeries, checkBookId, as
   try {
     if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
     const { bookId } = req.body;
-    res.series.books = res.series.books.filter(bookid => bookId.toString() !== bookId);
+    const book = await Book.findById(bookId);
+    res.series.books = res.series.books.filter(book => book.toString() !== bookId);
+    book.series = undefined;
     await res.series.save();
+    await book.save();
     res.status(200).json({ message: "Book removed" });
   } catch (error) {
     res.status(500).json(error);
@@ -69,6 +76,31 @@ router.get('/', async (req, res) => {
     const series = await Series.find().populate('books');
     const filteredSeries = series.filter(series => series.title.toLowerCase().includes(searchKey));
     res.status(200).json(filteredSeries);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// GET SERIES BY ID
+router.get('/:id', getSeries, async (req, res) => {
+  try {
+    res.status(200).json(res.series);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// DELETE SERIES
+router.delete('/:id', authenticationToken, getSeries, async (req, res) => {
+  try {
+    if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
+    res.series.books.map(async (bookId) => {
+      const book = await Book.findById(bookId);
+      book.series = undefined;
+      await book.save();
+    });
+    await Series.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Series deleted" });
   } catch (error) {
     res.status(500).json(error);
   }

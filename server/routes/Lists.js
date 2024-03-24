@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/create', authenticationToken, listValidationRules(), validation, async (req, res) => {
   try {
     const { title } = req.body;
-    const list = new List({ user: req.user.userId, title });
+    const list = new List({ user: req.user, title });
     await list.save();
     res.status(201).json({ message: "List created successfully" });
   } catch (error) {

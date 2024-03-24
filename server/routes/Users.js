@@ -8,6 +8,7 @@ const getUser = require('../middlewares/user/getUser');
 const sendVerifyMail = require('../services/mail/verifyEmail');
 const validation = require('../middlewares/validation');
 const userValidationRules = require('../validations/user/userValidationRules');
+const usernameValidationRules = require('../validations/user/usernameValidationRules');
 const userPasswordValidationRules = require('../validations/user/userPasswordValidationRules');
 const checkEmail = require('../middlewares/user/checkEmail');
 const checkUsername = require('../middlewares/user/checkUsername');
@@ -83,7 +84,7 @@ router.get('/:id/lists', getUser, async (req, res) => {
 });
 
 // UPDATE USER NAME AND USERNAME
-router.patch('/update', authenticationToken, userValidationRules(), validation, checkUsername, async (req, res) => {
+router.patch('/update', authenticationToken, usernameValidationRules(), validation, checkUsername, async (req, res) => {
   try {
     if (req.userRole !== 'user') return res.status(401).json({ message: "Access denied" });
     const user = await User.findById(req.user);
@@ -104,6 +105,7 @@ router.patch('/update-password', authenticationToken, userPasswordValidationRule
   try {
     if (req.userRole !== 'user') return res.status(401).json({ message: "Access denied" });
     const user = await User.findById(req.user);
+    console.log(user);
     const password = req.body.password;
     if (!(await bcrypt.compare(password, user.password))) {
       res.status(401).json({ message: 'Password is incorrect' });

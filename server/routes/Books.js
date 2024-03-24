@@ -1,22 +1,27 @@
 const express = require('express');
 const Book = require('../models/Book');
+const Review = require('../models/Review');
 const bookValidationRules = require('../validations/book/bookValidationRules');
 const reviewValidationRules = require('../validations/review/reviewValidationRules');
 const validation = require('../middlewares/validation');
 const getBook = require('../middlewares/book/getBook');
 const checkReview = require('../middlewares/review/checkReview');
+const getSeries = require('../middlewares/book/getSeries');
 const capitalize = require('../helpers/Capitalize');
 const authenticationToken = require('../middlewares/auth/authenticationToken');
-const Review = require('../models/Review');
 const router = express.Router();
 
 // CREATE BOOK
-router.post('/create', authenticationToken, bookValidationRules(), validation, async (req, res) => {
+router.post('/create', authenticationToken, bookValidationRules(), validation, getSeries, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const { title, originalTitle, author, published, genres, language, description, format } = req.body;
-    const book = new Book({ title, originalTitle, author, published, genres, language, description, format });
-    console.log(book);
+    const { title, originalTitle, author, published, genres, language, description } = req.body;
+    const book = new Book({ title, originalTitle, author, published, genres, language, description });
+    if (res.series) {
+      res.series.books.push(book._id);
+      book.series = res.series._id;
+      await res.series.save();
+    }
     await book.save();
     res.status(201).json({ messsage: "Book created" });
   } catch (error) {
@@ -29,10 +34,10 @@ router.get('/', async (req, res) => {
   try {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
-    const books = await Book.find().populate('author');
+    const books = await Book.find().populate('author').populate('series');
     const filteredBooks = books.filter(book => book.title.toLowerCase().includes(searchKey) ||
-    book.originalTitle.toLowerCase().includes(searchKey) ||
-    book.description.toLowerCase().includes(searchKey));
+      book.originalTitle.toLowerCase().includes(searchKey) ||
+      book.description.toLowerCase().includes(searchKey));
     res.status(200).json(filteredBooks);
   } catch (error) {
     res.status(500).json(error);
@@ -44,7 +49,7 @@ router.get('/:id', getBook, async (req, res) => {
   try {
     res.status(200).json(res.book);
   } catch (error) {
-   res.status(500).json(error);
+    res.status(500).json(error);
   }
 });
 
@@ -52,11 +57,10 @@ router.get('/:id', getBook, async (req, res) => {
 router.get('/author/:authorId', async (req, res) => {
   try {
     const authorId = req.params.authorId;
-    const books = await Book.find();
-    const booksByAuthor = books.filter(book => book.author.toString() === authorId);
-    res.status(200).json(booksByAuthor);
+    const books = await Book.find({ author: authorId }).populate('author').populate('series');
+    res.status(200).json(books);
   } catch (error) {
-   res.status(500).json(error);
+    res.status(500).json(error);
   }
 });
 
@@ -64,19 +68,19 @@ router.get('/author/:authorId', async (req, res) => {
 router.get('/genre/:genre', async (req, res) => {
   try {
     const genre = capitalize(req.params.genre);
-    const books = await Book.find();
+    const books = await Book.find().populate('author').populate('series');
     const booksByGenre = books.filter(book => book.genres.includes(genre));
     res.status(200).json(booksByGenre);
   } catch (error) {
-   res.status(500).json(error);
+    res.status(500).json(error);
   }
 });
 
 // UPDATE BOOK
-router.patch('/:id', authenticationToken, getBook, bookValidationRules(), validation, async (req, res) => {
+router.patch('/:id', authenticationToken, getBook, bookValidationRules(), validation, getSeries, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const { title, originalTitle, author, published, genres, language, description, format } = req.body;
+    const { title, originalTitle, author, published, genres, language, description, series } = req.body;
     res.book.title = title;
     res.book.originalTitle = originalTitle;
     res.book.author = author;
@@ -84,7 +88,11 @@ router.patch('/:id', authenticationToken, getBook, bookValidationRules(), valida
     res.book.genres = genres;
     res.book.language = language;
     res.book.description = description;
-    res.book.format = format;
+    if (res.series) {
+      res.series.books.push(book._id);
+      res.book.series = res.series._id;
+      await res.series.save();
+    }
     await res.book.save();
     res.status(200).json({ message: "Book updated" });
   } catch (error) {
@@ -105,7 +113,7 @@ router.delete('/:id', authenticationToken, getBook, async (req, res) => {
 
 router.post('/:id/reviews/add', authenticationToken, getBook, reviewValidationRules(), validation, checkReview, async (req, res) => {
   try {
-    if(req.userRole !== 'user') return res.status(401).json({ message: "User not verified" });
+    if (req.userRole !== 'user') return res.status(401).json({ message: "User not verified" });
     const { rating, title, content } = req.body;
     res.review.rating = rating;
     res.review.title = title;

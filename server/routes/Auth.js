@@ -13,8 +13,8 @@ router.post('/login', async (req, res) => {
       return res.status(404).json({ message: "Couldn't find your account" });
     }
     if (!user.active) {
-      const userRole = UserRole.findOne({ userId: user._id });
-      if (userRole === 'user') return res.status(401).json({ message: "Please verify your email address" });
+      const userRole = await UserRole.findOne({ userId: user._id });
+      if (userRole.role === 'user') return res.status(401).json({ message: "Please verify your email address" });
     }
     if (!(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "Incorrect password" });
@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
     const tokenOptions = {
       expiresIn: '30d',
     }
-    const token = jwt.sign({ id: user._id }, process.env.CRYPTR_SECRETKEY, tokenOptions);
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRETKEY, tokenOptions);
 
     res.status(200).json({ 
       message: "Login success",
