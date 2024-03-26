@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const UserRole = require('../models/UserRole');
-const authenticationToken = require('../middlewares/auth/authenticationToken');
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
@@ -30,7 +29,7 @@ router.post('/login', async (req, res) => {
       message: "Login success",
       token: token,
       userId: user._id,
-      role: userRole,
+      role: userRole.role,
     });
   } catch (error) {
     res.status(500).json(error);
