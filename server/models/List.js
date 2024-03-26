@@ -17,6 +17,11 @@ const ListSchema = new mongoose.Schema({
     }],
     default: [],
   },
+  cover: {
+    type: String,
+    required: true,
+    default: "",
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

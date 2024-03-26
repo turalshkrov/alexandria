@@ -21,6 +21,11 @@ const User = new mongoose.Schema({
     type: String,
     required: true,
   },
+  profileImage: {
+    type: String,
+    required: true,
+    default: "",
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -31,6 +36,9 @@ const User = new mongoose.Schema({
   active: {
     type: Boolean,
     default: false,
+  },
+  newMail: {
+    type: String,
   }
 }, { collection: 'User', versionKey: false });
 

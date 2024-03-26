@@ -11,8 +11,8 @@ const router = express.Router();
 router.post('/create', authenticationToken, authorValidationRules(), validation, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const { name, nativeName, imageUrl, born, died, genres, authorInfo } = req.body;
-    const author = new Author({ name, nativeName, imageUrl, born, died, genres, authorInfo });
+    const { name, nativeName, image, born, died, genres, authorInfo } = req.body;
+    const author = new Author({ name, nativeName, image, born, died, genres, authorInfo });
     await author.save();
     res.status(201).json({ message: "Author created" });
   } catch (error) {
@@ -25,10 +25,10 @@ router.patch('/:id', getAuthor, authenticationToken, authorValidationRules(), va
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
     const id = req.params.id;
-    const { name, nativeName, imageUrl, born, died, genres, authorInfo } = req.body;
+    const { name, nativeName, image, born, died, genres, authorInfo } = req.body;
     res.author.name = name;
     res.author.nativeName = nativeName;
-    if (imageUrl) res.author.imageUrl = imageUrl;
+    if (image) res.author.image = image;
     if (born) res.author.born = born;
     if (died) res.author.died = died;
     if (genres) res.author.genres = genres;

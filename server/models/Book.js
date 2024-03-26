@@ -19,8 +19,9 @@ const Book = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: 'Series',
   },
-  coverUrl: {
+  cover: {
     type: String,
+    required: true,
     default: "",
   },
   published: {
@@ -55,7 +56,7 @@ Book.pre('save', function(next) {
   this.title = capitalize(this.title.trim());
   this.originalTitle = capitalize(this.originalTitle.trim());
   this.language = capitalize(this.language.trim());
-  this.coverUrl = this.coverUrl.trim();
+  this.cover = this.cover.trim();
   this.published = this.published.trim();
   this.description = this.description.trim();
   next();

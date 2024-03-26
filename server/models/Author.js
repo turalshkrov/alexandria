@@ -10,8 +10,9 @@ const Author = new mongoose.Schema({
     type: String,
     required: true,
   },
-  imageUrl: {
+  image: {
     type: String,
+    required: true,
     default: "",
   },
   born: {
@@ -30,16 +31,17 @@ const Author = new mongoose.Schema({
   },
   authorInfo: {
     type: String,
+    required: true,
   },
 }, { collection: 'Author', versionKey: false });
 
 Author.pre('save', function(next) {
   this.name = capitalize(this.name);
   this.nativeName = capitalize(this.nativeName);
-  if (this.authorInfo) this.authorInfo = this.authorInfo.trim();
-  if (this.imageUrl) this.imageUrl = this.imageUrl.trim();
-  if (this.born) this.born = this.born.trim();
-  if (this.died) this.died = this.died.trim();
+  this.authorInfo = this.authorInfo.trim();
+  this.image = this.image.trim();
+  this.born = this.born.trim();
+  this.died = this.died.trim();
   next();
 });
 

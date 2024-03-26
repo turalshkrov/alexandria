@@ -15,8 +15,8 @@ const router = express.Router();
 router.post('/create', authenticationToken, bookValidationRules(), validation, getSeries, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const { title, originalTitle, author, published, genres, language, description } = req.body;
-    const book = new Book({ title, originalTitle, author, published, genres, language, description });
+    const { title, originalTitle, author, cover, published, genres, language, description } = req.body;
+    const book = new Book({ title, originalTitle, author, cover, published, genres, language, description });
     if (res.series) {
       res.series.books.push(book._id);
       book.series = res.series._id;
@@ -37,7 +37,9 @@ router.get('/', async (req, res) => {
     const books = await Book.find().populate('author').populate('series');
     const filteredBooks = books.filter(book => book.title.toLowerCase().includes(searchKey) ||
       book.originalTitle.toLowerCase().includes(searchKey) ||
-      book.description.toLowerCase().includes(searchKey));
+      book.description.toLowerCase().includes(searchKey) ||
+      book.author.name.toLowerCase().includes(searchKey) ||
+      book.author.nativeName.toLowerCase().includes(searchKey));
     res.status(200).json(filteredBooks);
   } catch (error) {
     res.status(500).json(error);
@@ -80,7 +82,7 @@ router.get('/genre/:genre', async (req, res) => {
 router.patch('/:id', authenticationToken, getBook, bookValidationRules(), validation, getSeries, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const { title, originalTitle, author, published, genres, language, description, series } = req.body;
+    const { title, originalTitle, author, cover, published, genres, language, description } = req.body;
     res.book.title = title;
     res.book.originalTitle = originalTitle;
     res.book.author = author;
@@ -88,8 +90,9 @@ router.patch('/:id', authenticationToken, getBook, bookValidationRules(), valida
     res.book.genres = genres;
     res.book.language = language;
     res.book.description = description;
+    if (cover) res.cover = cover;
     if (res.series) {
-      res.series.books.push(book._id);
+      res.series.books.push(res.book._id);
       res.book.series = res.series._id;
       await res.series.save();
     }
