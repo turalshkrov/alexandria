@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { useAppDispatch } from "@/hooks/hook";
+import { userRegister } from "@/redux/slices/userSlice";
 import "./index.scss";
 
-type Form = {
+export type Form = {
   name: string,
   username: string,
   email: string,
@@ -13,31 +15,25 @@ type Form = {
 }
 
 const SignUp = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<Form>();
+  const { register, handleSubmit, formState: { errors } } = useForm<Form>();
   const [ showPassword, setshowPassword ] = useState(false);
-  const [ userData, setUserData ] = useState<Form | undefined>(undefined);
+  const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<Form> = (data) => { 
-    setUserData(data);
-    console.log(userData);
+    dispatch(userRegister(data));
   };
-  
   return (
     <div className="page page-vertical-center" id="signup-page">
       <div className="container mb-md-0">
         <div className="register-content py-4 py-md-3 text-center">
           <h1 className="logo-title">Alexandria</h1>
           <h1 className="mt-2">Create Account</h1>
-          <form onSubmit={handleSubmit(onSubmit)} className="register-form form-control mt-2">
+          <form onSubmit={handleSubmit(onSubmit)} className="register-form form-control mt-2" autoComplete="off">
             <div className="form-item">
               <label htmlFor="name">Your Name</label>
               <input
                 type="text"
                 id="name"
-                {...register("name", { required: true, maxLength: 30, pattern: /^[a-zA-Z\s]/ })}
+                {...register("name", { required: true, maxLength: 64, pattern: /^[a-zA-Z\s]/ })}
               />
               {errors.name && errors.name.type === "required" && (
                 <span className="text-danger font-sm">Name is required</span>
@@ -48,13 +44,13 @@ const SignUp = () => {
               <input
                 id="username"
                 type="text"
-                {...register("username", { required: true, minLength: 6, maxLength: 30, pattern: /^[a-zA-Z]+$/ })}
+                {...register("username", { required: true, minLength: 3, maxLength: 32, pattern: /^[a-zA-Z0-9]+$/ })}
               />
               {errors.username && errors.username.type === "required" && (
                 <span className="text-danger font-sm">Username is required</span>
               )}
               {errors.username && errors.username.type === "minLength" && (
-                <span className="text-danger font-sm">Username must conatin minimum 6 characters</span>
+                <span className="text-danger font-sm">Username must conatin minimum 3 characters</span>
               )}
               {errors.username && errors.username.type === "pattern" && (
                 <span className="text-danger font-sm">Username must conatin only English letters</span>
@@ -84,8 +80,8 @@ const SignUp = () => {
                 id="password"
                 {...register("password", { required: true,
                   minLength: 8,
-                  maxLength: 30,
-                  pattern: /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/ 
+                  maxLength: 32,
+                  pattern: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
                 })} 
               />
               <span 
@@ -117,7 +113,7 @@ const SignUp = () => {
               Create Account
             </Button>
             <p className="mt-2">
-              Already have an account? <Link to='/login'>Sign in</Link>
+              Already have an account? <Link to='/signin'>Sign in</Link>
             </p>
           </form>
         </div>

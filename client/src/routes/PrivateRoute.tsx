@@ -1,9 +1,9 @@
-import { Outlet,Navigate } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
+import { useAppSelector } from "@/hooks/hook";
 
-type PrivateRouteProps = {
-  isAuthenticated: boolean
-}
-
-export default function PrivateRoute({ isAuthenticated }: PrivateRouteProps) {
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+export default function PrivateRoute() {
+  const userRole = useAppSelector(state => state.userSlice.role);
+  console.log(userRole);
+  
+  return userRole == 'admin' ? <Outlet /> : <Navigate to="/not-found" />;
 }

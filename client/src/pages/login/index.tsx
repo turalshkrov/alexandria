@@ -1,78 +1,56 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useState } from "react";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-import { Link } from "react-router-dom";
-import Button from "@/shared/components/button";
-import '../signup/index.scss';
-import './index.scss'
+import readingImg from '@/assets/images/reading.jpg';
+import readingDarkImg from '@/assets/images/reading-dark.jpg';
+import { FaGoogle, FaFacebook } from "react-icons/fa";
+import { useAppSelector } from '@/hooks/hook';
+import Button from '@/shared/components/button';
+import { Link } from 'react-router-dom';
+import "./index.scss";
 
-type loginForm = {
-  name: string,
-  username: string,
-  email: string,
-  password: string
-}
-
-const Login = () => {
-  const {
-    register,
-    handleSubmit
-  } = useForm<loginForm>();
-  const [ showPassword, setshowPassword ] = useState(false);
-  const [ userData, setUserData ] = useState<loginForm | undefined>(undefined);
-  const onSubmit: SubmitHandler<loginForm> = (data) => { 
-    setUserData(data);
-    console.log(userData);
-  };
+export default function Login() {
+  const theme = useAppSelector(state => state.ThemeSlice.theme);
   return (
-    <div className='page page-vertical-center' id='login-page'>
-      <div className="container">
-        <div className="login-content text-center py-4 py-md-3">
-          <h1 className="logo-title">Alexandria</h1>
-          <h1 className="mt-2">Sign in</h1>
-          <form onSubmit={handleSubmit(onSubmit)} className="register-form form-control mt-2">
-            <div className="form-item">
-              <label htmlFor="email">Email</label>
-              <input
-                id="email"
-                type="email"
-                {...register("email", {
-                  required: true,
-                  maxLength: 30,
-                })} />
-            </div>
-            <div className="form-item password-item">
-              <label htmlFor="password">Password</label>
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                {...register("password", { required: true,
-                  minLength: 8,
-                  maxLength: 30,
-                })} 
-              />
-              <span 
-                className="show-password"
-                onClick={() => setshowPassword(!showPassword)}>
-                {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
-              </span>
-            </div>
-            <p className="mt-2">
-              By sign in, you agree to the Alexandria <Link to='/terms'>Terms of Service</Link> and <Link to='/privacy'>Privacy Policy</Link>
-            </p>
-            <Button
-              type="submit"
-              className="mt-2">
-              Sign in
+    <div className='page page-vertical-center'>
+      <div className="container mb-2 mb-md-0">
+        <div className="py-3 row d-f align-items-center signup-content">
+          <div className="col-12 col-md-6 text-center">
+            <img className='signup-illustrator' src={theme === "dark" ? readingDarkImg : readingImg} alt="" />
+            <p className='font-md font-md-lg fw-bold signup-page-text'>Track books you’ve read</p>
+            <p className='font-md font-md-lg fw-bold signup-page-text'>Save those you want to read</p>
+          </div>
+          <div className="col-12 col-md-6 align-items-center mt-3 mt-md-0 d-f signup-btn-group">
+            <Link to='/signup' className='d-b w-100 text-center'>
+              <Button 
+                color='primary'
+                style='solid'
+                className='w-75 w-xl-50'>
+                Sign up free
+              </Button>
+            </Link>
+            <Button 
+              style='outline'
+              color={theme === 'dark' ? 'light' : 'dark'}
+              className='p-relative w-75 w-xl-50 mt-1 d-f align-items-center justify-center'>
+              <FaGoogle className='signup-btn-icon'/>
+              Continue with Google
             </Button>
-            <p className="mt-2">
-              New in Alexandria? <Link to='/register'>Sign up</Link>
-            </p>
-          </form>
+            <Button 
+              style='outline'
+              color={theme === 'dark' ? 'light' : 'dark'}
+              className='p-relative w-75 w-xl-50 mt-1 d-f align-items-center justify-center'>
+              <FaFacebook className='signup-btn-icon'/>
+              Continue with Facebook
+            </Button>
+            <Link to='/signin' className='d-b w-100 text-center'>
+              <Button
+                style='outline'
+                color={theme === 'dark' ? 'light' : 'dark'}
+                className='w-75 w-xl-50 mt-1'>
+                Sign in
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
   )
 }
-
-export default Login;

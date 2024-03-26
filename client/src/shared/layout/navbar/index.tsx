@@ -31,7 +31,7 @@ export default function Navbar() {
             </li>
             <li>
               <NavLink to="/profile" className="nav-link">
-                <MdPerson className='nav-mobile-icon'/>
+                <MdPerson className="nav-mobile-icon"/>
                 <span>Profile</span>
               </NavLink>
             </li>

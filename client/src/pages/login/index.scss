@@ -1,3 +1,15 @@
-#login-page {
-  min-height: calc(100vh - 87px);
+.signup-illustrator {
+  width: 60%;
+  margin: 2rem 20%;
+}
+.signup-page-text {
+  font-family: 'Merriweather', serif;
+}
+.signup-btn-group {
+  flex-direction: column;
+}
+.signup-btn-icon {
+  position: absolute;
+  font-size: 1.1rem;
+  left: 12px;
 }

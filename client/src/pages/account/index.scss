@@ -1,0 +1,37 @@
+aside {
+  position: sticky;
+  background-color: var(--primary-bg-color);
+  top: 0;
+  display: block;
+  z-index: 3;
+  a {
+    text-transform: capitalize;
+    padding: 6px 8px;
+    font-size: 14px;
+    margin: 3px 0;
+    transition: .3s;
+
+    &:hover {
+      background-color: var(--active-link-bg-color);
+    }
+  }
+
+  p {
+    padding: 0 8px;
+  }
+}
+
+.br {
+  width: 100%;
+  margin: .75rem 0;
+  background-color: var(--card-border-color);
+  height: 1px;
+}
+
+.sign-out {
+  cursor: pointer;
+  font-size: 14px;
+  &:hover {
+    text-decoration: underline;
+  }
+}
