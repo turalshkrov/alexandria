@@ -6,7 +6,7 @@ const getList = async (req, res, next) => {
     if (id.length !== 24) {
       return res.status(404).json({ message: "List not found" });
     }
-    const list = await List.findById(id).populate('books');
+    const list = await List.findById(id).populate('books').populate('user');
     if (!list) {
       return res.status(404).json({ message: "List not found" });
     }

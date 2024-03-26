@@ -76,7 +76,7 @@ router.get('/:id', getUser, async (req, res) => {
 router.get('/:id/lists', getUser, async (req, res) => {
   try {
     const userId = req.params.id
-    const listsByUser = await List.find({ user: userId });
+    const listsByUser = await List.find({ user: userId }).populate('user');
     res.status(200).json(listsByUser);
   } catch (error) {
     res.status(500).json(error);
