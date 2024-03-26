@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { MdHomeFilled, MdSearch, MdArticle, MdPerson } from "react-icons/md";
 import "./index.scss";
+import { useAppSelector } from "@/hooks/hook";
 
 export default function Navbar() {
+  const userId = useAppSelector(state => state.authSlice.userId);
   return (
     <header className='navbar navbar-mobile' id="header">
       <div className="container">
@@ -30,7 +32,7 @@ export default function Navbar() {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/profile" className="nav-link">
+              <NavLink to={`/users/${userId}`} className="nav-link">
                 <MdPerson className="nav-mobile-icon"/>
                 <span>Profile</span>
               </NavLink>

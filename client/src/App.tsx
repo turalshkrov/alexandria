@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
 import Navbar from '@/shared/layout/navbar';
@@ -9,12 +9,11 @@ import PrivateRoute from '@/routes/PrivateRoute';
 import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
 import './App.scss';
-import { useAppDispatch, useAppSelector } from './hooks/hook';
-import { getUser } from './redux/slices/userSlice';
+import { useAppSelector } from './hooks/hook';
 
 const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs'));
-const Profile = lazy(() => import('./pages/profile'));
+const User = lazy(() => import('./pages/user'));
 const Login = lazy(() => import('./pages/login'));
 const About = lazy(() => import('./pages/about/About'));
 const ErrorPage = lazy(() => import('./pages/error'));
@@ -24,12 +23,8 @@ const Library = lazy(() => import('./pages/library'));
 const Account = lazy(() => import('./pages/account'));
 
 function App() {
-  const token = useAppSelector(state => state.userSlice.token);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch, token]);
-
+  const isAuth = useAppSelector(state => state.authSlice.isAuth);
+  const isLoading = useAppSelector(state => state.authSlice.isLoading);
   return (
     <BrowserRouter>
       <Suspense fallback={<Preloader />}>
@@ -48,10 +43,10 @@ function App() {
               <Route path='/search' element={<Search />} />
               <Route path='/blogs' element={<Blogs />} />
               <Route path='/about' element={<About />} />
-              <Route path='/profile' element={token ? <Profile /> : <Navigate to='/login' />} />
-              <Route path='/library' element={token ? <Library /> : <Navigate to='/login' />} />
-              <Route path='/account' element={token ? <Account /> : <Navigate to='/login' />} />
-              <Route path='/login' element={!token ? <Login /> : <Navigate to='/profile' />} />
+              <Route path='/users/:id' element={<User />} />
+              <Route path='/library' element={isAuth ? <Library /> : <Navigate to='/login' />} />
+              <Route path='/account' element={isAuth ? <Account /> : <Navigate to='/login' />} />
+              <Route path='/login' element={!isAuth ? <Login /> : <Navigate to='/' />} />
             </Route>
             <Route element={(
               <>
@@ -59,8 +54,8 @@ function App() {
                 <Footer />
               </>
             )}>
-              <Route path='/signup' element={!token ? <SignUp /> : <Navigate to='/profile' />} />
-              <Route path='/signin' element={!token ? <SignIn /> : <Navigate to='/profile' />} />
+              <Route path='/signup' element={!isAuth ? <SignUp /> : <Navigate to='/' />} />
+              <Route path='/signin' element={!isAuth ? isLoading ? <Preloader /> : <SignIn /> : <Navigate to='/' />} />
             </Route>
             <Route element={<PrivateRoute />}>
               <Route path='/admin' element={<Admin />}></Route>

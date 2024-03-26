@@ -6,7 +6,7 @@ import Button from "@/shared/components/button";
 import '../signup/index.scss';
 import './index.scss'
 import { useAppDispatch } from "@/hooks/hook";
-import { login } from "@/redux/slices/userSlice";
+import { login } from "@/redux/slices/authSlice";
 
 type loginForm = {
   email: string,
@@ -14,10 +14,7 @@ type loginForm = {
 }
 
 const SignIn = () => {
-  const {
-    register,
-    handleSubmit
-  } = useForm<loginForm>();
+  const { register, handleSubmit } = useForm<loginForm>();
   const [ showPassword, setshowPassword ] = useState(false);
   const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<loginForm> = (data) => { 

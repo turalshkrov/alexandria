@@ -3,7 +3,7 @@ import { BsShieldLockFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import "./index.scss";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
-import { logOut } from "@/redux/slices/userSlice";
+import { logOut } from "@/redux/slices/authSlice";
 
 const settingsLinks = 
 [ { label: "profile", icon: <MdPerson size={18} className="mr-1 text-secondary" /> },
@@ -19,7 +19,7 @@ const infoLinks =
   { label: "coockies", icon: <MdCookie size={18} className="mr-1 text-secondary" /> } ];
 
 const Account = () => {
-  const userRole = useAppSelector(state => state.userSlice.role);
+  const userRole = useAppSelector(state => state.authSlice.role);
   const dispatch = useAppDispatch();
   const handleLogOut = () => {
     dispatch(logOut());
