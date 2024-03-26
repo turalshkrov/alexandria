@@ -15,8 +15,8 @@ const router = express.Router();
 router.post('/create', authenticationToken, bookValidationRules(), validation, getSeries, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const { title, originalTitle, author, cover, published, genres, language, description } = req.body;
-    const book = new Book({ title, originalTitle, author, cover, published, genres, language, description });
+    const { title, originalTitle, author, cover, published, genres, language, description, epub, audio } = req.body;
+    const book = new Book({ title, originalTitle, author, cover, published, genres, language, description, epub, audio });
     if (res.series) {
       res.series.books.push(book._id);
       book.series = res.series._id;
@@ -82,7 +82,7 @@ router.get('/genre/:genre', async (req, res) => {
 router.patch('/:id', authenticationToken, getBook, bookValidationRules(), validation, getSeries, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const { title, originalTitle, author, cover, published, genres, language, description } = req.body;
+    const { title, originalTitle, author, cover, published, genres, language, description, epub, audio } = req.body;
     res.book.title = title;
     res.book.originalTitle = originalTitle;
     res.book.author = author;
@@ -90,6 +90,8 @@ router.patch('/:id', authenticationToken, getBook, bookValidationRules(), valida
     res.book.genres = genres;
     res.book.language = language;
     res.book.description = description;
+    res.book.epub = epub;
+    res.book.audio = audio;
     if (cover) res.cover = cover;
     if (res.series) {
       res.series.books.push(res.book._id);

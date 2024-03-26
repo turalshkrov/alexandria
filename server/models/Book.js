@@ -50,6 +50,12 @@ const Book = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  epub: {
+    type: String,
+  },
+  audio: {
+    type: String,
+  }
 }, { collection: 'Book', versionKey: false });
 
 Book.pre('save', function(next) {

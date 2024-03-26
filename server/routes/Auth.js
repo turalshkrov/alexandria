@@ -10,11 +10,11 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    const userRole = await UserRole.findOne({ userId: user._id });
     if (!user) {
       return res.status(404).json({ message: "Couldn't find your account" });
     }
     if (!user.active) {
-      const userRole = await UserRole.findOne({ userId: user._id });
       if (userRole.role === 'user') return res.status(401).json({ message: "Please verify your email address" });
     }
     if (!(await bcrypt.compare(password, user.password))) {
@@ -28,19 +28,10 @@ router.post('/login', async (req, res) => {
 
     res.status(200).json({ 
       message: "Login success",
-      token: token
+      token: token,
+      userId: user._id,
+      role: userRole,
     });
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-router.get('/user', authenticationToken, async (req, res) => {
-  try {
-    const id = req.user;
-    const role = req.userRole;
-    const user = await User.findById(id);
-    res.status(200).json({ user, role });
   } catch (error) {
     res.status(500).json(error);
   }
