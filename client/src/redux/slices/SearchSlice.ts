@@ -21,7 +21,7 @@ const SearchSlice = createSlice({
       state.searchFilter = action.payload;
     }),
   }
-})
+});
 
 export default SearchSlice.reducer;
 export const { setSearchFilter, setSearchKeyword } = SearchSlice.actions;

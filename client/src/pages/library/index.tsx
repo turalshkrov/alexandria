@@ -2,9 +2,29 @@ import { useAppSelector } from '@/hooks/hook';
 import { MdPerson } from "react-icons/md";
 import './index.scss';
 import { Link } from 'react-router-dom';
+import { UserType } from '@/types';
+import { useEffect, useState } from 'react';
+import { getUserById } from '@/api/user';
 
 const Library = () => {
-  const user = useAppSelector(state => state.userSlice.user);
+  type State = {
+    data: UserType | null,
+    isLoading: boolean,
+    error: unknown,
+  }
+  const [ user, setUser ] = useState<State>({
+    data: null,
+    isLoading: false,
+    error: null,
+  })
+  const userId = useAppSelector(state => state.authSlice.userId);
+  useEffect(() => {
+    setUser(user => ({...user, isLoading: true }))
+    getUserById(userId)
+    .then(data => setUser(state => ({...state, data: data, isLoading: false })))
+    .catch(error => setUser(state => ({...state, error: error, isLoading: false })))
+  }, [ userId ]);
+  useEffect
   return (
     <div className='page'>
       <div className="container px-md-3">
@@ -13,7 +33,7 @@ const Library = () => {
           <div className="">
             <Link to='/account' className='d-f align-item-center'>
               <MdPerson size={24}/>
-              <h3 className='ml-1 mb-0 fw-regular'>{ user?.name }</h3>
+              <h3 className='ml-1 mb-0 fw-regular'>{ user?.data?.name }</h3>
             </Link>
           </div>
         </div>

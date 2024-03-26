@@ -1,5 +1,5 @@
 import { Form } from "@/pages/signup";
-import http from "@/utils/api";
+import http from "@/api/api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface AuthState {
@@ -15,7 +15,7 @@ const initialState: AuthState = {
   userId: localStorage.getItem('userId') || "",
   token: localStorage.getItem('token') || "",
   isAuth: localStorage.getItem('token') ? true : false,
-  role: "",
+  role: localStorage.getItem('role') || "",
   isLoading: false,
   error: null,
 }
@@ -36,8 +36,8 @@ export const userRegister = createAsyncThunk(
   }
 );
 
-const userSlice = createSlice({
-  name: 'user',
+const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
     logOut: (state) => {
@@ -76,5 +76,5 @@ const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
-export const { logOut } = userSlice.actions;
+export default authSlice.reducer;
+export const { logOut } = authSlice.actions;

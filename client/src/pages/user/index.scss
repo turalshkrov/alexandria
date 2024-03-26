@@ -1,8 +1,23 @@
 .profile-image {
-  width: 200px;
-  height: 200px;
-  background-position: center;
-  background-size: cover;
-  overflow: hidden;
-  border: 2px solid var(--card-border-color);
+  img {
+    box-shadow: 0px 0px 0px 1px var(--card-border-color);
+  }
+}
+
+.user-info {
+  .name {
+    font-size: 1.25rem;
+    margin-bottom: .25rem;
+  }
+  .username {
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: .5rem;
+  }
+  .link-to-account {
+    font-weight: 500;
+    svg {
+      margin-left: .25rem;
+    }
+  }
 }
