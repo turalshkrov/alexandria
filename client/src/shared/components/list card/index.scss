@@ -1,0 +1,17 @@
+.list-card {
+  .list-card-footer {
+    margin-top: .25rem;
+
+    .list-title, .create-list {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .list-author, .create-list-secondary {
+      margin-top: .25rem;
+      font-size: 13px;
+      svg {
+        margin-left: .125rem;
+      }
+    }
+  }
+}

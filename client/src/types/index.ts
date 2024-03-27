@@ -10,3 +10,13 @@ export type UserType = {
   active: boolean,
   newMail?: string,
 }
+
+export type ListType = {
+  _id: string,
+  user: UserType,
+  title: string,
+  cover: string,
+  books: [],
+  createdAt: Date,
+  updatedAt: Date,
+}

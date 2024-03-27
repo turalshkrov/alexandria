@@ -8,16 +8,42 @@
   .name {
     font-size: 1.25rem;
     margin-bottom: .25rem;
+    svg {
+      margin-left: .25rem;
+    }
   }
+
   .username {
     font-size: 1rem;
     font-weight: 300;
     margin-bottom: .5rem;
   }
+
   .link-to-account {
+    padding: 8px;
+    font-size: 13px;
     font-weight: 500;
+    color: #000;
+
     svg {
       margin-left: .25rem;
     }
+  }
+}
+
+.lists {
+  .link-to-library {
+    font-size: 14px;
+    svg {
+      margin-left: .25rem;
+    }
+  }
+}
+
+.user-details-item {
+  font-size: 14px;
+  margin-bottom: .5rem;
+  svg {
+    margin-right: .25rem;
   }
 }

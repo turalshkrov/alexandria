@@ -43,6 +43,7 @@ input {
     color: var(--primary-text-color);
   }
   .link-hover {
+    cursor: pointer;
     transition: .3s;
     &:hover {
       color: var(--primary-color);
