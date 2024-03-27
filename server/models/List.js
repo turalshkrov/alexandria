@@ -19,7 +19,6 @@ const ListSchema = new mongoose.Schema({
   },
   cover: {
     type: String,
-    required: true,
     default: "",
   },
   createdAt: {

@@ -6,7 +6,7 @@ const getUser = async (req, res, next) => {
     if (id.length !== 24) {
       return res.status(404).json({ message: "User not found" });
     }
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate('favoriteBooks').populate('favoriteAuthors');
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

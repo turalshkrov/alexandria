@@ -17,27 +17,49 @@ const User = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  password: {
+  location: {
     type: String,
     required: true,
   },
-  profileImage: {
+  password: {
     type: String,
     required: true,
+    select: false,
+  },
+  profileImage: {
+    type: String,
     default: "",
+  },
+  favoriteBooks:  {
+    type:[{
+      type: mongoose.Types.ObjectId,
+      ref: 'Book',
+    }],
+    default: [],
+  },
+  favoriteAuthors:  {
+    type:[{
+      type: mongoose.Types.ObjectId,
+      ref: 'Author',
+    }],
+    default: [],
   },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
   updatedAt: {
-    type: Date
+    type: Date,
   },
   active: {
     type: Boolean,
     default: false,
   },
-  newMail: {
+  verified: {
+    type: Boolean,
+    default: false,
+  },
+  newEmail: {
     type: String,
   }
 }, { collection: 'User', versionKey: false });

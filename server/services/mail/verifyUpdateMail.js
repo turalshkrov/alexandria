@@ -3,7 +3,7 @@ const Cryptr = require('cryptr');
 require('dotenv').config();
 const cryptr = new Cryptr(process.env.CRYPTR_SECRETKEY);
 
-const sendVerifyMail = async (to, id) => {
+const sendVerifyUpdateMail = async (to, email) => {
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     secure: false,
@@ -13,8 +13,8 @@ const sendVerifyMail = async (to, id) => {
     }
   });
 
-  const encryptedId = cryptr.encrypt(id);
-  const link = `${process.env.BASE_API_URL}/users/register/verify/${encryptedId}`;
+  const encryptedEmail = cryptr.encrypt(email);
+  const link = `${process.env.BASE_API_URL}/users/update-email/verify/${encryptedEmail}`;
   let info = await transporter.sendMail({
     from: '"Alexandria App" alexandria.library.app@gmail.com',
     to: to,
@@ -23,4 +23,4 @@ const sendVerifyMail = async (to, id) => {
   });
 }
 
-module.exports = sendVerifyMail;
+module.exports = sendVerifyUpdateMail;

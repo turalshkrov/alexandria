@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
     const userRole = await UserRole.findOne({ userId: user._id });
     if (!user) {
       return res.status(404).json({ message: "Couldn't find your account" });
