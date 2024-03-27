@@ -2,7 +2,7 @@ import '../list card/index.scss';
 
 const ListCardCreate = () => {
   return (
-    <div className='list-item col-6 col-md-4 col-xl-3 p-1 p-lg-2'>
+    <div className='list-item col-6 col-md-3 p-1 p-xxl-2'>
       <div className="list-card">
         <img src="https://rb.gy/cqvygl" alt="" className="w-100 br-1"/>
         <div className="list-card-footer">

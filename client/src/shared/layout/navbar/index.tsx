@@ -4,7 +4,7 @@ import "./index.scss";
 import { useAppSelector } from "@/hooks/hook";
 
 export default function Navbar() {
-  const userId = useAppSelector(state => state.authSlice.userId);
+  const isAuth = useAppSelector(state => state.authSlice.isAuth);
   return (
     <header className='navbar navbar-mobile' id="header">
       <div className="container">
@@ -32,7 +32,7 @@ export default function Navbar() {
               </NavLink>
             </li>
             <li>
-              <NavLink to={`/users/${userId}`} className="nav-link">
+              <NavLink to={isAuth ? `/profile` : '/login'} className="nav-link">
                 <MdPerson className="nav-mobile-icon"/>
                 <span>Profile</span>
               </NavLink>

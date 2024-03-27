@@ -1,9 +1,8 @@
-import { Link, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUserById } from "@/api/user";
 import { useAppSelector } from "@/hooks/hook";
 import { UserType, ListType } from "@/types";
-import { HiOutlineExternalLink } from "react-icons/hi";
 import { BiSolidBadgeCheck } from "react-icons/bi";
 import { MdMail, MdLocationOn } from "react-icons/md";
 import Preloader from "@/shared/components/preloader/Preloader";
@@ -11,10 +10,9 @@ import ErrorPage from "../error";
 import "./index.scss";
 import { getListsByUser } from "@/api/list";
 import ListCard from "@/shared/components/list card";
-import ListCardCreate from "@/shared/components/list card create";
 
 const User = () => {
-  const authId = useAppSelector(state => state.authSlice.userId); 
+  const authId = useAppSelector(state => state.authSlice.userId);
   type State = {
     user: UserType | null,
     lists: ListType[],
@@ -37,10 +35,10 @@ const User = () => {
     getListsByUser(userId)
       .then(lists => setData(state => ({...state, lists: lists, isLoading: false })))
       .catch(error => setData(state => ({...state, error: error, isLoading: false })))
-    
   }, [ userId ]);
   
   return (
+    userId === authId ? <Navigate to='/profile'/> :
     data.isLoading ? <Preloader /> :
     data.error ? <ErrorPage/> :
     <div className='page pt-2' id="profile">
@@ -56,13 +54,6 @@ const User = () => {
                 {data.user?.username === 'alexandria' && <BiSolidBadgeCheck/>}
               </h3>
               <p className="username text-secondary mb-md-1">{data.user?.username}</p>
-              { 
-                userId === authId &&
-                <Link to='/account' className="link-to-account btn btn-sm w-100 d-f align-items-center justify-center">
-                  Account
-                  <HiOutlineExternalLink/>
-                </Link>
-              }
             </div>
               <div className="col-12 user-details mt-2">
                 <ul>
@@ -80,20 +71,16 @@ const User = () => {
           <div className="lists col-12 col-md-9 px-0 px-md-3 mt-3 mt-md-0">
             <div className="list-header mb-2 d-f align-items-center justify-space-between">
               <h3 className="m-0">{data.user?.name}'s lists</h3>
-              { userId === authId &&
-                <Link to='/library' className="link-to-library d-f align-items-center justify-center link-hover">
+                {/* <Link to='/library' className="link-to-library d-f align-items-center justify-center link-hover">
                   Your library
                   <HiOutlineExternalLink/>
-                </Link>}
+                </Link> */}
             </div>
             <div className="list-container row">
               {
                 userId === authId 
                 ? data.lists.filter((_, i) => i < 5) .map(list => <ListCard key={list._id} list={list}/>) 
                 : data.lists.map(list => <ListCard key={list._id} list={list}/>)
-              }
-              {
-                userId === authId && <ListCardCreate />
               }
             </div>
           </div>

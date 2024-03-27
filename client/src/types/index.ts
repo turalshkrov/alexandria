@@ -8,7 +8,9 @@ export type UserType = {
   createdAt: Date,
   updatedAt: Date,
   active: boolean,
-  newMail?: string,
+  location: string,
+  favoriteBooks: [],
+  favoriteAuthors: [],
 }
 
 export type ListType = {

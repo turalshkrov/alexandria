@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
 import Navbar from '@/shared/layout/navbar';
@@ -8,11 +8,13 @@ import Admin from '@/pages/admin/Admin';
 import PrivateRoute from '@/routes/PrivateRoute';
 import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
+import { useAppDispatch, useAppSelector } from './hooks/hook';
+import { getMe, getMyLists } from './redux/slices/userSlice';
 import './App.scss';
-import { useAppSelector } from './hooks/hook';
 
 const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs'));
+const Profile = lazy(() => import('./pages/profile'));
 const User = lazy(() => import('./pages/user'));
 const Login = lazy(() => import('./pages/login'));
 const About = lazy(() => import('./pages/about/About'));
@@ -25,6 +27,12 @@ const Account = lazy(() => import('./pages/account'));
 function App() {
   const isAuth = useAppSelector(state => state.authSlice.isAuth);
   const isLoading = useAppSelector(state => state.authSlice.isLoading);
+  const userId = useAppSelector(state => state.authSlice.userId);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getMe(userId));
+    dispatch(getMyLists(userId));
+  }, [ dispatch, userId ]);
   return (
     <BrowserRouter>
       <Suspense fallback={<Preloader />}>
@@ -43,6 +51,7 @@ function App() {
               <Route path='/search' element={<Search />} />
               <Route path='/blogs' element={<Blogs />} />
               <Route path='/about' element={<About />} />
+              <Route path='/profile' element={<Profile />} />
               <Route path='/users/:id' element={<User />} />
               <Route path='/library' element={isAuth ? <Library /> : <Navigate to='/login' />} />
               <Route path='/account' element={isAuth ? <Account /> : <Navigate to='/login' />} />
