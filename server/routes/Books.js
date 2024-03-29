@@ -38,28 +38,37 @@ router.get('/', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const skip = (page - 1) * limit;
     const books = await Book.aggregate([
-      { $lookup: {
-        from: 'Author',
-        localField: 'author',
-        foreignField: '_id',
-        as: 'author',
-      } },
+      {
+        $lookup: {
+          from: 'Author',
+          localField: 'author',
+          foreignField: '_id',
+          as: 'author',
+        }
+      },
       { $unwind: '$author' },
-      { $lookup: {
-        from: 'Series',
-        localField: 'series',
-        foreignField: '_id',
-        as: 'series',
-      } },
-      { $facet: { data: [ { $match: { $or: [
-        { title: { $regex: new RegExp(searchKey, 'i' ) } },
-        { originalTitle: { $regex: new RegExp(searchKey, 'i') } },
-        { 'author.name': { $regex: new RegExp(searchKey, 'i') } },
-        { 'author.nativeName': { $regex: new RegExp(searchKey, 'i') } },
-        { 'series.title': { $regex: new RegExp(searchKey, 'i') } }
-      ]}}]}},
-      { $project: { data: { $slice: ['$data', skip, limit] } } }
-    ]);
+      {
+        $lookup: {
+          from: 'Series',
+          localField: 'series',
+          foreignField: '_id',
+          as: 'series',
+        }
+      },
+      {
+        $match: {
+          $or: [
+            { title: { $regex: new RegExp(searchKey, 'i') } },
+            { originalTitle: { $regex: new RegExp(searchKey, 'i') } },
+            { 'author.name': { $regex: new RegExp(searchKey, 'i') } },
+            { 'author.nativeName': { $regex: new RegExp(searchKey, 'i') } },
+            { 'series.title': { $regex: new RegExp(searchKey, 'i') } }
+          ]
+        }
+      },
+    ])
+    .skip(skip)
+    .limit(limit);
     res.status(200).json(books);
   } catch (error) {
     res.status(500).json(error);
