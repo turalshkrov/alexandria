@@ -110,7 +110,7 @@ router.get('/:id', getUser, async (req, res) => {
 router.get('/:id/lists', getUser, async (req, res) => {
   try {
     const userId = req.params.id
-    const userLists = await List.find({ user: userId }).populate({path: 'books', popuate: { path: 'author' }});
+    const userLists = await List.find({ user: userId }).populate({ path: 'books', popuate: { path: 'author' }}).populate('user', 'name username');
     res.status(200).json(userLists);
   } catch (error) {
     res.status(500).json(error);

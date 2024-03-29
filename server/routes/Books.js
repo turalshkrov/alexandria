@@ -38,7 +38,6 @@ router.get('/', async (req, res) => {
     const filteredBooks = books.filter(
       book => book.title.toLowerCase().includes(searchKey) ||
       book.originalTitle.toLowerCase().includes(searchKey) ||
-      book.description.toLowerCase().includes(searchKey) ||
       book.author.name.toLowerCase().includes(searchKey) ||
       book.author.nativeName.toLowerCase().includes(searchKey));
     res.status(200).json(filteredBooks);
