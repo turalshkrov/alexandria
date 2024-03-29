@@ -29,22 +29,38 @@ router.post('/create', authenticationToken, bookValidationRules(), validation, g
   }
 });
 
-// GET BOOKS
+// GET BOOKS 
 router.get('/', async (req, res) => {
   try {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
-    const limit = req.query.limit || 5;
-    const page = req.query.page || 1;
-    const books = await Book.find().populate('author').populate('series');
-    const filteredBooks = books.filter(book => 
-      book.title.toLowerCase().includes(searchKey) ||
-      book.originalTitle.toLowerCase().includes(searchKey) ||
-      book.series?.title?.toLowerCase().includes(searchKey) ||
-      book.author.name.toLowerCase().includes(searchKey) ||
-      book.author.nativeName.toLowerCase().includes(searchKey) ||
-      book.author.authorInfo.toLowerCase().includes(searchKey)).splice((page - 1) * limit, limit);
-    res.status(200).json(filteredBooks);
+    const limit = parseInt(req.query.limit) || 5;
+    const page = parseInt(req.query.page) || 1;
+    const skip = (page - 1) * limit;
+    const books = await Book.aggregate([
+      { $lookup: {
+        from: 'Author',
+        localField: 'author',
+        foreignField: '_id',
+        as: 'author',
+      } },
+      { $unwind: '$author' },
+      { $lookup: {
+        from: 'Series',
+        localField: 'series',
+        foreignField: '_id',
+        as: 'series',
+      } },
+      { $facet: { data: [ { $match: { $or: [
+        { title: { $regex: new RegExp(searchKey, 'i' ) } },
+        { originalTitle: { $regex: new RegExp(searchKey, 'i') } },
+        { 'author.name': { $regex: new RegExp(searchKey, 'i') } },
+        { 'author.nativeName': { $regex: new RegExp(searchKey, 'i') } },
+        { 'series.title': { $regex: new RegExp(searchKey, 'i') } }
+      ]}}]}},
+      { $project: { data: { $slice: ['$data', skip, limit] } } }
+    ]);
+    res.status(200).json(books);
   } catch (error) {
     res.status(500).json(error);
   }

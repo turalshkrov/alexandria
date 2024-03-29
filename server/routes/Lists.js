@@ -23,12 +23,17 @@ router.post('/create', authenticationToken, listValidationRules(), validation, a
 router.get('/', async (req, res) => {
   try {
     let searchKey = req.query.search || "";
-    searchKey = searchKey.toLowerCase();
     const limit = req.query.limit || 5;
     const page = req.query.page || 1;
-    const lists = await List.find().populate({path: 'books', popuate: { path: 'author' }}).populate('user');
-    const filteredLists = lists.filter(list => list.title.toLowerCase().includes(searchKey)).splice((page - 1) * limit, limit);
-    res.status(200).json(filteredLists);
+    const skip = (page - 1) * limit;
+    const lists = await List.find({
+      title: { $regex: new RegExp(searchKey, 'i')}
+    })
+    .populate({path: 'books', popuate: { path: 'author' }})
+    .populate('user')
+    .skip(skip)
+    .limit(limit);
+    res.status(200).json(lists);
   } catch (error) {
     res.status(500).json(error);
   }

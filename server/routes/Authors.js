@@ -44,15 +44,19 @@ router.patch('/:id', getAuthor, authenticationToken, authorValidationRules(), va
 router.get('/', async (req, res) => {
   try {
     let searchKey = req.query.search || "";
-    searchKey = searchKey.toLowerCase();
     const limit = req.query.limit || 5;
     const page = req.query.page || 1;
-    const authors = await Author.find();
-    const filteredAuthors = authors.filter(
-    author => author.name.toLowerCase().includes(searchKey) ||
-    author.nativeName.toLowerCase().includes(searchKey) ||
-    author.authorInfo.toLowerCase().includes(searchKey)).splice((page - 1) * limit, limit);
-    res.status(200).json(filteredAuthors);
+    const skip = (page - 1) * limit;
+    const authors = await Author.find({
+      $or: [
+        { name: { $regex: new RegExp(searchKey, 'i') } },
+        { nativeName: { $regex: new RegExp(searchKey, 'i') } },
+        { authorInfo: { $regex: new RegExp(searchKey, 'i') } }
+      ]
+    })
+    .skip(skip)
+    .limit(limit);
+    res.status(200).json(authors);
   } catch (error) {
     res.status(500).json(error);
   }
