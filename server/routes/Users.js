@@ -122,7 +122,8 @@ router.get('/:id/reviews', getUser, async (req, res) => {
   try {
     const user = req.params.id;
     const userReviews = await Review.find({ user });
-    res.status(300).json(userReviews);
+    console.log(userReviews);
+    res.status(200).json(userReviews);
   } catch (error) {
     res.status(500).json(error);
   }
