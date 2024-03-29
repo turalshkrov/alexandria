@@ -3,18 +3,18 @@ import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom
 import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
 import Navbar from '@/shared/layout/navbar';
 import Home from '@/pages/home';
+import Profile from './pages/profile';
 import ScrollToTop from '@/utils/ScrollToTop';
 import Admin from '@/pages/admin/Admin';
 import PrivateRoute from '@/routes/PrivateRoute';
 import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
 import { useAppDispatch, useAppSelector } from './hooks/hook';
-import { getMe, getMyLists } from './redux/slices/userSlice';
+import { getMe, getMyLists, getMyReviews } from './redux/slices/userSlice';
 import './App.scss';
 
 const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs'));
-const Profile = lazy(() => import('./pages/profile'));
 const User = lazy(() => import('./pages/user'));
 const Login = lazy(() => import('./pages/login'));
 const About = lazy(() => import('./pages/about/About'));
@@ -32,6 +32,7 @@ function App() {
   useEffect(() => {
     dispatch(getMe(userId));
     dispatch(getMyLists(userId));
+    dispatch(getMyReviews(userId));
   }, [ dispatch, userId ]);
   return (
     <BrowserRouter>

@@ -15,22 +15,40 @@
   &:hover {
     box-shadow: 0px 5px 10px var(--box-shadow-color);
   }
+
+  .book-cover-container {
+    background-color: lightgray;
+    width: 100%;
+    padding-top: 150%;
+    position: relative;
+
+    .book-cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+.book-info {
+  margin-top: 1rem;
 }
 
 .book-card-title {
   font-size: 1rem;
   font-weight: 500;
-  margin-bottom: .75rem;
+  margin-bottom: .5rem;
 }
 
 .book-card-author {
   color: var(--secondary-text-color);
   font-size: .8rem;
+  margin-bottom: .5rem;
 }
 
 .book-card-rating {
   font-size: .9rem;
-  margin-bottom: .75rem;
+  margin-bottom: .5rem;
 
   span {
     margin-left: .25rem;

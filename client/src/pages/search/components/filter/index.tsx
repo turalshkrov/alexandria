@@ -5,7 +5,7 @@ import { setSearchFilter } from "@/redux/slices/SearchSlice";
 export default function Filter() {
   const theme = useAppSelector(state => state.ThemeSlice.theme);
   const searchType: string[] = [
-    "all", "books", "writers", "list", "articles"
+    "all", "books", "writers", "list"
   ];
 
   const searchFilter = useAppSelector(state => state.SearchSlice.searchFilter);
@@ -15,7 +15,7 @@ export default function Filter() {
     <div className="filter d-f">
       {
         searchKeyword && searchType.map(type => {
-          return(
+          return( 
           <Button
             id={type}
             key={type}

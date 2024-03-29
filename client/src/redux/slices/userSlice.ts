@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ListType, UserType } from "@/types";
+import { ListType, ReviewType, UserType } from "@/types";
 import http from "@/api/api";
 
 interface UserState {
   user: UserType | null,
   lists: ListType[] | null,
+  reviews: ReviewType[] | null,
   isLoading: boolean,
   error: unknown,
 }
@@ -12,6 +13,7 @@ interface UserState {
 const initialState: UserState = {
   user: null,
   lists: null,
+  reviews: null,
   isLoading: false,
   error: null,
 }
@@ -31,6 +33,14 @@ export const getMyLists = createAsyncThunk(
     return response.data;
   }
 );
+
+export const getMyReviews = createAsyncThunk(
+  'user/getMyReviews',
+  async (userId: string) => {
+    const response = await http.get(`users/${userId}/reviews`);
+    return response.data;
+  }
+)
 
 const userSlice = createSlice({
   name: 'user',
@@ -57,7 +67,18 @@ const userSlice = createSlice({
         state.lists = action.payload;
       })
       .addCase(getMyLists.rejected, (state, action) => {
-        state.isLoading;
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getMyReviews.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(getMyReviews.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.reviews = action.payload;
+      })
+      .addCase(getMyReviews.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.error.message;
       })
   }

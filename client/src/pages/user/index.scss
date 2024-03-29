@@ -31,12 +31,11 @@
   }
 }
 
-.lists {
-  .link-to-library {
-    font-size: 14px;
-    svg {
-      margin-left: .25rem;
-    }
+.link-to-library {
+  margin-left: 1rem;
+  font-size: 14px;
+  svg {
+    margin-left: .25rem;
   }
 }
 
@@ -46,4 +45,14 @@
   svg {
     margin-right: .25rem;
   }
+}
+
+.empty-library {
+  width: 100%;
+  height: 100%;
+}
+
+.empty-library-content {
+  width: fit-content;
+  flex-direction: column;
 }

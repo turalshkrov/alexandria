@@ -5,12 +5,13 @@ export type UserType = {
   email: string,
   password: string,
   profileImage: string,
+  location: string,
   createdAt: Date,
   updatedAt: Date,
   active: boolean,
-  location: string,
-  favoriteBooks: [],
-  favoriteAuthors: [],
+  verified: boolean,
+  favoriteBooks: BookType[],
+  favoriteAuthors: AuthorType[],
 }
 
 export type ListType = {
@@ -18,7 +19,42 @@ export type ListType = {
   user: UserType,
   title: string,
   cover: string,
-  books: [],
+  books: BookType[],
   createdAt: Date,
   updatedAt: Date,
+}
+
+export type BookType = {
+  _id: string,
+  title: string, 
+  originalTitle: string,
+  author: AuthorType,
+  published: string,
+  genres: [],
+  language: string,
+  description: string,
+  rating: number,
+  ratingsCount: number,
+  cover: string,
+}
+
+export type AuthorType = {
+  _id: string,
+  name: string,
+  nativeName: string,
+  born: string,
+  died?: string,
+  genres: [],
+  authorInfo: string,
+  image: string,
+}
+
+export type ReviewType = {
+  _id: string,
+  user: UserType | string,
+  book: string,
+  rating: number,
+  title: string,
+  content: string,
+  date: Date,
 }

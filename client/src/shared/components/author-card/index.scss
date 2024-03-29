@@ -1,0 +1,22 @@
+.author-card-fullname {
+  font-size: 1rem;
+  margin-bottom: .5rem;
+}
+.card-secondary {
+  color: var(--secondary-text-color);
+  font-size: .8rem;
+}
+
+.author-image-container {
+  width: 100%;
+  padding-top: 100%;
+  background-color: lightgray;
+  position: relative;
+  overflow: hidden;
+  .author-image {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+}
