@@ -2,13 +2,13 @@ const Review = require('../../models/Review');
 
 const checkReview = async (req, res, next) => {
   try {
-    const userId = req.user;
-    const bookId = req.params.id;
-    const review = await Review.findOne({ userId, bookId });
+    const user = req.user;
+    const book = req.params.id;
+    const review = await Review.findOne({ user, book });
     if (review)  {
       res.review = review;
     } else {
-      const newReview = new Review({ userId, bookId });
+      const newReview = new Review({ user, book });
       res.review = newReview;
     }
     return next();

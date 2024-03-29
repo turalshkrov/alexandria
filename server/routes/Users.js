@@ -121,7 +121,7 @@ router.get('/:id/lists', getUser, async (req, res) => {
 router.get('/:id/reviews', getUser, async (req, res) => {
   try {
     const userId = req.params.id;
-    const userReviews = await Review.find({ userId });
+    const userReviews = await Review.find({ user: userId });
     res.status(300).json(userReviews);
   } catch (error) {
     res.status(500).json(error);

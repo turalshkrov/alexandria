@@ -117,15 +117,15 @@ router.delete('/:id', authenticationToken, getBook, async (req, res) => {
   }
 });
 
+// ADD REVIEW
 router.post('/:id/reviews/add', authenticationToken, getBook, reviewValidationRules(), validation, checkReview, async (req, res) => {
   try {
-    if (req.userRole !== 'user') return res.status(401).json({ message: "User not verified" });
     const { rating, title, content } = req.body;
     res.review.rating = rating;
     res.review.title = title;
     res.review.content = content;
     await res.review.save();
-    const reviews = await Review.find({ bookId: res.book._id });
+    const reviews = await Review.find({ book: res.book._id });
     res.book.ratingsCount = reviews.length;
     res.book.rating = Math.floor(reviews.map(review => review.rating).reduce((a, b) => a + b) * 10 / reviews.length) / 10;
     await res.book.save();
@@ -135,10 +135,11 @@ router.post('/:id/reviews/add', authenticationToken, getBook, reviewValidationRu
   }
 });
 
+// GET BOOK REVIEWS
 router.get('/:id/reviews', getBook, async (req, res) => {
   try {
-    const bookId = req.params.id;
-    const reviews = await Review.find({ bookId });
+    const book = req.params.id;
+    const reviews = await Review.find({ book });
     res.status(200).json(reviews);
   } catch (error) {
     res.status(500).json(error);
