@@ -34,8 +34,8 @@ router.get('/', async (req, res) => {
   try {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
-    const limit = req.query.limit;
-    const page = req.query.page;
+    const limit = req.query.limit || 5;
+    const page = req.query.page || 1;
     const books = await Book.find().populate('author').populate('series');
     const filteredBooks = books.filter(book => 
       book.title.toLowerCase().includes(searchKey) ||
@@ -49,19 +49,6 @@ router.get('/', async (req, res) => {
     res.status(500).json(error);
   }
 });
-
-// SEARCH BOOKS
-// router.get('/', async (req, res) => {
-//   try {
-//     const searchKey = req.query.search;
-//     const books = await Book.aggregate([
-//       { "$match": "author" }
-//     ])
-//     res.status(200).json(books)
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// });
 
 // GET BOOK BY ID
 router.get('/:id', getBook, async (req, res) => {

@@ -24,8 +24,10 @@ router.get('/', async (req, res) => {
   try {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
+    const limit = req.query.limit || 5;
+    const page = req.query.page || 1;
     const lists = await List.find().populate({path: 'books', popuate: { path: 'author' }}).populate('user');
-    const filteredLists = lists.filter(list => list.title.toLowerCase().includes(searchKey));
+    const filteredLists = lists.filter(list => list.title.toLowerCase().includes(searchKey)).splice((page - 1) * limit, limit);
     res.status(200).json(filteredLists);
   } catch (error) {
     res.status(500).json(error);
