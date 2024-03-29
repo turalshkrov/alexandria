@@ -6,6 +6,7 @@ const UserRole = require('../models/UserRole');
 const List = require('../models/List');
 const Book = require('../models/Book');
 const Author = require('../models/Author');
+const Review = require('../models/Review');
 const getUser = require('../middlewares/user/getUser');
 const sendVerifyMail = require('../services/mail/verifyEmail');
 const validation = require('../middlewares/validation');
@@ -24,8 +25,8 @@ const cryptr = new Cryptr(process.env.CRYPTR_SECRETKEY);
 // CREATE USER
 router.post('/register', userValidationRules(), validation, checkEmail, checkUsername, async (req, res) => {
   try {
-    const { name, username, email, password } = req.body;
-    const user = new User({ name, username, email, password });
+    const { name, username, email, location, password } = req.body;
+    const user = new User({ name, username, email, location, password });
     const userRole = new UserRole({ userId: user._id });
     const newUser = await user.save();
     await userRole.save();
@@ -105,16 +106,27 @@ router.get('/:id', getUser, async (req, res) => {
   }
 });
 
-// GET LISTS BY USER
+// GET USER LISTS
 router.get('/:id/lists', getUser, async (req, res) => {
   try {
     const userId = req.params.id
-    const listsByUser = await List.find({ user: userId }).populate('user');
-    res.status(200).json(listsByUser);
+    const userLists = await List.find({ user: userId }).populate({path: 'books', popuate: { path: 'author' }});
+    res.status(200).json(userLists);
   } catch (error) {
     res.status(500).json(error);
   }
 });
+
+// GET USER REVIEWS
+router.get('/:id/reviews', getUser, async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const userReviews = await Review.find({ userId });
+    res.status(300).json(userReviews);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+})
 
 // UPDATE USER
 router.patch('/update', authenticationToken, usernameValidationRules(), validation, checkUsername, async (req, res) => {
