@@ -46,7 +46,8 @@ router.get('/', async (req, res) => {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
     const authors = await Author.find();
-    const filteredAuthors = authors.filter(author => author.name.toLowerCase().includes(searchKey) ||
+    const filteredAuthors = authors.filter(
+    author => author.name.toLowerCase().includes(searchKey) ||
     author.nativeName.toLowerCase().includes(searchKey) ||
     author.authorInfo.toLowerCase().includes(searchKey));
     res.status(200).json(filteredAuthors);

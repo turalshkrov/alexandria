@@ -35,11 +35,13 @@ router.get('/', async (req, res) => {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
     const books = await Book.find().populate('author').populate('series');
-    const filteredBooks = books.filter(
-      book => book.title.toLowerCase().includes(searchKey) ||
+    const filteredBooks = books.filter(book => 
+      book.title.toLowerCase().includes(searchKey) ||
       book.originalTitle.toLowerCase().includes(searchKey) ||
+      book.series?.title?.toLowerCase().includes(searchKey) ||
       book.author.name.toLowerCase().includes(searchKey) ||
-      book.author.nativeName.toLowerCase().includes(searchKey));
+      book.author.nativeName.toLowerCase().includes(searchKey) ||
+      book.author.authorInfo.toLowerCase().includes(searchKey));
     res.status(200).json(filteredBooks);
   } catch (error) {
     res.status(500).json(error);
