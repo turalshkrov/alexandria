@@ -26,9 +26,11 @@ const BookSearchResult = () => {
     const searchBooks = async () => {
       setPage(1);
       try {
-        setBookResult(state => ({ ...state, isLoading: true }));
-        const books = await getBooks(searchKeyword, 1);
-        setBookResult(state => ({ ...state, books, isLoading: false }));
+        if (searchKeyword.length > 2) {
+          setBookResult(state => ({ ...state, isLoading: true }));
+          const books = await getBooks(searchKeyword, 1);
+          setBookResult(state => ({ ...state, books, isLoading: false }));
+        }
       } catch (error) {
         setBookResult(state => ({ ...state, error: error }));
       }
@@ -38,11 +40,13 @@ const BookSearchResult = () => {
   }, [searchKeyword]);
   const getMoreResult = async () => {
     try {
-      setBookResult(state => ({ ...state, isLoading: true }));
-      const books = await getBooks(searchKeyword, page + 1);
-      setBookResult(state => ({ ...state, books: [ ...state.books, ...books ], isLoading: false }));
+      if (searchKeyword.length > 2) {
+        setBookResult(state => ({ ...state, isLoading: true }));
+        const books = await getBooks(searchKeyword, page + 1);
+        setBookResult(state => ({ ...state, books: [ ...state.books, ...books ], isLoading: false }));
+      }
     } catch (error) {
-      setBookResult(state => ({ ...state, error: error }));
+      setBookResult(state => ({ ...state, error: error, isLoading: false }));
     }
   }
   const onClickMoreResult = async () => {
@@ -59,7 +63,7 @@ const BookSearchResult = () => {
             {
               booksResult.books?.map(data => {
                 return (
-                  <Link to={`books/${data._id}`} className="w-100" key={data._id}>
+                  <Link to={`/books/${data._id}`} className="w-100" key={data._id}>
                     <div className="book-search-result d-f w-100 align-items-center">
                       <div className="book-cover-container">
                         <img src={data.cover} alt="" className="book-cover" />

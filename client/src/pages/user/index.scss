@@ -31,11 +31,14 @@
   }
 }
 
-.link-to-library {
-  margin-left: 1rem;
+.show-all {
   font-size: 14px;
-  svg {
+  .arrow {
+    transition: transform .4s;
     margin-left: .25rem;
+  }
+  .arrow-up {
+    transform: rotate(180deg);
   }
 }
 

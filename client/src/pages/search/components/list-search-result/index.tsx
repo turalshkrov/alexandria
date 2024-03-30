@@ -26,9 +26,11 @@ const ListSearchResult = () => {
     const searchAuthors = async () => {
       setPage(1);
       try {
-        setListResult(state => ({ ...state, isLoading: true }));
-        const lists = await getLists(searchKeyword, 1);
-        setListResult(state => ({ ...state, lists, isLoading: false }));
+        if (searchKeyword.length > 2) {
+          setListResult(state => ({ ...state, isLoading: true }));
+          const lists = await getLists(searchKeyword, 1);
+          setListResult(state => ({ ...state, lists, isLoading: false }));
+        }
       } catch (error) {
         setListResult(state => ({ ...state, error: error }));
       }
@@ -37,11 +39,13 @@ const ListSearchResult = () => {
   }, [page, searchKeyword]);
   const getMoreResult = async () => {
     try {
-      setListResult(state => ({ ...state, isLoading: true }));
-      const authors = await getLists(searchKeyword, page + 1);
-      setListResult(state => ({ ...state, lists: [ ...state.lists, ...authors ], isLoading: false }));
+      if (searchKeyword.length > 2) {
+        setListResult(state => ({ ...state, isLoading: true }));
+        const authors = await getLists(searchKeyword, page + 1);
+        setListResult(state => ({ ...state, lists: [ ...state.lists, ...authors ], isLoading: false }));
+      }
     } catch (error) {
-      setListResult(state => ({ ...state, error: error }));
+      setListResult(state => ({ ...state, error: error, isLoading: false }));
     }
   }
   const onClickMoreResult = async () => {
@@ -57,7 +61,7 @@ const ListSearchResult = () => {
             {
               listsResult.lists.map(data => {
                 return (
-                  <Link to={`lists/${data._id}`} className="w-100" key={data._id}>
+                  <Link to={`/lists/${data._id}`} className="w-100" key={data._id}>
                     <div className="list-search-result d-f align-items-center">
                       <div className="list-cover-container">
                         <img src={data.cover || 'https://lh3.googleusercontent.com/drive-viewer/AKGpihZbn3AE3NQ3AnVS07A40OsfRKHWGIrbPYkuFbAmqHAXP7zlb8OTceLvYvBKXvmFh8En8hTvAk5tK3M-RkUI2wWxdJefuw=s2560'} alt="" className="list-cover" />

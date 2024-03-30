@@ -1,14 +1,14 @@
 import Preloader from "@/shared/components/preloader/Preloader";
 import ErrorPage from "../error";
+import UserFavoriteBooks from "../user/user-favorite-books";
+import UserLists from "../user/user-lists";
+import UserFavoriteAuthors from "../user/user-favorite-authors";
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '@/hooks/hook';
 import { BiSolidBadgeCheck } from "react-icons/bi";
 import { MdMail, MdLocationOn, MdCalendarMonth } from "react-icons/md";
 import { HiOutlineExternalLink } from 'react-icons/hi';
-import UserFavoriteBooks from "../user/user-favorite-books";
 import '../user/index.scss';
-import UserLists from "../user/user-lists";
-import UserFavoriteAuthors from "../user/user-favorite-authors";
 
 const Profile = () => {
   const data = useAppSelector(state => state.userSlice);

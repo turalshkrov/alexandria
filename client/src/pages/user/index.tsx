@@ -5,14 +5,14 @@ import { useAppSelector } from "@/hooks/hook";
 import { UserType, ListType } from "@/types";
 import { BiSolidBadgeCheck } from "react-icons/bi";
 import { MdMail, MdLocationOn, MdCalendarMonth } from "react-icons/md";
+import { getListsByUser } from "@/api/list";
 import Preloader from "@/shared/components/preloader/Preloader";
 import ErrorPage from "../error";
-import "./index.scss";
-import { getListsByUser } from "@/api/list";
 import UserLists from "./user-lists";
 import UserFavoriteBooks from "./user-favorite-books";
 import UserFavoriteAuthors from "./user-favorite-authors";
 import EmptyLibrary from "./empty-library";
+import "./index.scss";
 
 const User = () => {
   const authId = useAppSelector(state => state.authSlice.userId);
@@ -78,15 +78,15 @@ const User = () => {
           <div className="lists col-12 col-md-9 px-0 px-md-3 mt-3 mt-md-0">
             {
               data.user && data.lists && data.lists.length > 0 &&
-              <UserLists username={data.user?.name} lists={data.lists} showCreate={false} />
+              <UserLists username={data.user?.name} lists={data.lists.filter((_, i) => i < 5)} showCreate={false} />
             }
             {
               data.user && data.user?.favoriteBooks.length > 0 && 
-              <UserFavoriteBooks username={data.user?.name} books={data.user.favoriteBooks} />
+              <UserFavoriteBooks username={data.user?.name} books={data.user.favoriteBooks.filter((_, i) => i < 5)} />
             }
             {
               data.user && data.user.favoriteAuthors.length > 0 &&
-              <UserFavoriteAuthors username={data.user?.name} authors={data.user.favoriteAuthors} />
+              <UserFavoriteAuthors username={data.user?.name} authors={data.user.favoriteAuthors.filter((_, i) => i < 5)} />
             }
             {
               data.user && data.lists && data.lists.length === 0 && 

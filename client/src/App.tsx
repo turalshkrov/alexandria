@@ -21,7 +21,6 @@ const About = lazy(() => import('./pages/about/About'));
 const ErrorPage = lazy(() => import('./pages/error'));
 const SignUp = lazy(() => import('./pages/signup'));
 const SignIn = lazy(() => import('./pages/signin'));
-const Library = lazy(() => import('./pages/library'));
 const Account = lazy(() => import('./pages/account'));
 
 function App() {
@@ -54,7 +53,6 @@ function App() {
               <Route path='/about' element={<About />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/users/:id' element={<User />} />
-              <Route path='/library' element={isAuth ? <Library /> : <Navigate to='/login' />} />
               <Route path='/account' element={isAuth ? <Account /> : <Navigate to='/login' />} />
               <Route path='/login' element={!isAuth ? <Login /> : <Navigate to='/' />} />
             </Route>

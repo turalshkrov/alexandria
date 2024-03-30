@@ -1,8 +1,8 @@
 import ListCard from "@/shared/components/list card";
 import ListCardCreate from "@/shared/components/list card create";
 import { ListType } from "@/types";
-import { HiOutlineExternalLink } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 
 interface UserListProps {
   username: string,
@@ -11,18 +11,22 @@ interface UserListProps {
 }
 
 const UserLists = ({ username, lists, showCreate }: UserListProps) => {
+  const [ collapse, setCollapse ] = useState(true);
+  const handleCollapse = () => {
+    setCollapse(!collapse);
+  }
   return (
     <div className="lists">
-      <div className="favarotie-books-header mb-1 d-f align-items-center justify-space-between">
+      <div className="lists-header mb-1 d-f align-items-center justify-space-between">
         <h3 className="m-0">{username}'s lists</h3>
-        <Link to='/library' className="link-to-library d-f align-items-center justify-center link-hover">
-          {username}'s library
-          <HiOutlineExternalLink />
-        </Link>
+        <p className="show-all d-f align-items-center justify-center link-hover" onClick={handleCollapse}>
+          Show all
+          <IoIosArrowDown className={collapse ? "arrow" : "arrow arrow-up"}/>
+        </p>
       </div>
       <div className="list-container row">
         {
-          lists.filter((_, i) => i < 5).map(list => <ListCard key={list._id} list={list} />)
+          lists.filter((_, i) => i < (collapse ? showCreate ? 5 : 6 : lists.length)).map(list => <ListCard key={list._id} list={list} />)
         }
         {showCreate && <ListCardCreate /> }
       </div>

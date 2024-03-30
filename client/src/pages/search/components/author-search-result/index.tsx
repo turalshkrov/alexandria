@@ -27,9 +27,11 @@ const AuthorSearchResult = () => {
     const searchAuthors = async () => {
       setPage(1);
       try {
-        setAuthorsResult(state => ({ ...state, isLoading: true }));
-        const authors = await getAuthors(searchKeyword, 1);
-        setAuthorsResult(state => ({ ...state, authors, isLoading: false }));
+        if (searchKeyword.length > 2) {
+          setAuthorsResult(state => ({ ...state, isLoading: true }));
+          const authors = await getAuthors(searchKeyword, 1);
+          setAuthorsResult(state => ({ ...state, authors, isLoading: false }));
+        }
       } catch (error) {
         setAuthorsResult(state => ({ ...state, error: error }));
       }
@@ -39,11 +41,13 @@ const AuthorSearchResult = () => {
   }, [searchKeyword]);
   const getMoreResult = async () => {
     try {
-      setAuthorsResult(state => ({ ...state, isLoading: true }));
-      const authors = await getAuthors(searchKeyword, page + 1);
-      setAuthorsResult(state => ({ ...state, authors: [ ...state.authors, ...authors ], isLoading: false }));
+      if (searchKeyword.length > 2) {
+        setAuthorsResult(state => ({ ...state, isLoading: true }));
+        const authors = await getAuthors(searchKeyword, page + 1);
+        setAuthorsResult(state => ({ ...state, authors: [ ...state.authors, ...authors ], isLoading: false }));
+      }
     } catch (error) {
-      setAuthorsResult(state => ({ ...state, error: error }));
+      setAuthorsResult(state => ({ ...state, error: error, isLoading: false }));
     }
   }
   const onClickMoreResult = async () => {
@@ -59,7 +63,7 @@ const AuthorSearchResult = () => {
             {
               authorsResult.authors.map(data => {
                 return (
-                  <Link to={`authors/${data._id}`} className="w-100" key={data._id}>
+                  <Link to={`/authors/${data._id}`} className="w-100" key={data._id}>
                     <div className="author-search-result d-f align-items-center">
                       <div className="author-image-container">
                         <img src={data.image} alt="" className="author-image" />
