@@ -5,3 +5,8 @@ export const getListsByUser = async (id: string | undefined) => {
   const response = await http.get(`/users/${id}/lists`);
   return response.data;
 }
+
+export const getLists = async (serachKey: string, page: number) => {
+  const response = await http.get(`lists?search=${serachKey}&page=${page}`);
+  return response.data;
+}

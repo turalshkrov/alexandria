@@ -1,33 +1,40 @@
-import Button from "@/shared/components/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { setSearchFilter } from "@/redux/slices/SearchSlice";
 
 export default function Filter() {
-  const theme = useAppSelector(state => state.ThemeSlice.theme);
   const searchType: string[] = [
-    "all", "books", "writers", "list"
+    "all", "books", "authors", "lists"
   ];
 
   const searchFilter = useAppSelector(state => state.SearchSlice.searchFilter);
   const searchKeyword = useAppSelector(state => state.SearchSlice.searchKeyword);
   const dispatch = useAppDispatch();
   return (
-    <div className="filter d-f">
+    <>
+    {
+    searchKeyword.length > 2 ?
+    <div className="ml-md-2 ml-lg-3 mt-2">
+    <h2>Advanced search</h2>
+    <p className="text-secondary filter-header-text">
+      Create a more specific search using filter
+    </p>
+    <div className="filter mt-2">
       {
-        searchKeyword && searchType.map(type => {
+        searchType.map(value => {
           return( 
-          <Button
-            id={type}
-            key={type}
-            size="sm"
-            style="outline"
-            color={theme === "dark" ? "light" : "dark"}
-            className={searchFilter === type ? "filter-btn filter-btn-active mr-1" : "filter-btn mr-1"}
-            onClick={() => dispatch(setSearchFilter(type))}>
-            {type}
-          </Button>)
+          <p
+            id={value}
+            key={value}
+            className={searchFilter === value ? "filter-item filter-item-active mr-1" : "filter-item mr-1"}
+            onClick={() => dispatch(setSearchFilter(value))}>
+            {value}
+          </p>)
         })
       }
     </div>
+    </div>
+    : null
+    }
+    </>
   )
 }

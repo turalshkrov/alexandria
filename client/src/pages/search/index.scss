@@ -1,6 +1,7 @@
 .page-vertical-center {
   display: flex;
   align-items: center;
+
   .container {
     margin: 0 auto !important;
   }
@@ -11,6 +12,7 @@
   width: 310px;
   border-radius: 22px;
   transition: .3s;
+
   .search-input {
     min-width: 200px;
     border: none;
@@ -18,9 +20,11 @@
     font-size: 1rem;
     border: none !important;
   }
+
   .search-icon {
     transition: .3s;
   }
+
   .clear-input {
     cursor: pointer;
     position: absolute;
@@ -32,11 +36,13 @@
 .filter-btn {
   text-transform: capitalize;
 }
+
 .filter-btn:hover {
   background-color: transparent;
   color: var(--primary-color);
   border-color: var(--primary-color);
 }
+
 .filter-btn-active {
   background-color: transparent;
   color: var(--primary-color);
@@ -45,16 +51,39 @@
 
 .search-bar {
   border: 1px solid var(--secondary-text-color);
+
   .search-input {
     background-color: var(--primary-bg-color);
     color: var(--primary-text-color);
   }
 }
+
 .input-focus-true {
   border-color: var(--primary-text-color);
 }
+
 .input-focus-false {
   border-color: var(--secondary-text-color);
+}
+
+.filter-header-text {
+  font-size: 14px;
+}
+
+.filter-item {
+  cursor: pointer;
+  padding: .5rem .75rem;
+  border-radius: 4px;
+  transition: .3s;
+  text-transform: capitalize;
+
+  &:hover {
+    background-color: var(--active-link-bg-color);
+  }
+}
+
+.filter-item-active {
+  background-color: var(--active-link-bg-color);
 }
 
 @media (max-width: 767px) {

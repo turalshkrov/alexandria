@@ -1,0 +1,31 @@
+.book-search-result {
+  padding: 5px;
+  border-bottom: 1px solid var(--card-border-color);
+
+  .book-cover-container {
+    background-color: lightgray;
+    position: relative;
+    width: 55px;
+    height: 82.5px;
+    margin-right: .5rem;
+
+    .book-cover {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .book-info {
+
+    .book-info-published,
+    .book-info-author {
+      font-size: 14px;
+    }
+  }
+}
+
+.books-loading {
+  height: 44px;
+}

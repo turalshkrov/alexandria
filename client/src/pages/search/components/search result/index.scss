@@ -1,3 +1,17 @@
-.books-container {
-  align-items: stretch;
+.result-container {
+  padding: 1rem;
+  border: 1px solid var(--card-border-color);
+
+  .show-more {
+    cursor: pointer;
+    transition: color .3s;
+    
+    svg {
+      margin-left: .5rem;
+    }
+
+    &:hover {
+      color: var(--primary-text-color);
+    }
+  }
 }

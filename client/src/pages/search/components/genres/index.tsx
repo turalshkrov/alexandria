@@ -1,11 +1,14 @@
+import { useAppSelector } from "@/hooks/hook";
 import genres from "./genres.json";
 import GenreCard from "@/shared/components/genre card";
 
 export default function BrowseGenres() {
+  const searchKeyword = useAppSelector(state => state.SearchSlice.searchKeyword);
   return (
-    <div className="my-2">
+    <>
       {
-        <>
+        searchKeyword.length < 3 &&
+        <div className="my-2">
         <h2 className="mb-2">Browse All</h2>
         <div className="genres">
           {
@@ -21,8 +24,8 @@ export default function BrowseGenres() {
             })
           }
         </div>
-        </>
+        </div>
       }
-    </div>
+      </>
   )
 }
