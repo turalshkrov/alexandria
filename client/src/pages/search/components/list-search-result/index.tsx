@@ -50,7 +50,7 @@ const ListSearchResult = () => {
   }
   return (
     <>
-      {(searchFilter === 'authors' || searchFilter === 'all') &&
+      {(searchFilter === 'lists' || searchFilter === 'all') &&
         <>
           <h2>Lists</h2>
           <div className="row result-container mb-2">
