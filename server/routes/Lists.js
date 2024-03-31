@@ -27,12 +27,16 @@ router.get('/', async (req, res) => {
     const page = req.query.page || 1;
     const skip = (page - 1) * limit;
     const lists = await List.find({
-      title: { $regex: new RegExp(searchKey, 'i')}
+      title: { $regex: new RegExp(searchKey, 'i') }
     })
-    .populate({path: 'books', popuate: { path: 'author' }})
-    .populate('user')
-    .skip(skip)
-    .limit(limit);
+      .populate({
+        path: 'books',
+        populate: {
+          path: 'author'
+        }
+      })
+      .skip(skip)
+      .limit(limit);
     res.status(200).json(lists);
   } catch (error) {
     res.status(500).json(error);
@@ -51,7 +55,7 @@ router.get('/:id', getList, async (req, res) => {
 // UPDATE LIST
 router.patch('/:id', authenticationToken, getList, listValidationRules(), validation, async (req, res) => {
   try {
-    if(res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
+    if (res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     const { title, cover } = req.body;
     res.list.title = title;
     res.list.cover = cover;
@@ -65,7 +69,7 @@ router.patch('/:id', authenticationToken, getList, listValidationRules(), valida
 // DELETE LIST
 router.delete('/:id', authenticationToken, getList, async (req, res) => {
   try {
-    if(res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
+    if (res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     await List.deleteOne(res.list);
     res.status(200).json({ message: "List deleted" });
   } catch (error) {
@@ -74,9 +78,9 @@ router.delete('/:id', authenticationToken, getList, async (req, res) => {
 });
 
 // ADD TO LIST
-router.patch('/:id/add-book', authenticationToken, checkBookId, async (req, res) => {
+router.patch('/:id/add-book', authenticationToken, getList, checkBookId, async (req, res) => {
   try {
-    if(res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
+    if (res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     const bookId = req.body.bookId;
     res.list.books.push(bookId);
     await res.list.save();
@@ -90,11 +94,11 @@ router.patch('/:id/add-book', authenticationToken, checkBookId, async (req, res)
 });
 
 // REMOVE FROM LIST
-router.patch('/:id/remove-book', authenticationToken, checkBookId, async (req, res) => {
+router.patch('/:id/remove-book', authenticationToken, getList, checkBookId, async (req, res) => {
   try {
-    if(res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
+    if (res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     const bookId = req.body.bookId;
-    res.list.books = [ ...res.list.books.filter(_id => _id.toString() !== bookId) ];
+    res.list.books = [...res.list.books.filter(_id => _id.toString() !== bookId)];
     await res.list.save();
     res.status(200).json({
       message: `Removed from ${res.list.title}`,
