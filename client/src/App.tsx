@@ -1,5 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from './hooks/hook';
+import { getMe, getMyLists, getMyReviews } from './redux/slices/userSlice';
 import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
 import Navbar from '@/shared/layout/navbar';
 import Home from '@/pages/home';
@@ -9,8 +11,6 @@ import Admin from '@/pages/admin/Admin';
 import PrivateRoute from '@/routes/PrivateRoute';
 import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
-import { useAppDispatch, useAppSelector } from './hooks/hook';
-import { getMe, getMyLists, getMyReviews } from './redux/slices/userSlice';
 import './App.scss';
 
 const Search = lazy(() => import('./pages/search'));
@@ -22,6 +22,7 @@ const ErrorPage = lazy(() => import('./pages/error'));
 const SignUp = lazy(() => import('./pages/signup'));
 const SignIn = lazy(() => import('./pages/signin'));
 const Account = lazy(() => import('./pages/account'));
+const ListPage = lazy(() => import('./pages/list'));
 
 function App() {
   const isAuth = useAppSelector(state => state.authSlice.isAuth);
@@ -53,6 +54,7 @@ function App() {
               <Route path='/about' element={<About />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/users/:id' element={<User />} />
+              <Route path='/lists/:id' element={<ListPage />} />
               <Route path='/account' element={isAuth ? <Account /> : <Navigate to='/login' />} />
               <Route path='/login' element={!isAuth ? <Login /> : <Navigate to='/' />} />
             </Route>

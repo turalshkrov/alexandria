@@ -6,7 +6,18 @@ export const getListsByUser = async (id: string | undefined) => {
   return response.data;
 }
 
+export const getListById = async (id: string | undefined) => {
+  if (id?.length !== 24) { throw new Error() }
+  const response = await http.get(`/lists/${id}`);
+  return response.data;
+}
+
 export const getLists = async (serachKey: string, page: number) => {
   const response = await http.get(`lists?search=${serachKey}&page=${page}`);
+  return response.data;
+}
+
+export const createNewList = async (title: string) => {
+  const response = await http.post('lists/create', { title });
   return response.data;
 }

@@ -40,12 +40,18 @@ export const getMyReviews = createAsyncThunk(
     const response = await http.get(`users/${userId}/reviews`);
     return response.data;
   }
-)
+);
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    addNewListToUI: (state, action) => {
+      const list = action.payload.list;
+      list.user = state.user;
+      state.lists?.push(list);
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getMe.pending, state => {
@@ -85,3 +91,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+export const { addNewListToUI } = userSlice.actions;

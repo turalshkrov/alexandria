@@ -3,7 +3,7 @@
     margin-top: .25rem;
 
     .list-title, .create-list {
-      font-size: 18px;
+      font-size: 1rem;
       font-weight: 500;
     }
     .list-author, .create-list-secondary {
@@ -14,4 +14,8 @@
       }
     }
   }
+}
+
+.create-list {
+  cursor: pointer;
 }

@@ -1,5 +1,5 @@
-import ListCard from "@/shared/components/list card";
-import ListCardCreate from "@/shared/components/list card create";
+import ListCard from "@/shared/components/list-card";
+import CreateList from "@/shared/components/create-list";
 import { ListType } from "@/types";
 import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
@@ -26,9 +26,9 @@ const UserLists = ({ username, lists, showCreate }: UserListProps) => {
       </div>
       <div className="list-container row">
         {
-          lists.filter((_, i) => i < (collapse ? showCreate ? 5 : 6 : lists.length)).map(list => <ListCard key={list._id} list={list} />)
+          lists.filter((_, i) => i < (collapse ? showCreate ? 3 : 4 : lists.length)).map(list => <ListCard key={list._id} list={list} />)
         }
-        {showCreate && <ListCardCreate /> }
+        {showCreate && <CreateList /> }
       </div>
     </div>
   )

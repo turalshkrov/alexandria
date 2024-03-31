@@ -1,0 +1,37 @@
+.list-page {
+  .list-cover {
+    margin: 0 auto;
+    cursor: pointer;
+  }
+  
+  .list-info {
+    .list-author {
+      display: inline-block;
+      margin-top: .25rem !important;
+      font-size: 18px;
+    }
+    .created-date {
+      margin-top: .25rem !important;
+      font-size: 15px;
+    }
+  }
+  .list-actions {
+    .list-action-btn {
+      font-size: 18px;
+      background-color: var(--primary-bg-color) !important;
+      color: var(--primary-text-color);
+      border: none;
+      svg {
+        margin-right: .25rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .list-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

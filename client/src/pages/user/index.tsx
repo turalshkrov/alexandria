@@ -54,7 +54,7 @@ const User = () => {
             <div className="user-info col-8 px-2 px-md-0 mt-1 mt-sm-2 col-md-12">
               <h3 className="name d-f align-items-center">
                 {data.user?.name}
-                {data.user?.username === 'alexandria' && <BiSolidBadgeCheck/>}
+                {data.user?.verified && <BiSolidBadgeCheck/>}
               </h3>
               <p className="username text-secondary mb-md-1">{data.user?.username}</p>
             </div>

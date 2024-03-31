@@ -3,6 +3,7 @@ import ThemeSlice from './slices/ThemeSlice';
 import SearchSlice from './slices/SearchSlice';
 import authSlice from './slices/authSlice';
 import userSlice from './slices/userSlice';
+import ModalSlice from './slices/ModalSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     SearchSlice,
     authSlice,
     userSlice,
+    ModalSlice,
   },
 })
 
