@@ -2,7 +2,7 @@
 import { FaXmark } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { handleCloseCreateList } from "@/redux/slices/ModalSlice";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { toast, Toaster } from "sonner";
 import { createNewList } from "@/api/list";
 import { addNewListToUI } from "@/redux/slices/userSlice";
@@ -11,7 +11,6 @@ import "../index.scss";
 import "./index.scss";
 
 export default function CreateListModal() {
-  const listTitle = useRef<HTMLInputElement>(null);
   const showCreateListModal = useAppSelector(state => state.ModalSlice.showCreateList);
   const dispatch = useAppDispatch();
   const [title, setTitle] = useState("");
@@ -37,9 +36,6 @@ export default function CreateListModal() {
       dispatch(addNewListToUI(list));
     }
   }
-  useEffect(() => {
-    listTitle.current?.focus();
-  })
   return (
     <>
       <Toaster position="top-right" />
@@ -58,7 +54,7 @@ export default function CreateListModal() {
             </div>
             <div className="modal-body">
               <input id="list-title-input"
-                ref={listTitle}
+                name="title"
                 onChange={handleChange}
                 value={title}
                 type="text"
