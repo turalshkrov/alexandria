@@ -38,6 +38,9 @@
       }
 
       .book-action-btn {
+        background-color: var(--primary-bg-color) !important;
+        color: var(--primary-text-color);
+        border: none;
         svg {
           margin-right: .25rem;
         }
