@@ -6,7 +6,12 @@ const getList = async (req, res, next) => {
     if (id.length !== 24) {
       return res.status(404).json({ message: "List not found" });
     }
-    const list = await List.findById(id).populate({path: 'books', popuate: { path: 'author' }}).populate('user');
+    const list = await List.findById(id).populate({
+      path: 'books',
+      populate: {
+        path: 'author'
+      }
+    }).populate('user');
     if (!list) {
       return res.status(404).json({ message: "List not found" });
     }
