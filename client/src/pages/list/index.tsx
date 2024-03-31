@@ -9,6 +9,7 @@ import { FiShare } from "react-icons/fi";
 import Preloader from "@/shared/components/preloader/Preloader";
 import "./index.scss";
 import Button from "@/shared/components/button";
+import BookTable from "./book-table";
 
 interface ListPageState {
   list: ListType | undefined,
@@ -53,8 +54,8 @@ const ListPage = () => {
     data.isLoading ?
     <Preloader /> :
     <div className="page list-page">
-      <div className="container py-2 py-lg-3">
-        <div className="row align-items-center">
+      <div className="container py-2 py-lg-3 px-1 px-md-2">
+        <div className="row align-items-center mx-md-2 mx-lg-3">
           <div className="col-12 col-md-3 col-lg-2 d-f justify-center p-relative">
             <img src={ data.list?.cover || "https://lh3.googleusercontent.com/drive-viewer/AKGpihZbn3AE3NQ3AnVS07A40OsfRKHWGIrbPYkuFbAmqHAXP7zlb8OTceLvYvBKXvmFh8En8hTvAk5tK3M-RkUI2wWxdJefuw=s2560" } 
               alt={data.list?.title}
@@ -90,8 +91,8 @@ const ListPage = () => {
             }
           </div>
         </div>
-        <div className="books-container mb-2">
-          
+        <div className="books-container mt-2">
+          <BookTable data={data.list?.books || []}/>
         </div>
       </div>
     </div>

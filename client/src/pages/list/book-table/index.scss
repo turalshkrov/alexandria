@@ -1,0 +1,53 @@
+.book-table {
+  border-collapse: collapse;
+
+  thead {
+    text-align: left;
+    border-bottom: 1px solid var(--card-border-color);
+
+    th {
+      padding: .25rem;
+    }
+  }
+
+  tbody {
+    td {
+      padding: .25rem;
+
+      .book-cover-container {
+        position: relative;
+        width: 40px;
+        height: 60px;
+        overflow: hidden;
+        margin-right: .5rem;
+
+        .book-cover {
+          width: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+      }
+
+      .publish-date {
+        font-size: 14px;
+      }
+
+      .book-author {
+        font-size: 15px;
+      }
+
+      .book-action-btn {
+        svg {
+          margin-right: .25rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .author-td {
+    display: none;
+  }
+}

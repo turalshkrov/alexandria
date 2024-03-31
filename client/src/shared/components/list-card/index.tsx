@@ -16,7 +16,7 @@ const ListCard = ({ list } : listCardProps) => {
         </Link>
         <div className="list-card-footer">
           <div className="list-info">
-            <Link className='list-title link-hover' to={`lists/${list._id}`}>
+            <Link className='list-title link-hover' to={`/lists/${list._id}`}>
               {list.title}
             </Link>
             <p className='list-author text-secondary d-f align-items-center'>
