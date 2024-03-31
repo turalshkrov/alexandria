@@ -21,3 +21,9 @@ export const createNewList = async (title: string) => {
   const response = await http.post('lists/create', { title });
   return response.data;
 }
+
+export const deleteListById = async (id: string) => {
+  const response = await http.delete(`/lists/${id}`);
+  if (response.status === 200) return id;
+  return response.data;
+}

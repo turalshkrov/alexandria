@@ -5,6 +5,7 @@ import http from "@/api/api";
 interface UserState {
   user: UserType | null,
   lists: ListType[] | null,
+  selectedList: string | null,
   reviews: ReviewType[] | null,
   isLoading: boolean,
   error: unknown,
@@ -13,6 +14,7 @@ interface UserState {
 const initialState: UserState = {
   user: null,
   lists: null,
+  selectedList: null,
   reviews: null,
   isLoading: false,
   error: null,
@@ -50,6 +52,13 @@ const userSlice = createSlice({
       const list = action.payload.list;
       list.user = state.user;
       state.lists?.push(list);
+    },
+    removeListFromUI: (state, action) => {
+      const listId = action.payload;
+      state.lists = state.lists?.filter(list => list._id !== listId) || state.lists;
+    },
+    setSelectedList: (state, action) => {
+      state.selectedList = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -91,4 +100,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { addNewListToUI } = userSlice.actions;
+export const { addNewListToUI, setSelectedList, removeListFromUI } = userSlice.actions;

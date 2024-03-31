@@ -1,25 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 interface ModalState {
-  showCreateList: boolean,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  isOpen: any
 }
 
 const initialState: ModalState = {
-  showCreateList: false,
+  isOpen: {}
 }
 
 const ModalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    handleShowCreateList: (state) => {
-      state.showCreateList = true;
-    },
-    handleCloseCreateList: (state) => {
-      state.showCreateList = false;
+    setIsOpen: (state, action) => {
+      state.isOpen[action.payload.id] = action.payload.isOpen;
     }
   }
 });
 
 export default ModalSlice.reducer;
-export const { handleShowCreateList, handleCloseCreateList } = ModalSlice.actions;
+export const { setIsOpen } = ModalSlice.actions;

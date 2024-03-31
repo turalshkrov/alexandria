@@ -1,16 +1,22 @@
 import { useAppDispatch } from '@/hooks/hook';
-import { handleCloseCreateList, handleShowCreateList } from '@/redux/slices/ModalSlice';
+import { setIsOpen } from '@/redux/slices/ModalSlice';
+import { useEffect } from 'react';
 import CreateListModal from '../modals/create-list';
 import '../list-card/index.scss';
-import { useEffect } from 'react';
 
 const CreateList = () => {
   const dispatch = useAppDispatch();
   const showModal = () => {
-    dispatch(handleShowCreateList());
+    dispatch(setIsOpen({
+      id: 'createList',
+      isOpen: true
+    }));
   }
   useEffect(() => {
-    dispatch(handleCloseCreateList());
+    dispatch(setIsOpen({
+      id: 'createList',
+      isOpen: false
+    }));
   });
   return (
     <>

@@ -33,7 +33,7 @@ const AuthorSearchResult = () => {
           setAuthorsResult(state => ({ ...state, authors, isLoading: false }));
         }
       } catch (error) {
-        setAuthorsResult(state => ({ ...state, error: error }));
+        setAuthorsResult(state => ({ ...state, error: error, isLoading: false }));
       }
     }
     searchAuthors();

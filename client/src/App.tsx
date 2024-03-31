@@ -12,6 +12,7 @@ import PrivateRoute from '@/routes/PrivateRoute';
 import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
 import './App.scss';
+import { Toaster } from 'sonner';
 
 const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs'));
@@ -44,6 +45,7 @@ function App() {
               <>
                 <Navbar />
                 <Outlet />
+                <Toaster position="top-right" />
                 <Footer />
               </>
             )}>

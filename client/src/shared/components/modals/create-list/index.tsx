@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FaXmark } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
-import { handleCloseCreateList } from "@/redux/slices/ModalSlice";
+import { setIsOpen } from "@/redux/slices/ModalSlice";
 import { useState } from "react";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { createNewList } from "@/api/list";
 import { addNewListToUI } from "@/redux/slices/userSlice";
+import { modalIsOpenSelector } from "@/redux/selectors";
 import Button from "../../button";
 import "../index.scss";
 import "./index.scss";
 
 export default function CreateListModal() {
-  const showCreateListModal = useAppSelector(state => state.ModalSlice.showCreateList);
+  const isOpen = useAppSelector(state => modalIsOpenSelector(state, "createList"));
   const dispatch = useAppDispatch();
   const [title, setTitle] = useState("");
   const handleChange = (e: any) => {
@@ -22,7 +23,7 @@ export default function CreateListModal() {
     if (target.classList.contains('modal') ||
       target.classList.contains('hide-modal') ||
       target.closest('.hide-modal')) {
-      dispatch(handleCloseCreateList());
+      dispatch(setIsOpen({ id: 'createList', isOpen: false }));
       setTitle("");
     }
   }
@@ -30,7 +31,7 @@ export default function CreateListModal() {
     if (!title.trim()) { toast.error('Title is required') }
     else {
       setTitle("");
-      dispatch(handleCloseCreateList());
+      dispatch(setIsOpen({ id: 'createList', isOpen: false }));
       const list = await createNewList(title);
       if (list) toast.success('List created');
       dispatch(addNewListToUI(list));
@@ -38,8 +39,7 @@ export default function CreateListModal() {
   }
   return (
     <>
-      <Toaster position="top-right" />
-      <div className={showCreateListModal ? 'modal show' : 'modal'} id='create-list-modal' onClick={hideModal}>
+      <div className={isOpen ? 'modal show' : 'modal'} id='create-list-modal' onClick={hideModal}>
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header d-f justify-space-between align-items-center">

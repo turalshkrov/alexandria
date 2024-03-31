@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { useAppSelector } from "@/hooks/hook";
+import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { useEffect, useState } from "react";
 import { ListType } from "@/types";
 import { getListById } from "@/api/list";
@@ -10,6 +10,9 @@ import Preloader from "@/shared/components/preloader/Preloader";
 import "./index.scss";
 import Button from "@/shared/components/button";
 import BookTable from "./book-table";
+import { setSelectedList } from "@/redux/slices/userSlice";
+import { setIsOpen } from "@/redux/slices/ModalSlice";
+import ConfirmDeleteList from "@/shared/components/modals/confirm-delet-list";
 
 interface ListPageState {
   list: ListType | undefined,
@@ -19,7 +22,7 @@ interface ListPageState {
 }
 
 const ListPage = () => {
-  const theme = useAppSelector(state => state.ThemeSlice.theme);
+  const dispatch = useAppDispatch();
   const [ data, setData ] = useState<ListPageState>({
     list: undefined,
     editPermission: false,
@@ -30,6 +33,10 @@ const ListPage = () => {
   const params = useParams();
   const id = params.id;
   const createdDate = new Date(String(data.list?.createdAt));
+  const showDeleteModal = () => {
+    dispatch(setSelectedList(data.list?._id));
+    dispatch(setIsOpen({ id: 'confirmDeleteList', isOpen: true }));
+  }
 
   useEffect(() => {
     const getList = async () => {
@@ -43,7 +50,7 @@ const ListPage = () => {
           setData({ list, isLoading: false, editPermission: false, error: null, });
         }
       } catch (error) {
-        setData(state => ({ ...state, error}));
+        setData(state => ({ ...state, error, isLoading: false }));
       }
     }
     getList();
@@ -75,24 +82,32 @@ const ListPage = () => {
             {
               data.editPermission && 
               <div className="d-f list-actions mt-1">
-                <Button style="link" color={theme === 'dark' ? 'light' : 'dark'} className="p-0 list-action-btn d-f align-items-center mr-2">
+                <Button 
+                  style="link"
+                  className="p-0 list-action-btn d-f align-items-center mr-2">
                   <MdOutlineEdit/>
                   Edit
                 </Button>
-                <Button style="link" color={theme === 'dark' ? 'light' : 'dark'} className="p-0 list-action-btn d-f align-items-center mr-2">
+                <Button 
+                  style="link"
+                  className="p-0 list-action-btn d-f align-items-center mr-2">
                   <FiShare/>
                   Share
                 </Button>
-                <Button style="link" color={theme === 'dark' ? 'light' : 'dark'} className="p-0 list-action-btn d-f align-items-center">
+                <Button
+                  style="link" 
+                  className="p-0 list-action-btn d-f align-items-center"
+                  onClick={showDeleteModal}>
                   <FaRegCircleXmark/>
                   Delete
                 </Button>
+                <ConfirmDeleteList />
               </div>
             }
           </div>
         </div>
         <div className="books-container mt-2">
-          <BookTable data={data.list?.books || []}/>
+          <BookTable editPermission={data.editPermission} data={data.list?.books || []}/>
         </div>
       </div>
     </div>
