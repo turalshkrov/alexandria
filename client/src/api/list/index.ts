@@ -27,3 +27,9 @@ export const deleteListById = async (id: string) => {
   if (response.status === 200) return id;
   return response.data;
 }
+
+export const removeBookFromList = async (listId: string, bookId: string) => {
+  const response = await http.patch(`/lists/${listId}/remove-book`, { bookId });
+  if (response.status === 200) return { listId, bookId };
+  return response.data;
+}

@@ -6,6 +6,7 @@ interface UserState {
   user: UserType | null,
   lists: ListType[] | null,
   selectedList: string | null,
+  selectedBook: string | null,
   reviews: ReviewType[] | null,
   isLoading: boolean,
   error: unknown,
@@ -15,6 +16,7 @@ const initialState: UserState = {
   user: null,
   lists: null,
   selectedList: null,
+  selectedBook: null,
   reviews: null,
   isLoading: false,
   error: null,
@@ -53,13 +55,24 @@ const userSlice = createSlice({
       list.user = state.user;
       state.lists?.push(list);
     },
-    removeListFromUI: (state, action) => {
+    setSelectedList: (state, action) => {
+      state.selectedList = action.payload;
+    },
+    setSelectedBook: (state, action) => {
+      const bookId = action.payload;
+      state.selectedBook = bookId;
+    },
+    removeBookFromSlice: (state, action) => {
+      const { listId, bookId } = action.payload;
+      const list = state.lists?.find(list => list._id === listId);
+      if (list) list.books = list?.books.filter(book => book._id !== bookId) || list?.books;
+      state.lists = state.lists?.filter(list => list._id !== listId) || state.lists;
+      if (list) state.lists?.push(list);
+    },
+    removeListFromSlice: (state, action) => {
       const listId = action.payload;
       state.lists = state.lists?.filter(list => list._id !== listId) || state.lists;
     },
-    setSelectedList: (state, action) => {
-      state.selectedList = action.payload;
-    }
   },
   extraReducers: (builder) => {
     builder
@@ -100,4 +113,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { addNewListToUI, setSelectedList, removeListFromUI } = userSlice.actions;
+export const { addNewListToUI, setSelectedList, setSelectedBook, removeListFromSlice, removeBookFromSlice } = userSlice.actions;

@@ -55,6 +55,13 @@ const ListPage = () => {
     }
     getList();
   }, [ id, userLists ]);
+
+  useEffect(() => {
+    if (data.editPermission) {
+      dispatch(setSelectedList(data.list?._id));
+    }
+  });
+  
   return (
     <>
     {

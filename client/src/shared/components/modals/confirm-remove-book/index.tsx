@@ -2,16 +2,15 @@ import { setIsOpen } from '@/redux/slices/ModalSlice';
 import { FaXmark } from 'react-icons/fa6'
 import { useAppDispatch, useAppSelector } from '@/hooks/hook';
 import { modalIsOpenSelector } from '@/redux/selectors';
-import { removeListFromSlice, setSelectedList } from '@/redux/slices/userSlice';
-import Button from '../../button';
-import { deleteListById } from '@/api/list';
-import { useNavigate } from 'react-router-dom';
+import { removeBookFromSlice, setSelectedList } from '@/redux/slices/userSlice';
+import { removeBookFromList } from '@/api/list';
 import { toast } from 'sonner';
+import Button from '../../button';
 
-export default function ConfirmDeleteList (){
-  const navigate = useNavigate();
-  const isOpen = useAppSelector(state => modalIsOpenSelector(state, 'confirmDeleteList'));
+export default function ConfirmRemoveBook (){
+  const isOpen = useAppSelector(state => modalIsOpenSelector(state, 'confirmRemoveBook'));
   const selectedList = useAppSelector(state => state.userSlice.selectedList);
+  const selectedBook = useAppSelector(state => state.userSlice.selectedBook);
   const dispatch = useAppDispatch();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const hideModal = (e: any) => {
@@ -19,17 +18,16 @@ export default function ConfirmDeleteList (){
     if (target.classList.contains('modal') ||
       target.classList.contains('hide-modal') ||
       target.closest('.hide-modal')) {
-      dispatch(setIsOpen({ id: 'confirmDeleteList', isOpen: false }));
+      dispatch(setIsOpen({ id: 'confirmRemoveBook', isOpen: false }));
       dispatch(setSelectedList(null));
     }
   }
-  const deleteList = async () => {
+  const removeBook = async () => {
     dispatch(setIsOpen({ id: 'confirmDeleteList', isOpen: false }));
-    const id = await deleteListById(selectedList || "");
-    if (id) {
-      dispatch(removeListFromSlice(id));
-      navigate('/profile');
-      toast.success('List deleted');
+    const { listId, bookId } = await removeBookFromList(selectedList || "", selectedBook || "");
+    if (listId) {
+      dispatch(removeBookFromSlice({ listId, bookId }));
+      toast.success('Book removed from list');
     }
   }
   return (
@@ -39,7 +37,7 @@ export default function ConfirmDeleteList (){
           <div className="modal-header d-f justify-space-between align-items-center">
             <div className="modal-title">
               <h3 className=" m-0">
-                Delete this list?
+                Remove book from list?
               </h3>
             </div>
             <div className="hide-modal" onClick={hideModal}>
@@ -49,7 +47,7 @@ export default function ConfirmDeleteList (){
         </div>
         <div className="modal-footer d-f align-items-center justify-flex-end mt-3">
           <Button size="sm" color="light" style="solid" className="hide-modal">Cancel</Button>
-          <Button size="sm" color="primary" style="solid" className="ml-1" onClick={deleteList}>Delete</Button>
+          <Button size="sm" color="primary" style="solid" className="ml-1" onClick={removeBook}>Delete</Button>
         </div>
       </div>
     </div>

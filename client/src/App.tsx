@@ -45,8 +45,8 @@ function App() {
               <>
                 <Navbar />
                 <Outlet />
-                <Toaster position="top-right" />
                 <Footer />
+                <Toaster position="top-right" />
               </>
             )}>
               <Route path='/' element={<Home />} />

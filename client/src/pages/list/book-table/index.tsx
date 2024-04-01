@@ -1,14 +1,23 @@
 import { BookType } from "@/types";
 import { Link } from "react-router-dom";
-  import { FaRegCircleXmark } from "react-icons/fa6";
-import { useAppSelector } from "@/hooks/hook";
+import { FaRegCircleXmark } from "react-icons/fa6";
+import { useAppDispatch } from "@/hooks/hook";
+import { setIsOpen } from "@/redux/slices/ModalSlice";
+import { setSelectedBook } from "@/redux/slices/userSlice";
+import { useEffect } from "react";
+import ConfirmRemoveBook from "@/shared/components/modals/confirm-remove-book";
 import Button from "@/shared/components/button";
-import './index.scss';  
+import './index.scss';
 
 const BookTable = ({ data, editPermission }: { data: BookType[], editPermission: boolean }) => {
-  const theme = useAppSelector(state => state.ThemeSlice.theme);
-
-
+  const dispatch = useAppDispatch()
+  const showModal = (id: string) => {
+    dispatch(setIsOpen({ id: 'confirmRemoveBook', isOpen: true }));
+    dispatch(setSelectedBook(id));
+  }
+  useEffect(() => {
+    dispatch(setIsOpen({ id: 'confirmRemoveBook', isOpen: false }));
+  })
   return (
     <table className="book-table w-100 mx-md-2 mx-lg-3">
       <thead>
@@ -43,10 +52,14 @@ const BookTable = ({ data, editPermission }: { data: BookType[], editPermission:
               {
                 editPermission &&
                 <td className="actions-td">
-                  <Button style="link" color={theme === 'dark' ? 'light' : 'dark'} className="p-0 book-action-btn d-f align-items-center">
+                  <Button 
+                    style="link" 
+                    className="p-0 book-action-btn d-f align-items-center"
+                    onClick={() => showModal(book._id)}>
                     <FaRegCircleXmark/>
                     Remove
                   </Button>
+                  <ConfirmRemoveBook />
                 </td>
               }
             </tr>
