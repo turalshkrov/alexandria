@@ -55,7 +55,7 @@ router.get('/:id', getList, async (req, res) => {
 // UPDATE LIST
 router.patch('/:id', authenticationToken, getList, listValidationRules(), validation, async (req, res) => {
   try {
-    if (res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
+    if (res.list.user._id.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     const { title, cover } = req.body;
     res.list.title = title;
     res.list.cover = cover;
