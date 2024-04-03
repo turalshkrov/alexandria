@@ -234,7 +234,7 @@ router.patch('/remove-favorite-authors', authenticationToken, async (req, res) =
 });
 
 // DELETE USER
-router.delete('/', authenticationToken, async (req, res) => {
+router.patch('/', authenticationToken, async (req, res) => {
   try {
     const user = await User.findById(req.user).select('+password');
     const password = req.body.password;
