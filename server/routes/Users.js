@@ -138,10 +138,11 @@ router.get('/:id/reviews', getUser, async (req, res) => {
 router.patch('/update', authenticationToken, usernameValidationRules(), validation, checkUsername, async (req, res) => {
   try {
     const user = await User.findById(req.user);
-    const { name, username, profileImage } = req.body;
+    const { name, username, profileImage, location } = req.body;
     user.name = name;
     user.username = username;
     user.profileImage = profileImage;
+    user.location = location;
     await user.save();
     res.status(200).json({ message: "User updated" });
   } catch (error) {
