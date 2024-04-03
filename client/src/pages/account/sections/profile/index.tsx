@@ -76,8 +76,7 @@ const ProfileSection = () => {
             onChange={handleProfileImageChange}/>
         </div>
         <div className="profile-image-item">
-          <div className="profile-image-container br-full">
-            <img src={userEditForm.profileImage} className="profile-image w-100 br-full" />
+          <div className="profile-image-container br-full" style={{background: `url(${userEditForm.profileImage})`}}>
           </div>
           <button 
             className="update-image-btn mt-1 br-1"

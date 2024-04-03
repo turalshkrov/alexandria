@@ -8,7 +8,6 @@ import { updateListOnUi } from "@/redux/slices/userSlice";
 import { modalIsOpenSelector } from "@/redux/selectors";
 import { createPortal } from "react-dom";
 import "./index.scss";
-import Button from "../../button";
 
 const EditList = () => {
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, "editList"));
@@ -37,7 +36,7 @@ const EditList = () => {
       dispatch(updateListOnUi(list));
     }
   }
-  
+
   return (
     createPortal(<div className={isOpen ? 'modal show' : 'modal'} id='edit-list-modal' onClick={hideModal}>
       <div className="modal-dialog">
@@ -53,7 +52,9 @@ const EditList = () => {
             </div>
           </div>
           <div className="modal-body w-100 p-2 edit-modal-body">
-            <input id="list-title-edit-input"
+            <input
+              className="list-title-input"
+              id="list-title-edit-input"
               name="title"
               onChange={handleTitleChange}
               value={title}
@@ -61,8 +62,8 @@ const EditList = () => {
               maxLength={64} />
           </div>
           <div className="modal-footer d-f align-items-center justify-flex-end">
-            <Button size="sm" color="light" style="solid" className="hide-modal">Cancel</Button>
-            <Button size="sm" color="primary" style="solid" className="ml-1" onClick={editList}>Save</Button>
+            <button className="modal-btn cancel-btn hide-modal">Cancel</button>
+            <button className="modal-btn ml-1" onClick={editList}>Save</button>
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 .profile-image {
-  img {
-    box-shadow: 0px 0px 0px 1px var(--card-border-color);
-  }
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  padding-top: 100%;
 }
 
 .user-info {

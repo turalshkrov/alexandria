@@ -18,3 +18,18 @@ export const updateProfile = async (data: EditProfileData) => {
   if (response.status === 200) return data;
   return response.data;
 }
+
+export const updateEmail = async (email: string) => {
+  const response = await http.patch('users/update-email', { email });
+  return response.data;
+}
+
+export const updatePassword = async (password: string, newPassword: string) => {
+  const response = await http.patch('users/update-password', { password, newPassword });
+  return response.data;
+}
+
+export const deleteAccount = async (password: string) => {
+  const response = await http.patch('users/', { password });
+  return response.data;
+}

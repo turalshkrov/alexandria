@@ -4,18 +4,21 @@ aside {
   top: 0;
   display: block;
   z-index: 3;
-  a {
+  a, .aside-link {
     text-transform: capitalize;
+    cursor: pointer;
     padding: 6px 8px;
     font-size: 14px;
     margin: 3px 0;
-    transition: .3s;
+    transition: .3s background-color;
 
     &:hover {
       background-color: var(--active-link-bg-color);
     }
   }
-
+  .aside-link-active {
+    background-color: var(--active-link-bg-color);
+  }
   p {
     padding: 0 8px;
   }
@@ -51,6 +54,9 @@ aside {
     width: 200px;
     height: 200px;
     overflow: hidden;
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
   }
   .update-image-btn {
     padding: 5px 10px;
@@ -73,4 +79,39 @@ aside {
       background-color: #217a33;
     }
   }
+}
+.account-btn {
+  background-color: var(--active-link-bg-color);
+  padding: 10px 14px;
+  border: 1px solid var(--card-border-color);
+  color: var(--primary-text-color);
+  cursor: pointer;
+  svg {
+    margin-right: .25rem;
+  }
+}
+.delete-text {
+  color: #f85149;
+}
+.success-btn{
+  background-color: #238636;
+  color: #FFF;
+  &:hover {
+    background-color: #217a33;
+  }
+}
+
+.get-help-text {
+  font-size: 14px;
+  svg {
+    margin-right: .25rem;
+  }
+  a {
+    margin-left: .5rem;
+    text-decoration: underline;
+  }
+}
+.info-text {
+  margin-top: .5rem;
+  font-size: 14px;
 }

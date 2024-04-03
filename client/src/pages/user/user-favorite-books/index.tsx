@@ -18,7 +18,7 @@ const UserFavoriteBooks = ({ username, books }: UserFavoriteBooksProps) => {
       <div className="favarotie-books-header d-f align-items-center justify-space-between">
         <h4 className="fw-regular m-0">{username}'s favorite books</h4>
         <p className="show-all d-f align-items-center justify-center link-hover m-0" onClick={handleCollapse}>
-          Show all
+          Show {collapse ? 'all' : 'less'}
           <IoIosArrowDown className={collapse ? "arrow" : "arrow arrow-up"}/>
         </p>
       </div>

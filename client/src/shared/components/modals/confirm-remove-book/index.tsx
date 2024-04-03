@@ -5,7 +5,6 @@ import { removeBookFromSlice, setSelectedList } from '@/redux/slices/userSlice';
 import { removeBookFromList } from '@/api/list';
 import { toast } from 'sonner';
 import { createPortal } from 'react-dom';
-import Button from '../../button';
 
 export default function ConfirmRemoveBook (){
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, 'confirmRemoveBook'));
@@ -45,8 +44,8 @@ export default function ConfirmRemoveBook (){
           </div>
         </div>
         <div className="modal-footer d-f align-items-center justify-flex-end mt-3">
-          <Button size="sm" color="light" style="solid" className="hide-modal">Cancel</Button>
-          <Button size="sm" color="primary" style="solid" className="ml-1" onClick={removeBook}>Delete</Button>
+          <button className="modal-btn cancel-btn hide-modal">Cancel</button>
+          <button className="modal-btn ml-1" onClick={removeBook}>Delete</button>
         </div>
       </div>
     </div>, document.body)

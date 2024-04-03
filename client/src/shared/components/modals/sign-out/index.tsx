@@ -4,7 +4,6 @@ import { modalIsOpenSelector } from '@/redux/selectors';
 import { toast } from 'sonner';
 import { createPortal } from 'react-dom';
 import { logOut } from '@/redux/slices/authSlice';
-import Button from '../../button';
 
 export default function SignOut (){
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, 'signout'));
@@ -40,8 +39,8 @@ export default function SignOut (){
         </div>
         <p className='mt-1'>Are you sure want to sign out?</p>
         <div className="modal-footer d-f align-items-center justify-flex-end mt-3">
-          <Button size="sm" color="light" style="solid" className="hide-modal">Cancel</Button>
-          <Button size="sm" color="primary" style="solid" className="ml-1" onClick={deleteList}>Sign out</Button>
+          <button className="modal-btn cancel-btn hide-modal">Cancel</button>
+          <button className="modal-btn ml-1" onClick={deleteList}>Sign out</button>
         </div>
       </div>
     </div>, document.body)

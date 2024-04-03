@@ -6,7 +6,6 @@ import { deleteListById } from '@/api/list';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { createPortal } from 'react-dom';
-import Button from '../../button';
 
 export default function ConfirmDeleteList (){
   const navigate = useNavigate();
@@ -47,8 +46,8 @@ export default function ConfirmDeleteList (){
           </div>
         </div>
         <div className="modal-footer d-f align-items-center justify-flex-end mt-3">
-          <Button size="sm" color="light" style="solid" className="hide-modal">Cancel</Button>
-          <Button size="sm" color="primary" style="solid" className="ml-1" onClick={deleteList}>Delete</Button>
+          <button className="modal-btn cancel-btn hide-modal">Cancel</button>
+          <button className="modal-btn ml-1" onClick={deleteList}>Delete</button>
         </div>
       </div>
     </div>, document.body)

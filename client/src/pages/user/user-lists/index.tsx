@@ -20,7 +20,7 @@ const UserLists = ({ username, lists, showCreate }: UserListProps) => {
       <div className="lists-header mb-1 d-f align-items-center justify-space-between">
         <h3 className="m-0">{username}'s lists</h3>
         <p className="show-all d-f align-items-center justify-center link-hover" onClick={handleCollapse}>
-          Show all
+          Show {collapse ? 'all' : 'less'}
           <IoIosArrowDown className={collapse ? "arrow" : "arrow arrow-up"}/>
         </p>
       </div>

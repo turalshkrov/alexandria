@@ -8,6 +8,7 @@
   animation: modal-animation .2s;
   display: none;
   z-index: 998;
+
   .modal-dialog {
     padding: 1.5rem;
     width: 450px;
@@ -19,6 +20,7 @@
     border-radius: 0.375rem;
     z-index: 999;
     color: var(--primary-text-color);
+
     .modal-content {
       flex-direction: column;
 
@@ -27,13 +29,28 @@
           cursor: pointer;
         }
       }
+
       .modal-body {
         min-height: 108px;
       }
     }
   }
+
   .modal-footer {
     margin-top: auto;
+
+    .modal-btn {
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: .25rem;
+      font-size: 15px;
+      border: 1px solid var(--card-border-color);
+    }
+
+    .cancel-btn {
+      background-color: var(--active-link-bg-color);
+      color: var(--primary-text-color);
+    }
   }
 }
 
@@ -42,13 +59,23 @@
 }
 
 @keyframes modal-hide-animation {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes modal-animation {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 500px) {
@@ -60,4 +87,8 @@
     }
 
   }
+}
+
+.delete-modal-input {
+  padding: 8px 12px !important;
 }

@@ -7,7 +7,6 @@ import { createNewList } from "@/api/list";
 import { addNewListToUI } from "@/redux/slices/userSlice";
 import { modalIsOpenSelector } from "@/redux/selectors";
 import { createPortal } from "react-dom";
-import Button from "../../button";
 import "../index.scss";
 import "./index.scss";
 
@@ -52,7 +51,9 @@ export default function CreateListModal() {
               </div>
             </div>
             <div className="modal-body p-2">
-              <input id="list-title-input"
+              <input
+                id="list-title-input"
+                className="list-title-input"
                 name="title"
                 onChange={handleChange}
                 value={title}
@@ -60,8 +61,8 @@ export default function CreateListModal() {
                 maxLength={64} />
             </div>
             <div className="modal-footer d-f align-items-center justify-flex-end">
-              <Button size="sm" color="light" style="solid" className="hide-modal">Cancel</Button>
-              <Button size="sm" color="primary" style="solid" className="ml-1" onClick={createList}>Create</Button>
+              <button className="modal-btn cancel-btn hide-modal">Cancel</button>
+              <button className="modal-btn ml-1" onClick={createList}>Create</button>
             </div>
           </div>
         </div>

@@ -20,8 +20,7 @@ const Profile = () => {
       <div className="container w-xl-75">
         <div className="row align-items-start">
           <div className="col-12 col-md-3 row">
-            <div className="profile-image br-full col-4 col-md-12">
-              <img className="w-100 br-full" src={data.user?.profileImage || 'https://rb.gy/mygjaa'} alt="" />
+            <div className="profile-image br-full col-4 col-md-12" style={{ background: `url(${data.user?.profileImage || 'https://rb.gy/mygjaa'})` }}>
             </div>
             <div className="user-info col-8 px-2 px-md-0 mt-1 mt-sm-2 col-md-12">
               <h3 className="name d-f align-items-center">
