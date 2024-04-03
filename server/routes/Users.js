@@ -236,9 +236,7 @@ router.patch('/remove-favorite-authors', authenticationToken, async (req, res) =
 // DELETE USER
 router.delete('/', authenticationToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user);
-    user.active = false;
-    await user.save();
+    await User.findByIdAndDelete(req.user);
     res.status(200).json({ message: "User deleted" });
   } catch (error) {
     res.status(500).json(error);
