@@ -22,6 +22,12 @@ export const createNewList = async (title: string) => {
   return response.data;
 }
 
+export const updateList = async (id: string, title: string, cover: string ) => {
+  const response = await http.patch(`lists/${id}`, { title, cover });
+  if (response.status === 200) return { id, title, cover };
+  return response.data;
+}
+
 export const deleteListById = async (id: string) => {
   const response = await http.delete(`/lists/${id}`);
   if (response.status === 200) return id;

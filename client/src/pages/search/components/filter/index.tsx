@@ -13,7 +13,7 @@ export default function Filter() {
     <>
     {
     searchKeyword.length > 2 ?
-    <div className="ml-md-2 ml-lg-3 mt-2">
+    <div className="ml-md-2 ml-lg-3 mt-2 d-n d-md-b">
     <h2>Advanced search</h2>
     <p className="text-secondary filter-header-text">
       Create a more specific search using filter

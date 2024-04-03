@@ -1,7 +1,8 @@
 .list-card {
+  
   .list-card-footer {
     margin-top: .25rem;
-
+    
     .list-title, .create-list {
       font-size: 1rem;
       font-weight: 500;
@@ -18,4 +19,53 @@
 
 .create-list {
   cursor: pointer;
+}
+
+.list-cover-container {
+  background-color: var(--card-bg-color);
+  padding-top: 100%;
+  position: relative;
+  transition: .4s box-shadow;
+
+  .list-cover-main-img, .list-cover-main-img-empty {
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+  }
+  .list-cover-main-img-empty {
+    padding-top: 60%;
+    background-color: gray;
+  }
+  .list-cover-bg-book-1 {
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    width: 5%;
+    padding-top: 55%;
+    background-color: gray;
+  }
+  .list-cover-bg-book-2 {
+    position: absolute;
+    top: 50%;
+    left: 77.5%;
+    transform: translate(-50%, -50%);
+    width: 5%;
+    padding-top: 50%;
+    background-color: gray;
+  }
+  .crete-list-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.list-card {
+  .list-cover-container:hover {
+    box-shadow: 2px 2px 5px 0px var(--box-shadow-color);
+  }
 }

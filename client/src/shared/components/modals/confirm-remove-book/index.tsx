@@ -1,10 +1,10 @@
 import { setIsOpen } from '@/redux/slices/ModalSlice';
-import { FaXmark } from 'react-icons/fa6'
 import { useAppDispatch, useAppSelector } from '@/hooks/hook';
 import { modalIsOpenSelector } from '@/redux/selectors';
 import { removeBookFromSlice, setSelectedList } from '@/redux/slices/userSlice';
 import { removeBookFromList } from '@/api/list';
 import { toast } from 'sonner';
+import { createPortal } from 'react-dom';
 import Button from '../../button';
 
 export default function ConfirmRemoveBook (){
@@ -16,8 +16,7 @@ export default function ConfirmRemoveBook (){
   const hideModal = (e: any) => {
     const target = e.target;
     if (target.classList.contains('modal') ||
-      target.classList.contains('hide-modal') ||
-      target.closest('.hide-modal')) {
+      target.classList.contains('hide-modal')) {
       dispatch(setIsOpen({ id: 'confirmRemoveBook', isOpen: false }));
       dispatch(setSelectedList(null));
     }
@@ -31,7 +30,7 @@ export default function ConfirmRemoveBook (){
     }
   }
   return (
-    <div className={isOpen ? 'modal show' : 'modal'} id='create-list-modal' onClick={hideModal}>
+    createPortal(<div className={isOpen ? 'modal show' : 'modal'} id='confirm-remove-book' onClick={hideModal}>
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header d-f justify-space-between align-items-center">
@@ -40,8 +39,8 @@ export default function ConfirmRemoveBook (){
                 Remove book from list?
               </h3>
             </div>
-            <div className="hide-modal" onClick={hideModal}>
-              <FaXmark size={20} />
+            <div className="hide-modal font-lg" onClick={hideModal}>
+              &times;
             </div>
           </div>
         </div>
@@ -50,6 +49,6 @@ export default function ConfirmRemoveBook (){
           <Button size="sm" color="primary" style="solid" className="ml-1" onClick={removeBook}>Delete</Button>
         </div>
       </div>
-    </div>
+    </div>, document.body)
   )
 }

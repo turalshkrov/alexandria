@@ -5,14 +5,15 @@ import { ListType } from "@/types";
 import { getListById } from "@/api/list";
 import { MdOutlineEdit } from "react-icons/md";
 import { FaRegCircleXmark } from "react-icons/fa6";
-import { FiShare } from "react-icons/fi";
-import Preloader from "@/shared/components/preloader/Preloader";
-import "./index.scss";
-import Button from "@/shared/components/button";
-import BookTable from "./book-table";
+import { MdOutlineContentCopy } from "react-icons/md";
 import { setSelectedList } from "@/redux/slices/userSlice";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
+import Preloader from "@/shared/components/preloader/Preloader";
+import Button from "@/shared/components/button";
+import BookTable from "./book-table";
 import ConfirmDeleteList from "@/shared/components/modals/confirm-delet-list";
+import "./index.scss";
+import { toast } from "sonner";
 
 interface ListPageState {
   list: ListType | undefined,
@@ -33,11 +34,17 @@ const ListPage = () => {
   const params = useParams();
   const id = params.id;
   const createdDate = new Date(String(data.list?.createdAt));
+  const copyLink = () => {
+    navigator.clipboard.writeText(document.URL);
+    toast.success('Copied link');
+  }
   const showDeleteModal = () => {
     dispatch(setSelectedList(data.list?._id));
     dispatch(setIsOpen({ id: 'confirmDeleteList', isOpen: true }));
   }
-
+  const showEditModal = () => {
+    dispatch(setIsOpen({ id: 'editList', isOpen: true }));
+  }
   useEffect(() => {
     const getList = async () => {
       try {
@@ -57,9 +64,7 @@ const ListPage = () => {
   }, [ id, userLists ]);
 
   useEffect(() => {
-    if (data.editPermission) {
-      dispatch(setSelectedList(data.list?._id));
-    }
+    if (data.editPermission) { dispatch(setSelectedList(data.list?._id)); }
   });
   
   return (
@@ -71,12 +76,17 @@ const ListPage = () => {
       <div className="container py-2 py-lg-3 px-1 px-md-2">
         <div className="row align-items-center mx-md-2 mx-lg-3">
           <div className="col-12 col-md-3 col-lg-2 d-f justify-center p-relative">
-            <img src={ data.list?.cover || "https://lh3.googleusercontent.com/drive-viewer/AKGpihZbn3AE3NQ3AnVS07A40OsfRKHWGIrbPYkuFbAmqHAXP7zlb8OTceLvYvBKXvmFh8En8hTvAk5tK3M-RkUI2wWxdJefuw=s2560" } 
-              alt={data.list?.title}
-              title={data.editPermission ? "Change cover image" : ""}
-              className="list-cover w-50 w-md-100" 
-            />
-            <input type="file" name="" id="" hidden/>
+            <div className="col-6 col-md-12">
+              <div className="list-cover-container w-100 p-relative">
+                {
+                  data.list?.books.length ?
+                  <img src={data.list.books[0].cover} className="list-cover-main-img" /> :
+                  <div className="list-cover-main-img-empty"></div>
+                }
+                <div className="list-cover-bg-book-1"></div>
+                <div className="list-cover-bg-book-2"></div>
+              </div>
+            </div>
           </div>
           <div className="col-12 col-md-9 col-lg-10 pl-md-2 pl-md-3 mt-1 mt-md-0 list-info">
             <h1 className="list-title font-lg-xxl m-0">
@@ -91,15 +101,17 @@ const ListPage = () => {
               <div className="d-f list-actions mt-1">
                 <Button 
                   style="link"
-                  className="p-0 list-action-btn d-f align-items-center mr-2">
+                  className="p-0 list-action-btn d-f align-items-center mr-2"
+                  onClick={showEditModal}>
                   <MdOutlineEdit/>
                   Edit
                 </Button>
                 <Button 
                   style="link"
-                  className="p-0 list-action-btn d-f align-items-center mr-2">
-                  <FiShare/>
-                  Share
+                  className="p-0 list-action-btn d-f align-items-center mr-2"
+                  onClick={copyLink}>
+                  <MdOutlineContentCopy/>
+                  Copy link
                 </Button>
                 <Button
                   style="link" 

@@ -32,8 +32,8 @@ const BookTable = ({ data, editPermission }: { data: BookType[], editPermission:
           data.map(book => (
             <tr key={book._id}>
               <td className="d-f align-items-center mr-1 title-td">
-                <div className="book-cover-container">
-                  <img src={book.cover} alt="" className="book-cover" />
+                <div className="td-book-cover-container">
+                  <img src={book.cover} alt="" className="td-book-cover" />
                 </div>
                 <div className="td-right">
                   <Link to={`/books/${book._id}`} className="link-hover fw-bold">

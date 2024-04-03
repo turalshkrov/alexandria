@@ -12,9 +12,17 @@ const ListCard = ({ list } : listCardProps) => {
     <div className='list-item col-6 col-md-3 p-1 p-xxl-2'>
       <div className="list-card">
         <Link className='list-title link-hover' to={`/lists/${list._id}`}>
-          <img src={list.cover || 'https://lh3.googleusercontent.com/drive-viewer/AKGpihZbn3AE3NQ3AnVS07A40OsfRKHWGIrbPYkuFbAmqHAXP7zlb8OTceLvYvBKXvmFh8En8hTvAk5tK3M-RkUI2wWxdJefuw=s2560'} className='w-100 br-1'/>
+          <div className="list-cover-container w-100 p-relative">
+            {
+              list?.books.length ?
+              <img src={list.books[0].cover} className="list-cover-main-img" /> :
+              <div className="list-cover-main-img-empty"></div>
+            }
+            <div className="list-cover-bg-book-1"></div>
+            <div className="list-cover-bg-book-2"></div>
+          </div>
         </Link>
-        <div className="list-card-footer">
+        <div className="list-card-footer mt-1">
           <div className="list-info">
             <Link className='list-title link-hover' to={`/lists/${list._id}`}>
               {list.title}

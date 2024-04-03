@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FaXmark } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
 import { useState } from "react";
@@ -7,6 +6,7 @@ import { toast } from "sonner";
 import { createNewList } from "@/api/list";
 import { addNewListToUI } from "@/redux/slices/userSlice";
 import { modalIsOpenSelector } from "@/redux/selectors";
+import { createPortal } from "react-dom";
 import Button from "../../button";
 import "../index.scss";
 import "./index.scss";
@@ -21,8 +21,7 @@ export default function CreateListModal() {
   const hideModal = (e: any) => {
     const target = e.target;
     if (target.classList.contains('modal') ||
-      target.classList.contains('hide-modal') ||
-      target.closest('.hide-modal')) {
+      target.classList.contains('hide-modal')) {
       dispatch(setIsOpen({ id: 'createList', isOpen: false }));
       setTitle("");
     }
@@ -38,7 +37,7 @@ export default function CreateListModal() {
     }
   }
   return (
-    <>
+    createPortal(<>
       <div className={isOpen ? 'modal show' : 'modal'} id='create-list-modal' onClick={hideModal}>
         <div className="modal-dialog">
           <div className="modal-content">
@@ -48,11 +47,11 @@ export default function CreateListModal() {
                   Give your list name
                 </h3>
               </div>
-              <div className="hide-modal" onClick={hideModal}>
-                <FaXmark size={20} />
+              <div className="hide-modal font-lg" onClick={hideModal}>
+                &times;
               </div>
             </div>
-            <div className="modal-body">
+            <div className="modal-body p-2">
               <input id="list-title-input"
                 name="title"
                 onChange={handleChange}
@@ -67,6 +66,6 @@ export default function CreateListModal() {
           </div>
         </div>
       </div>
-    </>
+    </>, document.body)
   )
 }

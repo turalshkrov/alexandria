@@ -12,7 +12,7 @@ export default function GenreCard(props: GenreCardProps) {
     <div className="genre-card-container">
       <Link to={`/genres/${props.id}`}>
         <div 
-          className="genre-card br-2" 
+          className="genre-card" 
           id={props.title}>
           <div className="genre-content p-1">
             <h2 className="genre-title">{props.title}</h2>

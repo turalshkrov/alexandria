@@ -1,0 +1,14 @@
+.edit-modal-body {
+  display: flex;
+  flex-direction: column;
+
+  .cover-photo-input {
+    border: none !important;
+
+  }
+
+  label {
+    font-size: 14px;
+  }
+}
+

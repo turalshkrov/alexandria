@@ -18,7 +18,6 @@ export type ListType = {
   _id: string,
   user: UserType,
   title: string,
-  cover: string,
   books: BookType[],
   createdAt: Date,
   updatedAt: Date,

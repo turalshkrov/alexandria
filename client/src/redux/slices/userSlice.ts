@@ -73,6 +73,13 @@ const userSlice = createSlice({
       const listId = action.payload;
       state.lists = state.lists?.filter(list => list._id !== listId) || state.lists;
     },
+    updateListOnUi: (state, action) => {
+      const listId = action.payload.id;
+      const list = state.lists?.find(list => list._id === listId);
+      if (list) list.title = action.payload.title;
+      state.lists = state.lists?.filter(list => list._id !== listId) || state.lists;
+      if (list) state.lists?.push(list);
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -113,4 +120,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { addNewListToUI, setSelectedList, setSelectedBook, removeListFromSlice, removeBookFromSlice } = userSlice.actions;
+export const { addNewListToUI, setSelectedList, setSelectedBook, removeListFromSlice, removeBookFromSlice, updateListOnUi } = userSlice.actions;

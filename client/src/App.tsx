@@ -13,6 +13,7 @@ import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
 import './App.scss';
 import { Toaster } from 'sonner';
+import Modals from './shared/components/modals';
 
 const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs'));
@@ -40,6 +41,7 @@ function App() {
       <Suspense fallback={<Preloader />}>
         <ScrollToTop />
         <ThemeSwitcherComponent>
+          <Modals />
           <Routes>
             <Route element={(
               <>

@@ -42,7 +42,7 @@ const ListSearchResult = () => {
       if (searchKeyword.length > 2) {
         setListResult(state => ({ ...state, isLoading: true }));
         const authors = await getLists(searchKeyword, page + 1);
-        setListResult(state => ({ ...state, lists: [ ...state.lists, ...authors ], isLoading: false }));
+        setListResult(state => ({ ...state, lists: [...state.lists, ...authors], isLoading: false }));
       }
     } catch (error) {
       setListResult(state => ({ ...state, error: error, isLoading: false }));
@@ -63,8 +63,14 @@ const ListSearchResult = () => {
                 return (
                   <Link to={`/lists/${data._id}`} className="w-100" key={data._id}>
                     <div className="list-search-result d-f align-items-center">
-                      <div className="list-cover-container">
-                        <img src={data.cover || 'https://lh3.googleusercontent.com/drive-viewer/AKGpihZbn3AE3NQ3AnVS07A40OsfRKHWGIrbPYkuFbAmqHAXP7zlb8OTceLvYvBKXvmFh8En8hTvAk5tK3M-RkUI2wWxdJefuw=s2560'} alt="" className="list-cover" />
+                      <div className="list-cover-container p-relative br-1">
+                        {
+                          data?.books.length ?
+                            <img src={data.books[0].cover} className="list-cover-main-img" /> :
+                            <div className="list-cover-main-img-empty"></div>
+                        }
+                        <div className="list-cover-bg-book-1"></div>
+                        <div className="list-cover-bg-book-2"></div>
                       </div>
                       <div className="ml-1">
                         <p className="m-0 m-0 link-hover fw-bold">{data.title}</p>

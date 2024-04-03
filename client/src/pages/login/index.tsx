@@ -1,8 +1,7 @@
-import readingImg from '@/assets/images/reading.jpg';
-import readingDarkImg from '@/assets/images/reading-dark.jpg';
+import readingImg from '@/assets/images/reading.png';
+import Button from '@/shared/components/button';
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { useAppSelector } from '@/hooks/hook';
-import Button from '@/shared/components/button';
 import { Link } from 'react-router-dom';
 import "./index.scss";
 
@@ -13,7 +12,7 @@ export default function Login() {
       <div className="container mb-2 mb-md-0">
         <div className="py-3 row d-f align-items-center signup-content">
           <div className="col-12 col-md-6 text-center">
-            <img className='signup-illustrator' src={theme === "dark" ? readingDarkImg : readingImg} alt="" />
+            <img className='signup-illustrator' src={readingImg} alt="" />
             <p className='font-md font-md-lg fw-bold signup-page-text'>Track books you’ve read</p>
             <p className='font-md font-md-lg fw-bold signup-page-text'>Save those you want to read</p>
           </div>

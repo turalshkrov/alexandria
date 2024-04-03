@@ -1,6 +1,7 @@
 import { useAppDispatch } from '@/hooks/hook';
 import { setIsOpen } from '@/redux/slices/ModalSlice';
 import { useEffect } from 'react';
+import { AiOutlinePlus } from "react-icons/ai";
 import CreateListModal from '../modals/create-list';
 import '../list-card/index.scss';
 
@@ -22,8 +23,13 @@ const CreateList = () => {
     <>
     <div className='list-item col-6 col-md-3 p-1 p-xxl-2'>
       <div className="list-card create-list" onClick={showModal}>
-        <img src="https://rb.gy/cqvygl" alt="" className="w-100 br-1"/>
-        <div className="list-card-footer">
+        <div className="list-cover-container w-100">
+          <div className="crete-list-icon text-center">
+            <AiOutlinePlus size={36}/>
+            <p className='m-0 mt-1'>New list</p>
+          </div>
+        </div>
+        <div className="list-card-footer mt-1">
           <div className="list-action">
             <p className="mb-0 create-list link-hover">
               Create
