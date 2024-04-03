@@ -1,9 +1,10 @@
 import { MdPerson, MdSettings, MdBrush, MdMail, MdInfo, MdCookie, MdAdminPanelSettings } from "react-icons/md";
 import { BsShieldLockFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import "./index.scss";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
-import { logOut } from "@/redux/slices/authSlice";
+import { setIsOpen } from "@/redux/slices/ModalSlice";
+import "./index.scss";
+import ProfileSection from "./sections/profile";
 
 const settingsLinks = 
 [ { label: "profile", icon: <MdPerson size={18} className="mr-1 text-secondary" /> },
@@ -22,8 +23,7 @@ const Account = () => {
   const userRole = useAppSelector(state => state.authSlice.role);
   const dispatch = useAppDispatch();
   const handleLogOut = () => {
-    dispatch(logOut());
-    location.reload();
+    dispatch(setIsOpen({ id: 'signout', isOpen: true }));
   }
 
   return (
@@ -70,7 +70,7 @@ const Account = () => {
             <p className="mt-2 sign-out" onClick={handleLogOut}>Sign out</p>
           </aside>
           <div className="col-12 col-md-9 px-md-2">
-
+            <ProfileSection />
           </div>
         </div>
       </div>

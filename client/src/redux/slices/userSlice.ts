@@ -79,6 +79,14 @@ const userSlice = createSlice({
       if (list) list.title = action.payload.title;
       state.lists = state.lists?.filter(list => list._id !== listId) || state.lists;
       if (list) state.lists?.push(list);
+    },
+    updateProfileOnUI: (state, action) => {
+      if (state.user) { 
+        state.user.name = action.payload.name;
+        state.user.username = action.payload.username;
+        state.user.profileImage = action.payload.profileImage;
+        state.user.location = action.payload.location;
+      }
     }
   },
   extraReducers: (builder) => {
@@ -120,4 +128,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { addNewListToUI, setSelectedList, setSelectedBook, removeListFromSlice, removeBookFromSlice, updateListOnUi } = userSlice.actions;
+export const { addNewListToUI, setSelectedList, setSelectedBook, removeListFromSlice, removeBookFromSlice, updateListOnUi, updateProfileOnUI } = userSlice.actions;

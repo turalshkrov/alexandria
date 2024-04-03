@@ -32,10 +32,12 @@ function App() {
   const userId = useAppSelector(state => state.authSlice.userId);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getMe(userId));
-    dispatch(getMyLists(userId));
-    dispatch(getMyReviews(userId));
-  }, [ dispatch, userId ]);
+    if (isAuth) {
+      dispatch(getMe(userId));
+      dispatch(getMyLists(userId));
+      dispatch(getMyReviews(userId));
+    }
+  }, [dispatch, isAuth, userId]);
   return (
     <BrowserRouter>
       <Suspense fallback={<Preloader />}>
@@ -56,7 +58,7 @@ function App() {
               <Route path='/search' element={<Search />} />
               <Route path='/blogs' element={<Blogs />} />
               <Route path='/about' element={<About />} />
-              <Route path='/profile' element={<Profile />} />
+              <Route path='/profile' element={isAuth ? <Profile /> : <Navigate to='/login' />} />
               <Route path='/users/:id' element={<User />} />
               <Route path='/lists/:id' element={<ListPage />} />
               <Route path='/account' element={isAuth ? <Account /> : <Navigate to='/login' />} />

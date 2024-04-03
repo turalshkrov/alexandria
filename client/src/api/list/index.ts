@@ -22,9 +22,9 @@ export const createNewList = async (title: string) => {
   return response.data;
 }
 
-export const updateList = async (id: string, title: string, cover: string ) => {
-  const response = await http.patch(`lists/${id}`, { title, cover });
-  if (response.status === 200) return { id, title, cover };
+export const updateList = async (id: string, title: string) => {
+  const response = await http.patch(`lists/${id}`, { title });
+  if (response.status === 200) return { id, title };
   return response.data;
 }
 

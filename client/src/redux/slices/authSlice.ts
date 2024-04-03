@@ -1,4 +1,3 @@
-import { Form } from "@/pages/signup";
 import http from "@/api/api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -9,6 +8,14 @@ interface AuthState {
   isAuth: boolean,
   isLoading: boolean,
   error: string | null,
+}
+
+type registerForm = {
+  name: string,
+  username: string,
+  email: string,
+  password: string,
+  location: string,
 }
 
 const initialState: AuthState = {
@@ -30,7 +37,7 @@ export const login = createAsyncThunk(
 
 export const userRegister = createAsyncThunk(
   "auth/resgister",
-  async (data: Form) => {
+  async (data: registerForm) => {
     const response = await http.post("users/register", data);
     return response.data;
   }
@@ -46,7 +53,7 @@ const authSlice = createSlice({
       state.token = "";
       state.role = "";
       state.userId = "";
-    }
+    },
   },
   extraReducers(builder) {
     builder

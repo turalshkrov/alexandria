@@ -6,6 +6,7 @@ import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useAppDispatch } from "@/hooks/hook";
 import { userRegister } from "@/redux/slices/authSlice";
 import "./index.scss";
+import http from "@/api/api";
 
 export type Form = {
   name: string,
@@ -18,8 +19,10 @@ const SignUp = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<Form>();
   const [ showPassword, setshowPassword ] = useState(false);
   const dispatch = useAppDispatch();
-  const onSubmit: SubmitHandler<Form> = (data) => { 
-    dispatch(userRegister(data));
+  const onSubmit: SubmitHandler<Form> = async (data) => {
+    const response = await http.get('https://geolocation-db.com/json/');
+    const location = response.data.country_name;
+    dispatch(userRegister({...data, location }));
   };
   return (
     <div className="page page-vertical-center" id="signup-page">
