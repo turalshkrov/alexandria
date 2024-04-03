@@ -236,8 +236,14 @@ router.patch('/remove-favorite-authors', authenticationToken, async (req, res) =
 // DELETE USER
 router.delete('/', authenticationToken, async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.user);
-    res.status(200).json({ message: "User deleted" });
+    const user = await User.findById(req.user).select('+password');
+    const password = req.body.password;
+    if (!(await bcrypt.compare(password, user.password))) {
+      res.status(401).json({ message: 'Password is incorrect' });
+    } else {
+      await User.deleteOne(user)
+      res.status(200).json({ message: "User deleted" });
+    }
   } catch (error) {
     res.status(500).json(error);
   }
