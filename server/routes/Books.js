@@ -157,7 +157,7 @@ router.post('/:id/reviews/add', authenticationToken, getBook, reviewValidationRu
     res.book.ratingsCount = reviews.length;
     res.book.rating = Math.floor(reviews.map(review => review.rating).reduce((a, b) => a + b) * 10 / reviews.length) / 10;
     await res.book.save();
-    res.status(201).json({ message: "Review updated" });
+    res.status(201).json({ message: "Review updated", review: res.review });
   } catch (error) {
     res.status(500).json(error);
   }
