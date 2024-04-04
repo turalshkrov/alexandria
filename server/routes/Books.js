@@ -149,9 +149,9 @@ router.delete('/:id', authenticationToken, getBook, async (req, res) => {
 router.post('/:id/reviews/add', authenticationToken, getBook, reviewValidationRules(), validation, checkReview, async (req, res) => {
   try {
     const { rating, title, content } = req.body;
-    res.review.rating = rating;
-    res.review.title = title;
-    res.review.content = content;
+    if (rating) res.review.rating = rating;
+    if (title) res.review.title = title;
+    if (content) res.review.content = content;
     await res.review.save();
     const reviews = await Review.find({ book: res.book._id });
     res.book.ratingsCount = reviews.length;
