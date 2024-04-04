@@ -87,6 +87,17 @@ const userSlice = createSlice({
         state.user.profileImage = action.payload.profileImage;
         state.user.location = action.payload.location;
       }
+    },
+    updateBookReviewOnUi: (state, action) => {
+      if (state.reviews) {
+        const review = state.reviews.find(review => review.book === action.payload.book);
+        if (review) {
+          review.rating = action.payload.review.rating;
+          review.content = action.payload.review.content;
+          review.title = action.payload.review.title;
+        state.reviews = [ ...state.reviews.filter(review => review.book !== action.payload.book), review ]
+        }
+      }
     }
   },
   extraReducers: (builder) => {
@@ -128,4 +139,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { addNewListToUI, setSelectedList, setSelectedBook, removeListFromSlice, removeBookFromSlice, updateListOnUi, updateProfileOnUI } = userSlice.actions;
+export const { addNewListToUI, setSelectedList, setSelectedBook, removeListFromSlice, removeBookFromSlice, updateListOnUi, updateProfileOnUI, updateBookReviewOnUi } = userSlice.actions;

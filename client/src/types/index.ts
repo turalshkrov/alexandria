@@ -50,7 +50,7 @@ export type AuthorType = {
 
 export type ReviewType = {
   _id: string,
-  user: UserType | string,
+  user: UserType,
   book: string,
   rating: number,
   title: string,

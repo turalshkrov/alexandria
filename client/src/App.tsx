@@ -25,6 +25,7 @@ const SignUp = lazy(() => import('./pages/signup'));
 const SignIn = lazy(() => import('./pages/signin'));
 const Account = lazy(() => import('./pages/account'));
 const ListPage = lazy(() => import('./pages/list'));
+const BookPage = lazy(() => import('./pages/book'));
 
 function App() {
   const isAuth = useAppSelector(state => state.authSlice.isAuth);
@@ -60,6 +61,7 @@ function App() {
               <Route path='/about' element={<About />} />
               <Route path='/profile' element={isAuth ? <Profile /> : <Navigate to='/login' />} />
               <Route path='/users/:id' element={<User />} />
+              <Route path='/books/:id' element={<BookPage />} />
               <Route path='/lists/:id' element={<ListPage />} />
               <Route path='/account' element={isAuth ? <Account /> : <Navigate to='/login' />} />
               <Route path='/login' element={!isAuth ? <Login /> : <Navigate to='/' />} />
