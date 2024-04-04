@@ -167,7 +167,7 @@ router.post('/:id/reviews/add', authenticationToken, getBook, reviewValidationRu
 router.get('/:id/reviews', getBook, async (req, res) => {
   try {
     const book = req.params.id;
-    const reviews = await Review.find({ book });
+    const reviews = await Review.find({ book }).populate('user');
     res.status(200).json(reviews);
   } catch (error) {
     res.status(500).json(error);
