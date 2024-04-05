@@ -23,7 +23,7 @@ body {
   background: #555;
 }
 
-input{
+input, textarea{
   background-color: var(--primary-bg-color);
   color: var(--primary-text-color);
   border: 1px solid var(--secondary-text-color) !important;

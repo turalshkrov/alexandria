@@ -5,12 +5,12 @@ import { BookType, ReviewType } from "@/types";
 import { getBookById, getBookReviews, rateBook } from "@/api/book";
 import { IoIosStar } from "react-icons/io";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
-import Preloader from "@/shared/components/preloader/Preloader";
-import "./index.scss";
 import { Rating } from "react-simple-star-rating";
 import { toast } from "sonner";
 import { updateBookReviewOnUi } from "@/redux/slices/userSlice";
+import Preloader from "@/shared/components/preloader/Preloader";
 import Review from "./review";
+import "./index.scss";
 
 interface BookData {
   book: BookType | null,
@@ -29,8 +29,8 @@ const BookPage = () => {
     isLoading: false,
     error: null
   });
+  const isAuth = useAppSelector(state => state.authSlice.isAuth);
   const userReview = useAppSelector(state => state.userSlice.reviews?.find(review => review.book === data.book?._id));
-  const theme = useAppSelector(state => state.ThemeSlice.theme);
   const [ newReview, setNewReview ] = useState({
     title: "",
     content: "",
@@ -59,11 +59,11 @@ const BookPage = () => {
     e.preventDefault();
     try {
       if (newReview.rating) {
-        await rateBook(id || "", newReview.rating, newReview.content, newReview.title);
-        dispatch(updateBookReviewOnUi({ book: id, review: newReview } ));
+        const review = await rateBook(id || "", newReview.rating, newReview.content, newReview.title);
+        dispatch(updateBookReviewOnUi({ book: id, review } ));
         toast.success('Review updated');
       } else {
-        toast.error('Your rating is empty');
+        toast.error('Rating is empty');
       }
     } catch (error) {
       toast.error('Something get wrong');
@@ -81,7 +81,7 @@ const BookPage = () => {
       }
     }
     getBook();
-  }, [id]);
+  }, [ id ]);
   useEffect(() => {
     setNewReview({
       title: "",
@@ -93,7 +93,7 @@ const BookPage = () => {
     <>
     {
     data.isLoading ? <Preloader /> :
-    <div className="page">
+    <div className="page book-page">
       <div className="container py-2">
         <div className="row align-items-start">
           <div className="col-12 col-md-4 col-lg-3 text-center book-container-left">
@@ -106,7 +106,6 @@ const BookPage = () => {
               <div className="rating-stars mt-1">
                 <Rating
                   onClick={handleRatingChange}
-                  fillColor={theme === 'dark' ? '#9309BF' : '#F44A65'}
                   size={28}
                   initialValue={userReview?.rating}
                   allowTitleTag={false}
@@ -132,11 +131,11 @@ const BookPage = () => {
               <p className="m-0 text-secondary">First published: {data.book?.published}</p>
               <p className="m-0 text-secondary">Original language: {data.book?.language}</p>
               <p className="m-0 text-secondary">Original title: {data.book?.originalTitle}</p>
-              <p>
+              <p className="text-secondary">
                 Genre:
                 {
                   data.book?.genres.map(genre => (
-                    <Link key={genre} to={`/genres/${genre}`} className="link-hover text-secondary ml-1">{genre}</Link>
+                    <Link key={genre} to={`/genres/${genre}`} className="link-hover underline-link ml-1">{genre}</Link>
                   ))
                 }
               </p>
@@ -162,12 +161,13 @@ const BookPage = () => {
                 {data.book?.author.authorInfo}
               </p>
             </div>
+            {
+              isAuth &&
             <div className="write review">
               <h3 className="fw-regular">Write a review</h3>
               <h4>Your rating</h4>
               <Rating
                   onClick={handleRatingChange}
-                  fillColor={theme === 'dark' ? '#9309BF' : '#F44A65'}
                   size={28}
                   initialValue={userReview?.rating}
                   allowTitleTag={false}
@@ -198,16 +198,17 @@ const BookPage = () => {
                 <button className="book-action-btn w-100 w-md-50" onClick={handleSubmitReview}>Write a review</button>
               </form>
             </div>
+            }
             <div className="rating-and-reviews">
               <h3 className="fw-regular">Rating & reviews</h3>
               {
                 (data.reviews?.filter(review => review.content).length === 0) ?
-                <div className="empty-review d-f justify-center py-3">
-                  <h3 className="fw-regular">No review yet</h3>
+                <div className="empty-review d-f justify-center py-2">
+                  <h3 className="fw-regular text-secondary">No review yet</h3>
                 </div> :
-                <div className="reviews-container py-2">
+                <div className="reviews-container">
                   {
-                    userReview &&
+                    userReview && userReview?.user &&
                     <Review data={userReview}/>
                   }
                   {

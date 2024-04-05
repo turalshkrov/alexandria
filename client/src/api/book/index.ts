@@ -20,5 +20,5 @@ export const getBookReviews = async (id: string) => {
 export const rateBook = async (id: string, rating: number, content?: string, title?: string) => {
   if (id.length !== 24) throw new Error('Id is not valid');
   const response = await http.post(`/books/${id}/reviews/add`, { rating, content, title });
-  return response.data;
+  return response.data.review;
 }

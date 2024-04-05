@@ -1,97 +1,103 @@
-.book-cover-container {
-  width: 50%;
-  padding-top: 75%;
-  margin: auto;
-  background-color: lightgray;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-}
-.ratings-count {
-  font-size: 15px;
-}
-.book-details p {
-  margin-top: .25rem !important;
-  font-size: 15px;
-}
-
-.rating-text {
-  svg {
-    margin-right: .25rem;
+.book-page {
+  .book-cover-container {
+    width: 50%;
+    padding-top: 75%;
+    margin: auto;
+    background-color: lightgray;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
   }
-
-  .user-rating {
+  .ratings-count {
+    font-size: 15px;
+  }
+  .book-details p {
+    margin-top: .25rem !important;
+    font-size: 15px;
+  }
+  
+  .rating-text {
+    svg {
+      margin-right: .25rem;
+    }
+  
+    .user-rating {
+      cursor: pointer;
+    }
+  }
+  
+  .book-action-btn {
     cursor: pointer;
-  }
-}
-
-.book-action-btn {
-  cursor: pointer;
-  background: var(--card-bg-color);
-  border: 1px solid var(--card-border-color);
-  color: var(--primary-text-color);
-  padding: 8px;
-  border-radius: 2px;
-  font-size: 15px;
-  transition: .3s background-color;
-
-  &:hover {
-    background-color: var(--active-link-bg-color);
-  }
-}
-
-.book-author-info {
-  border-top: 1px solid var(--card-border-color);
-  border-bottom: 1px solid var(--card-border-color);
-  .author-profile {
-    .author-image-container {
-      width: 72px;
-      height: 72px;
-      overflow: hidden;
-      background-position: center !important;
-      background-repeat: no-repeat !important;
-      background-size: cover !important;
-    }
-    .author-name {
-      width: calc(100% - 84px);
+    background: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    color: var(--primary-text-color);
+    padding: 8px;
+    border-radius: 2px;
+    font-size: 15px;
+    transition: .3s background-color;
+  
+    &:hover {
+      background-color: var(--active-link-bg-color);
     }
   }
-}
-
-.review-form {
-  border-bottom: 1px solid var(--card-border-color);
-  input, textarea {
-    padding: 8px !important;
-    font-family: Arial;
-    font-size: 15px !important;
-    border-radius: .25rem;
-    &:focus {
-      outline: 1px solid #3182CE;
+  
+  .book-author-info {
+    border-top: 1px solid var(--card-border-color);
+    border-bottom: 1px solid var(--card-border-color);
+    .author-profile {
+      .author-image-container {
+        width: 72px;
+        height: 72px;
+        overflow: hidden;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+      }
+      .author-name {
+        width: calc(100% - 84px);
+      }
     }
   }
-}
-
-.user-review {
-  border-bottom: 1px solid var(--card-border-color);
-
-  .user-profile {
-    .user-profile-image-container {
-      width: 60px;
-      height: 60px;
-      overflow: hidden;
-      background-position: center !important;
-      background-repeat: no-repeat !important;
-      background-size: cover !important;
-      margin-bottom: .5rem;
-    }
-    .user-name {
-      font-size: 14px;
+  
+  .review-form {
+    border-bottom: 1px solid var(--card-border-color);
+    input, textarea {
+      padding: 8px !important;
+      font-family: Arial;
+      font-size: 15px !important;
+      border-radius: .25rem;
+      &:focus {
+        outline: 1px solid #3182CE;
+      }
     }
   }
-  .review-container {
-    .review-header {
-      .review-date {
+  
+  .user-review {
+    border-bottom: 1px solid var(--card-border-color);
+  
+    .user-profile {
+      .user-profile-image-container {
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+      }
+      .user-name {
         font-size: 14px;
+      }
+    }
+    .review-container {
+      .review-header {
+        margin-bottom: .25rem;
+        .review-date {
+          font-size: 14px;
+        }
+      }
+      .review-content {
+        margin-top: .25rem !important;
+        font-size: 15px;
       }
     }
   }
