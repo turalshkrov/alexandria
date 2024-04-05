@@ -83,9 +83,10 @@ router.patch('/:id/add-book', authenticationToken, getList, checkBookId, async (
     const bookId = req.body.bookId;
     res.list.books.push(bookId);
     await res.list.save();
+    const updatedList = await List.findById(req.params.id).populate('books');
     res.status(200).json({
       message: `Added to ${res.list.title}`,
-      list: res.list,
+      list: updatedList,
     });
   } catch (error) {
     res.status(500).json(error);
