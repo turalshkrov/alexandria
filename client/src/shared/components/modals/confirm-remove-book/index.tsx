@@ -1,7 +1,7 @@
 import { setIsOpen } from '@/redux/slices/ModalSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/hook';
 import { modalIsOpenSelector } from '@/redux/selectors';
-import { removeBookFromSlice, setSelectedList } from '@/redux/slices/userSlice';
+import { updateListBooksOnUI, setSelectedList } from '@/redux/slices/userSlice';
 import { removeBookFromList } from '@/api/list';
 import { toast } from 'sonner';
 import { createPortal } from 'react-dom';
@@ -22,9 +22,9 @@ export default function ConfirmRemoveBook (){
   }
   const removeBook = async () => {
     dispatch(setIsOpen({ id: 'confirmDeleteList', isOpen: false }));
-    const { listId, bookId } = await removeBookFromList(selectedList || "", selectedBook || "");
+    const { listId, list } = await removeBookFromList(selectedList || "", selectedBook || "");
     if (listId) {
-      dispatch(removeBookFromSlice({ listId, bookId }));
+      dispatch(updateListBooksOnUI({ listId, list }));
       toast.success('Book removed from list');
     }
   }

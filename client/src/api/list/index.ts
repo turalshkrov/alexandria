@@ -34,8 +34,14 @@ export const deleteListById = async (id: string) => {
   return response.data;
 }
 
+export const addBookToList = async (listId: string, bookId: string) => {
+  const response = await http.patch(`/lists/${listId}/add-book`, { bookId });
+  const list = response.data.list;
+  return { listId, list };
+}
+
 export const removeBookFromList = async (listId: string, bookId: string) => {
   const response = await http.patch(`/lists/${listId}/remove-book`, { bookId });
-  if (response.status === 200) return { listId, bookId };
-  return response.data;
+  const list = response.data.list;
+  return { listId, list };
 }

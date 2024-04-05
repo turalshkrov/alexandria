@@ -62,10 +62,10 @@ const userSlice = createSlice({
       const bookId = action.payload;
       state.selectedBook = bookId;
     },
-    removeBookFromSlice: (state, action) => {
-      const { listId, bookId } = action.payload;
-      const list = state.lists?.find(list => list._id === listId);
-      if (list) list.books = list?.books.filter(book => book._id !== bookId) || list?.books;
+    updateListBooksOnUI: (state, action) => {
+      const listId = action.payload.listId;
+      let list = state.lists?.find(list => list._id === listId);
+      if (list) list = action.payload.list;
       state.lists = state.lists?.filter(list => list._id !== listId) || state.lists;
       if (list) state.lists?.push(list);
     },
@@ -88,16 +88,24 @@ const userSlice = createSlice({
         state.user.location = action.payload.location;
       }
     },
-    updateBookReviewOnUi: (state, action) => {
+    updateBookReviewOnUI: (state, action) => {
       if (state.reviews) {
         const review = state.reviews.find(review => review.book === action.payload.book);
         if (review) {
           review.rating = action.payload.review.rating;
           review.content = action.payload.review.content;
           review.title = action.payload.review.title;
-        state.reviews = [ ...state.reviews.filter(review => review.book !== action.payload.book), review ]
+          state.reviews = [ ...state.reviews.filter(review => review.book !== action.payload.book), review ]
         }
       }
+    },
+    addFavoriteBookOnUI: (state, action) => {
+      const book = action.payload;
+      state.user?.favoriteBooks.push(book);
+    },
+    removeFavoriteBookOnUI: (state, action) => {
+      const id = action.payload;
+      if (state.user) state.user.favoriteBooks = state.user?.favoriteBooks.filter(book => book._id !== id);
     }
   },
   extraReducers: (builder) => {
@@ -139,4 +147,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { addNewListToUI, setSelectedList, setSelectedBook, removeListFromSlice, removeBookFromSlice, updateListOnUi, updateProfileOnUI, updateBookReviewOnUi } = userSlice.actions;
+export const { addNewListToUI, setSelectedList, setSelectedBook, removeListFromSlice, updateListBooksOnUI, updateListOnUi, updateProfileOnUI, updateBookReviewOnUI, addFavoriteBookOnUI, removeFavoriteBookOnUI } = userSlice.actions;

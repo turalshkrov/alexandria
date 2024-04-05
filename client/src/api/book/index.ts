@@ -22,3 +22,15 @@ export const rateBook = async (id: string, rating: number, content?: string, tit
   const response = await http.post(`/books/${id}/reviews/add`, { rating, content, title });
   return response.data.review;
 }
+
+export const addBookToFavorites = async (bookId: string) => {
+  if (bookId.length !== 24) throw new Error('Id is not valid');
+  const response = await http.patch(`/users/add-favorite-books`, { bookId });
+  return response.data;
+}
+
+export const removeBookFromFavorites = async (bookId: string) => {
+  if (bookId.length !== 24) throw new Error('Id is not valid');
+  const response = await http.patch(`/users/remove-favorite-books`, { bookId });
+  return response.data;
+}

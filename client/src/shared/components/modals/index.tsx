@@ -4,6 +4,7 @@ import ConfirmRemoveBook from './confirm-remove-book';
 import CreateListModal from './create-list';
 import SignOut from './sign-out';
 import ConfirmDeleteAccount from './confirm-delete-account';
+import AddToListModal from './add-to-list';
 
 const Modals = () => {
   return (
@@ -14,6 +15,7 @@ const Modals = () => {
       <EditList />
       <SignOut />
       <ConfirmDeleteAccount />
+      <AddToListModal />
     </>
   )
 }

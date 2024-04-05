@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './hooks/hook';
 import { getMe, getMyLists, getMyReviews } from './redux/slices/userSlice';
+import { Toaster } from 'sonner';
 import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
 import Navbar from '@/shared/layout/navbar';
 import Home from '@/pages/home';
@@ -11,9 +12,8 @@ import Admin from '@/pages/admin/Admin';
 import PrivateRoute from '@/routes/PrivateRoute';
 import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
-import './App.scss';
-import { Toaster } from 'sonner';
 import Modals from './shared/components/modals';
+import './App.scss';
 
 const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs'));

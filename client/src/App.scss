@@ -59,6 +59,10 @@ input, textarea {
   text-decoration: underline;
 }
 
+:where([data-sonner-toast][data-styled="true"]) {
+  padding: 16px !important;
+}
+
 .page-vertical-center {
   display: flex;
   align-items: center;

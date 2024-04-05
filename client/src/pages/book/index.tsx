@@ -2,12 +2,14 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BookType, ReviewType } from "@/types";
-import { getBookById, getBookReviews, rateBook } from "@/api/book";
+import { addBookToFavorites, getBookById, getBookReviews, rateBook, removeBookFromFavorites } from "@/api/book";
 import { IoIosStar } from "react-icons/io";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { Rating } from "react-simple-star-rating";
 import { toast } from "sonner";
-import { updateBookReviewOnUi } from "@/redux/slices/userSlice";
+import { addFavoriteBookOnUI, removeFavoriteBookOnUI, setSelectedBook, updateBookReviewOnUI } from "@/redux/slices/userSlice";
+import { setIsOpen } from "@/redux/slices/ModalSlice";
+import { BiHeart, BiPlus, BiSolidHeart } from "react-icons/bi";
 import Preloader from "@/shared/components/preloader/Preloader";
 import Review from "./review";
 import "./index.scss";
@@ -20,38 +22,47 @@ interface BookData {
 }
 
 const BookPage = () => {
-  const dispatch = useAppDispatch();
   const params = useParams();
   const id = params.id;
+  const isAuth = useAppSelector(state => state.authSlice.isAuth);
+  const dispatch = useAppDispatch();
   const [data, setData] = useState<BookData>({
     book: null,
     reviews: null,
     isLoading: false,
     error: null
   });
-  const isAuth = useAppSelector(state => state.authSlice.isAuth);
   const userReview = useAppSelector(state => state.userSlice.reviews?.find(review => review.book === data.book?._id));
+  const isFavorite = useAppSelector(state => Boolean(state.userSlice.user?.favoriteBooks?.find(book => book._id === id)));
   const [ newReview, setNewReview ] = useState({
-    title: "",
-    content: "",
+    title: userReview?.title,
+    content: userReview?.content,
     rating: userReview?.rating,
   });
   const handleRatingChange =(rate: number) => {
     setNewReview(state => ({ ...state, rating: rate }));
   };
-  const handleSubmitRating = async () => {
+  const showAddToListModal = () => {
+    dispatch(setIsOpen({
+      id: 'addToList',
+      isOpen: true,
+    }));
+  };
+  const handleAddFavorites = async () => {
     try {
-      if (newReview.rating) {
-        await rateBook(id || "", newReview.rating);
-        dispatch(updateBookReviewOnUi({ book: id, review: newReview } ));
-        toast.success('Rating updated');
+      if (isFavorite) {
+        await removeBookFromFavorites(id || "");
+        dispatch(removeFavoriteBookOnUI(id));
+        toast.success('Book removed from favorites');
       } else {
-        toast.error('Your rating is empty');
+        await addBookToFavorites(id || "");
+        dispatch(addFavoriteBookOnUI(data.book));
+        toast.success('Book added to favorites');
       }
     } catch (error) {
-      toast.error('Something get wrong');
+      toast.error('Somethings get wrong');
     }
-  };
+  }
   const handleReviewChange = (e: any) => {
     setNewReview(state => ({ ...state, [e.target.name]: e.target.value}));
   };
@@ -60,7 +71,7 @@ const BookPage = () => {
     try {
       if (newReview.rating) {
         const review = await rateBook(id || "", newReview.rating, newReview.content, newReview.title);
-        dispatch(updateBookReviewOnUi({ book: id, review } ));
+        dispatch(updateBookReviewOnUI({ book: id, review } ));
         toast.success('Review updated');
       } else {
         toast.error('Rating is empty');
@@ -70,6 +81,7 @@ const BookPage = () => {
     }
   };
   useEffect(() => {
+    dispatch(setSelectedBook(id));
     const getBook = async () => {
       try {
         setData(state => ({ ...state, isLoading: true }));
@@ -81,11 +93,11 @@ const BookPage = () => {
       }
     }
     getBook();
-  }, [ id ]);
+  }, [dispatch, id]);
   useEffect(() => {
     setNewReview({
-      title: "",
-      content: "",
+      title: userReview?.title,
+      content: userReview?.content,
       rating: userReview?.rating,
     })
   }, [ userReview?.content, userReview?.rating, userReview?.title ]);
@@ -100,21 +112,28 @@ const BookPage = () => {
             <div className="book-cover-container" style={{ background: `url(${data.book?.cover})` }}>
             </div>
             <div className="book-actions mt-2">
-              <button className="book-action-btn w-75">
-                + Add to list
-              </button>
-              <div className="rating-stars mt-1">
-                <Rating
-                  onClick={handleRatingChange}
-                  size={28}
-                  initialValue={userReview?.rating}
-                  allowTitleTag={false}
-                />
-              </div>
               <button
                 className="book-action-btn w-75 mt-1"
-                onClick={handleSubmitRating}>
-                Rate this book
+                onClick={handleAddFavorites}>
+                <div className="d-f align-items-center justify-center">
+                  {
+                    isFavorite ?
+                    <>
+                      <BiSolidHeart color="#dc3545" size={18}/>
+                      Favorite
+                    </> :
+                    <>
+                      <BiHeart color="#dc3545" size={18}/>
+                      Add to favorites
+                    </>
+                  }
+                </div>
+              </button>
+              <button className="book-action-btn w-75 mt-1" onClick={showAddToListModal}>
+                <div className="d-f align-items-center justify-center">
+                  <BiPlus size={18}/> 
+                  Add to list
+                </div>
               </button>
             </div>
           </div>
@@ -164,7 +183,13 @@ const BookPage = () => {
             {
               isAuth &&
             <div className="write review">
-              <h3 className="fw-regular">Write a review</h3>
+              <h3 className="fw-regular">
+                {
+                  userReview?._id ?
+                  "Edit your review" :
+                  "Write a review"
+                }
+              </h3>
               <h4>Your rating</h4>
               <Rating
                   onClick={handleRatingChange}
@@ -195,7 +220,13 @@ const BookPage = () => {
                     onChange={handleReviewChange}>
                   </textarea>
                 </div>
-                <button className="book-action-btn w-100 w-md-50" onClick={handleSubmitReview}>Write a review</button>
+                <button className="book-action-btn w-100 w-md-50" onClick={handleSubmitReview}>
+                {
+                  userReview?._id ?
+                  "Edit your review" :
+                  "Write a review"
+                }
+                </button>
               </form>
             </div>
             }
