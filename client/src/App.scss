@@ -23,9 +23,9 @@ body {
   background: #555;
 }
 
-input, textarea{
-  background-color: var(--primary-bg-color);
-  color: var(--primary-text-color);
+input, textarea {
+  background-color: var(--primary-bg-color) !important;
+  color: var(--primary-text-color) !important;
   border: 1px solid var(--secondary-text-color) !important;
   outline: none;
 }
