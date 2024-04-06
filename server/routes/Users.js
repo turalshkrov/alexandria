@@ -139,12 +139,15 @@ router.patch('/update', authenticationToken, usernameValidationRules(), validati
   try {
     const user = await User.findById(req.user);
     const { name, username, profileImage, location } = req.body;
-    user.name = name;
-    user.username = username;
+    if (name) user.name = name;
+    if (username) user.username = username;
+    if (location) user.location = location;
     user.profileImage = profileImage;
-    user.location = location;
     await user.save();
-    res.status(200).json({ message: "User updated" });
+    res.status(200).json({ 
+      message: "User updated",
+      user: res.user
+    });
   } catch (error) {
     res.status(500).json(error);
   }
