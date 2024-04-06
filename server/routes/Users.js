@@ -146,7 +146,7 @@ router.patch('/update', authenticationToken, usernameValidationRules(), validati
     await user.save();
     res.status(200).json({ 
       message: "User updated",
-      user: res.user
+      user
     });
   } catch (error) {
     res.status(500).json(error);
