@@ -3,15 +3,14 @@ import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
 import { useState } from "react";
 import { toast } from "sonner";
-import { updateList } from "@/api/list";
-import { updateListOnUi } from "@/redux/slices/userSlice";
 import { modalIsOpenSelector } from "@/redux/selectors";
 import { createPortal } from "react-dom";
 import "./index.scss";
+import { updateList } from "@/redux/slices/userListsSlice";
 
 const EditList = () => {
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, "editList"));
-  const selectedList = useAppSelector(state => state.userSlice.selectedList);
+  const selectedList = useAppSelector(state => state.userSlice.selectedList) || "";
   const dispatch = useAppDispatch();
   const [title, setTitle] = useState("");
   const handleTitleChange = (e: any) => {
@@ -29,11 +28,13 @@ const EditList = () => {
   const editList = async () => {
     if (!title.trim()) { toast.error('Title is required') }
     else {
-      setTitle("");
+      toast.promise(dispatch(updateList({ id: selectedList, title})), {
+        loading: 'Loading...',
+        success: 'List updated',
+        error: 'Somethings get wrong'
+      })
       dispatch(setIsOpen({ id: 'editList', isOpen: false }));
-      const list = await updateList(selectedList || "", title,);
-      if (list) toast.success('List updated');
-      dispatch(updateListOnUi(list));
+      setTitle("");
     }
   }
 

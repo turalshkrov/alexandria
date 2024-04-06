@@ -8,12 +8,12 @@ import { FaRegCircleXmark } from "react-icons/fa6";
 import { MdOutlineContentCopy } from "react-icons/md";
 import { setSelectedList } from "@/redux/slices/userSlice";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
+import { toast } from "sonner";
 import Preloader from "@/shared/components/preloader/Preloader";
 import Button from "@/shared/components/button";
 import BookTable from "./book-table";
 import ConfirmDeleteList from "@/shared/components/modals/confirm-delet-list";
 import "./index.scss";
-import { toast } from "sonner";
 
 interface ListPageState {
   list: ListType | undefined,
@@ -30,7 +30,7 @@ const ListPage = () => {
     isLoading: false,
     error: null,
   });
-  const userLists = useAppSelector(state => state.userSlice.lists);
+  const Lists = useAppSelector(state => state.userListsSlice.lists);
   const params = useParams();
   const id = params.id;
   const createdDate = new Date(String(data.list?.createdAt));
@@ -48,7 +48,7 @@ const ListPage = () => {
   useEffect(() => {
     const getList = async () => {
       try {
-        let list = userLists?.find(list => list._id === id);
+        let list = Lists?.find(list => list._id === id);
         if (list) {
           setData({ list, isLoading: false, editPermission: true, error: null, });
         } else {
@@ -61,7 +61,7 @@ const ListPage = () => {
       }
     }
     getList();
-  }, [ id, userLists ]);
+  }, [ id, Lists ]);
 
   useEffect(() => {
     if (data.editPermission) { dispatch(setSelectedList(data.list?._id)); }

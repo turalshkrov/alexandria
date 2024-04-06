@@ -14,7 +14,6 @@ import "./index.scss";
 
 const settingsLinks = 
 [ { label: "profile", icon: <MdPerson size={18} className="mr-1 text-secondary" />, id: "profile" },
-  { label: "account", icon: <MdSettings size={18} className="mr-1 text-secondary" />, id: "account" },
   { label: "theme", icon: <MdBrush size={18} className="mr-1 text-secondary" />, id: "theme" } ];
 
 const loginLinks = 
@@ -24,6 +23,8 @@ const loginLinks =
 const infoLinks = 
 [ { label: "about alexandria", icon: <MdInfo size={18} className="mr-1 text-secondary" />, id: "about" } ];
 
+const accountLinks = 
+[ { label: "account", icon: <MdSettings size={18} className="mr-1 text-secondary" />, id: "account" }, ];
 const Account = () => {
   const userRole = useAppSelector(state => state.authSlice.role);
   const dispatch = useAppDispatch();
@@ -81,14 +82,24 @@ const Account = () => {
                 </p>
               ))
             }
+            <div className="br"></div>
+            <p className="text-secondary font-sm">Account</p>
+            {
+              accountLinks.map(link => (
+                <p 
+                  key={link.label} 
+                  className={`aside-link ${showTab === link.id && 'aside-link-active'} d-f align-items-center br-1`}
+                  onClick={() => setShowTab(link.id)}>
+                  {link.icon}
+                  <span>{link.label}</span>
+                </p>
+              ))
+            }
             <p className="mt-2 sign-out" onClick={handleLogOut}>Sign out</p>
           </aside>
           <div className="col-12 col-md-9 px-md-2">
             <div className={showTab === 'profile' ? 'd-b' : 'd-b d-md-n'}>
               <ProfileSection />
-            </div>
-            <div className={showTab === 'account' ? 'd-b' : 'd-b d-md-n'}>
-              <AccountSection />
             </div>
             <div className={showTab === 'theme' ? 'd-b' : 'd-b d-md-n'}>
               <ThemeSection />
@@ -101,6 +112,9 @@ const Account = () => {
             </div>
             <div className={showTab === 'about' ? 'd-b' : 'd-b d-md-n'}>
               <AboutSection />
+            </div>
+            <div className={showTab === 'account' ? 'd-b' : 'd-b d-md-n'}>
+              <AccountSection />
             </div>
           </div>
         </div>

@@ -11,23 +11,24 @@ import { HiOutlineExternalLink } from 'react-icons/hi';
 import '../user/index.scss';
 
 const Profile = () => {
-  const data = useAppSelector(state => state.userSlice);
-  const joinedDate = new Date(String(data.user?.createdAt));
+  const userData = useAppSelector(state => state.userSlice);
+  const listsData = useAppSelector(state => state.userListsSlice);
+  const joinedDate = new Date(String(userData.user?.createdAt));
   return (
-    data.isLoading ? <Preloader /> :
-    data.error ? <ErrorPage/> :
+    userData.isLoading ? <Preloader /> :
+    userData.error ? <ErrorPage/> :
     <div className='page pt-2' id="profile">
       <div className="container w-xl-75">
         <div className="row align-items-start">
           <div className="col-12 col-md-3 row">
-            <div className="profile-image br-full col-4 col-md-12" style={{ background: `url(${data.user?.profileImage || 'https://rb.gy/mygjaa'})` }}>
+            <div className="profile-image br-full col-4 col-md-12" style={{ background: `url(${userData.user?.profileImage || 'https://rb.gy/mygjaa'})` }}>
             </div>
             <div className="user-info col-8 px-2 px-md-0 mt-1 mt-sm-2 col-md-12">
               <h3 className="name d-f align-items-center">
-                {data.user?.name}
-                {data.user?.verified && <BiSolidBadgeCheck size={14}/>}
+                {userData.user?.name}
+                {userData.user?.verified && <BiSolidBadgeCheck size={14}/>}
               </h3>
-              <p className="username text-secondary mb-md-1">{data.user?.username}</p>
+              <p className="username text-secondary mb-md-1">{userData.user?.username}</p>
               <Link to='/account' className="link-to-account btn btn-sm w-100 d-f align-items-center justify-center">
                 Account
                 <HiOutlineExternalLink/>
@@ -37,11 +38,11 @@ const Profile = () => {
               <ul>
                 <li className="d-f align-items-center text-secondary user-details-item">
                   <MdMail />
-                  {data.user?.email}
+                  {userData.user?.email}
                 </li>
                 <li className="d-f align-items-center text-secondary user-details-item">
                   <MdLocationOn />
-                  {data.user?.location}
+                  {userData.user?.location}
                 </li>
                 <li className="d-f align-items-center text-secondary user-details-item">
                   <MdCalendarMonth />
@@ -52,16 +53,16 @@ const Profile = () => {
           </div>
           <div className="col-12 col-md-9 px-0 px-md-1 px-lg-3 mt-2 mt-md-0">
             {
-              data.user && data.lists && data.lists.length > 0 &&
-              <UserLists username={data.user?.name} lists={data.lists} showCreate={true} />
+              userData.user && listsData.lists && listsData.lists.length > 0 &&
+              <UserLists username={userData.user?.name} lists={listsData.lists} showCreate={true} />
             }
             {
-              data.user && data.user?.favoriteBooks.length > 0 && 
-              <UserFavoriteBooks username={data.user?.name} books={data.user.favoriteBooks} />
+              userData.user && userData.user?.favoriteBooks.length > 0 && 
+              <UserFavoriteBooks username={userData.user?.name} books={userData.user.favoriteBooks} />
             }
             {
-              data.user && data.user.favoriteAuthors.length > 0 &&
-              <UserFavoriteAuthors username={data.user?.name} authors={data.user.favoriteAuthors} />
+              userData.user && userData.user.favoriteAuthors.length > 0 &&
+              <UserFavoriteAuthors username={userData.user?.name} authors={userData.user.favoriteAuthors} />
             }
           </div>
         </div>

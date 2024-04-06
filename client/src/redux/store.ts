@@ -4,6 +4,7 @@ import SearchSlice from './slices/SearchSlice';
 import authSlice from './slices/authSlice';
 import userSlice from './slices/userSlice';
 import ModalSlice from './slices/ModalSlice';
+import userListsSlice from './slices/userListsSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     authSlice,
     userSlice,
     ModalSlice,
+    userListsSlice,
   },
 })
 

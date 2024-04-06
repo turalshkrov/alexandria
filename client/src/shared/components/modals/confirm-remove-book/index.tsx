@@ -1,15 +1,15 @@
 import { setIsOpen } from '@/redux/slices/ModalSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/hook';
 import { modalIsOpenSelector } from '@/redux/selectors';
-import { updateListBooksOnUI, setSelectedList } from '@/redux/slices/userSlice';
-import { removeBookFromList } from '@/api/list';
+import { setSelectedBook } from '@/redux/slices/userSlice';
 import { toast } from 'sonner';
 import { createPortal } from 'react-dom';
+import { removeBook } from '@/redux/slices/userListsSlice';
 
 export default function ConfirmRemoveBook (){
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, 'confirmRemoveBook'));
-  const selectedList = useAppSelector(state => state.userSlice.selectedList);
-  const selectedBook = useAppSelector(state => state.userSlice.selectedBook);
+  const selectedList = useAppSelector(state => state.userSlice.selectedList) || "";
+  const selectedBook = useAppSelector(state => state.userSlice.selectedBook) || "";
   const dispatch = useAppDispatch();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const hideModal = (e: any) => {
@@ -17,16 +17,15 @@ export default function ConfirmRemoveBook (){
     if (target.classList.contains('modal') ||
       target.classList.contains('hide-modal')) {
       dispatch(setIsOpen({ id: 'confirmRemoveBook', isOpen: false }));
-      dispatch(setSelectedList(null));
+      dispatch(setSelectedBook(""));
     }
   }
-  const removeBook = async () => {
+  const handleSubmit = async () => {
     dispatch(setIsOpen({ id: 'confirmDeleteList', isOpen: false }));
-    const { listId, list } = await removeBookFromList(selectedList || "", selectedBook || "");
-    if (listId) {
-      dispatch(updateListBooksOnUI({ listId, list }));
-      toast.success('Book removed from list');
-    }
+    toast.promise(dispatch(removeBook({ listId: selectedList, bookId: selectedBook })), {
+      loading: 'Loading...',
+      success: 'Book removed from list'
+    });
   }
   return (
     createPortal(<div className={isOpen ? 'modal show' : 'modal'} id='confirm-remove-book' onClick={hideModal}>
@@ -45,7 +44,7 @@ export default function ConfirmRemoveBook (){
         </div>
         <div className="modal-footer d-f align-items-center justify-flex-end mt-3">
           <button className="modal-btn cancel-btn hide-modal">Cancel</button>
-          <button className="modal-btn ml-1" onClick={removeBook}>Delete</button>
+          <button className="modal-btn ml-1" onClick={handleSubmit}>Delete</button>
         </div>
       </div>
     </div>, document.body)

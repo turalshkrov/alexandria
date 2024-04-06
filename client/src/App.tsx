@@ -1,7 +1,8 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './hooks/hook';
-import { getMe, getMyLists, getMyReviews } from './redux/slices/userSlice';
+import { getMe, getMyReviews } from './redux/slices/userSlice';
+import { getMyLists } from './redux/slices/userListsSlice';
 import { Toaster } from 'sonner';
 import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
 import Navbar from '@/shared/layout/navbar';

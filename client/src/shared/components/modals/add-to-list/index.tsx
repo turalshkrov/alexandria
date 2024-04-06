@@ -3,15 +3,15 @@ import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { modalIsOpenSelector } from "@/redux/selectors";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
 import { createPortal } from "react-dom";
-import { setSelectedList, updateListBooksOnUI } from "@/redux/slices/userSlice";
-import { addBookToList } from "@/api/list";
-import "./index.scss";
 import { toast } from "sonner";
+import { addBook } from "@/redux/slices/userListsSlice";
+import "./index.scss";
+import { ListType } from "@/types";
 
 const AddToListModal = () => {
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, "addToList"));
-  const lists = useAppSelector(state => state.userSlice.lists);
-  const selectedBook = useAppSelector(state => state.userSlice.selectedBook);
+  const lists = useAppSelector(state => state.userListsSlice.lists);
+  const selectedBook = useAppSelector(state => state.userSlice.selectedBook) || "";
   const dispatch = useAppDispatch();
   const hideModal = (e: any) => {
     const target = e.target;
@@ -20,18 +20,14 @@ const AddToListModal = () => {
       dispatch(setIsOpen({ id: 'addToList', isOpen: false }));
     }
   }
-  const handleAddToList = async (id: string) => {
-    try {
-      if (lists?.find(list => list._id === id)?.books.find(book => book._id === selectedBook)) {
-        toast.info(`Book is already in ${lists?.find(list => list._id === id)?.title}`);
-      } else {
-        dispatch(setSelectedList(id));
-        const { listId, list } = await addBookToList(id, selectedBook || "");
-        dispatch(updateListBooksOnUI({ listId, list }));
-        toast.success(`Book added to ${list.title}`);
-      }
-    } catch (error) {
-      toast.error('Somethings get wrong');
+  const handleAddToList = async (selectedList: ListType) => {
+    if (lists?.find(list => list._id === selectedList._id)?.books.find(book => book._id === selectedBook)) {
+      toast.info(`Book is already in ${selectedList.title}`);
+    } else {
+      toast.promise(dispatch(addBook({ listId: selectedList._id, bookId: selectedBook })), {
+        loading: 'Loading...',
+        success: `Book added to ${selectedList.title}`,
+      })
     }
   }
   return (
@@ -53,7 +49,7 @@ const AddToListModal = () => {
               <div className="modal-list-container w-100">
               {
                 lists?.map(list => (
-                  <div key={list._id} className="add-to-list-modal-item d-f align-items-center" onClick={() => handleAddToList(list._id)}>
+                  <div key={list._id} className="add-to-list-modal-item d-f align-items-center" onClick={() => handleAddToList(list)}>
                     <div className="list-cover-container">
                     <div className="list-cover-container p-relative br-1">
                         {

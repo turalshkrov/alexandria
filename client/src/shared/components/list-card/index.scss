@@ -1,5 +1,4 @@
 .list-card {
-  
   .list-card-footer {
     margin-top: .25rem;
     
@@ -25,7 +24,7 @@
   background-color: var(--card-bg-color);
   padding-top: 100%;
   position: relative;
-  transition: .4s box-shadow;
+  transition: .3s background-color;
 
   .list-cover-main-img, .list-cover-main-img-empty {
     position: absolute;
@@ -65,7 +64,8 @@
 }
 
 .list-card {
+
   .list-cover-container:hover {
-    box-shadow: 2px 2px 5px 0px var(--box-shadow-color);
+    background-color: var(--card-border-color);
   }
 }

@@ -3,8 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
 import { useState } from "react";
 import { toast } from "sonner";
-import { createNewList } from "@/api/list";
-import { addNewListToUI } from "@/redux/slices/userSlice";
+import { createNewList } from "@/redux/slices/userListsSlice";
 import { modalIsOpenSelector } from "@/redux/selectors";
 import { createPortal } from "react-dom";
 import "../index.scss";
@@ -28,11 +27,13 @@ export default function CreateListModal() {
   const createList = async () => {
     if (!title.trim()) { toast.error('Title is required') }
     else {
+      toast.promise(dispatch(createNewList(title)), {
+        loading: 'Loading...',
+        success: 'List created',
+        error: 'Somethings get wrong'
+      });
       setTitle("");
       dispatch(setIsOpen({ id: 'createList', isOpen: false }));
-      const list = await createNewList(title);
-      if (list) toast.success('List created');
-      dispatch(addNewListToUI(list));
     }
   }
   return (

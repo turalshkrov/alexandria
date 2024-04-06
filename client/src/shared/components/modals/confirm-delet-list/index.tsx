@@ -1,11 +1,11 @@
 import { setIsOpen } from '@/redux/slices/ModalSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/hook';
 import { modalIsOpenSelector } from '@/redux/selectors';
-import { removeListFromSlice, setSelectedList } from '@/redux/slices/userSlice';
-import { deleteListById } from '@/api/list';
+import { setSelectedList } from '@/redux/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { createPortal } from 'react-dom';
+import { deleteList } from '@/redux/slices/userListsSlice';
 
 export default function ConfirmDeleteList (){
   const navigate = useNavigate();
@@ -21,14 +21,14 @@ export default function ConfirmDeleteList (){
       dispatch(setSelectedList(null));
     }
   }
-  const deleteList = async () => {
+  const handleSumbit = async () => {
     dispatch(setIsOpen({ id: 'confirmDeleteList', isOpen: false }));
-    const id = await deleteListById(selectedList || "");
-    if (id) {
-      dispatch(removeListFromSlice(id));
-      navigate('/profile');
-      toast.success('List deleted');
-    }
+    toast.promise(dispatch(deleteList(selectedList || "")), {
+      loading: 'Loading...',
+      success: 'List deleted',
+      error: 'Somethings get wrong',
+    })
+    navigate('/profile');
   }
   return (
     createPortal(<div className={isOpen ? 'modal show' : 'modal'} id='confirm-delete-list' onClick={hideModal}>
@@ -47,7 +47,7 @@ export default function ConfirmDeleteList (){
         </div>
         <div className="modal-footer d-f align-items-center justify-flex-end mt-3">
           <button className="modal-btn cancel-btn hide-modal">Cancel</button>
-          <button className="modal-btn ml-1" onClick={deleteList}>Delete</button>
+          <button className="modal-btn ml-1" onClick={handleSumbit}>Delete</button>
         </div>
       </div>
     </div>, document.body)

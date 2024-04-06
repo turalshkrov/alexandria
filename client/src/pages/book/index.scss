@@ -31,15 +31,14 @@
   .book-action-btn {
     cursor: pointer;
     background: var(--card-bg-color);
-    border: 1px solid var(--card-border-color);
     color: var(--primary-text-color);
-    padding: 8px;
-    border-radius: 2px;
+    border: none;
+    padding: 12px;
     font-size: 15px;
     transition: .3s background-color;
 
     &:hover {
-      background-color: var(--active-link-bg-color);
+      background-color: var(--card-border-color);
     }
 
     svg {
