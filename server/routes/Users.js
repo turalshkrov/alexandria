@@ -137,7 +137,7 @@ router.get('/:id/reviews', getUser, async (req, res) => {
 // UPDATE USER
 router.patch('/update', authenticationToken, usernameValidationRules(), validation, checkUsername, async (req, res) => {
   try {
-    const user = await User.findById(req.user);
+    const user = await User.findById(req.user).populate('favoriteBooks').populate('favoriteAuthors');
     const { name, username, profileImage, location } = req.body;
     if (name) user.name = name;
     if (username) user.username = username;
