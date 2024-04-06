@@ -83,7 +83,12 @@ router.patch('/:id/add-book', authenticationToken, getList, checkBookId, async (
     const bookId = req.body.bookId;
     res.list.books.push(bookId);
     await res.list.save();
-    const updatedList = await List.findById(req.params.id).populate('books').populate('user');
+    const updatedList = await List.findById(req.params.id).populate({
+      path: 'books',
+      populate: {
+        path: 'author'
+      }
+    }).populate('user');
     res.status(200).json({
       message: `Added to ${res.list.title}`,
       list: updatedList,
@@ -101,7 +106,12 @@ router.patch('/:id/remove-book', authenticationToken, getList, checkBookId, asyn
     console.log(res.list);
     res.list.books = [...res.list.books.filter(_id => _id.toString() !== bookId)];
     await res.list.save();
-    const updatedList = await List.findById(req.params.id).populate('books').populate('user');
+    const updatedList = await List.findById(req.params.id).populate({
+      path: 'books',
+      populate: {
+        path: 'author'
+      }
+    }).populate('user');
     res.status(200).json({
       message: `Removed from ${res.list.title}`,
       list: updatedList,
