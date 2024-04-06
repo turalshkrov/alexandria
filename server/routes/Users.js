@@ -142,7 +142,7 @@ router.patch('/update', authenticationToken, usernameValidationRules(), validati
     if (name) user.name = name;
     if (username) user.username = username;
     if (location) user.location = location;
-    user.profileImage = profileImage;
+    if (profileImage) user.profileImage = profileImage;
     await user.save();
     res.status(200).json({ 
       message: "User updated",
