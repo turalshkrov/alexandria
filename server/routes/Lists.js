@@ -83,7 +83,7 @@ router.patch('/:id/add-book', authenticationToken, getList, checkBookId, async (
     const bookId = req.body.bookId;
     res.list.books.push(bookId);
     await res.list.save();
-    const updatedList = await List.findById(req.params.id).populate('books');
+    const updatedList = await List.findById(req.params.id).populate('books').populate('user');
     res.status(200).json({
       message: `Added to ${res.list.title}`,
       list: updatedList,
@@ -98,11 +98,13 @@ router.patch('/:id/remove-book', authenticationToken, getList, checkBookId, asyn
   try {
     if (res.list.user.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     const bookId = req.body.bookId;
+    console.log(res.list);
     res.list.books = [...res.list.books.filter(_id => _id.toString() !== bookId)];
     await res.list.save();
+    const updatedList = await List.findById(req.params.id).populate('books').populate('user');
     res.status(200).json({
       message: `Removed from ${res.list.title}`,
-      list: res.list,
+      list: updatedList,
     });
   } catch (error) {
     res.status(500).json(error);
