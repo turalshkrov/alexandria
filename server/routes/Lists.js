@@ -70,7 +70,7 @@ router.delete('/:id', authenticationToken, getList, async (req, res) => {
   try {
     if (res.list.user._id.toString() !== req.user) return res.status(401).json({ message: "Access denied" });
     await List.deleteOne(res.list);
-    res.status(200).json({ message: "List deleted" });
+    res.status(200).json({ message: "List deleted", id: res.list._id });
   } catch (error) {
     res.status(500).json(error);
   }
