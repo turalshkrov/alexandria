@@ -1,15 +1,15 @@
 const List = require('../../models/List');
+const Book = require('../../models/Book');
 
 const checkBookId = async (req, res, next) => {
   try {
-    const { id } = req.params;
     const { bookId } = req.body;
-    const list = await List.findById(id);
-    res.list = list;
-    if (list.books.find(_id => _id.toString() === bookId)) {
+    if (res.list.books.find(book => book._id.toString() === bookId)) {
       res.hasBookId = true;
     }
     if (req.originalUrl.includes('add-book')) {
+      const book = await Book.findById(bookId).populate('author');
+      res.book = book;
       if (res.hasBookId) {
         return res.status(409).json({ message: `This is already in ${res.list.title}` });
       }
