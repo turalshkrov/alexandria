@@ -220,7 +220,10 @@ router.patch('/add-favorite-authors', authenticationToken, async (req, res) => {
     if (user.favoriteAuthors.includes(author._id)) return res.status(409).json({ message: "Author is already in favorites" });
     user.favoriteAuthors.push(author._id);
     await user.save();
-    res.status(200).json({ message: "Author added to favorites" });
+    res.status(200).json({ 
+      message: "Author added to favorites",
+      author
+    });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -236,7 +239,10 @@ router.patch('/remove-favorite-authors', authenticationToken, async (req, res) =
     if (!user.favoriteAuthors.includes(author._id)) return res.status(409).json({ message: "Author not found in favorites" });
     user.favoriteAuthors = user.favoriteAuthors.filter(id => id.toString() !== authorId);
     await user.save();
-    res.status(200).json({ message: "Author removed from favorites" });
+    res.status(200).json({ 
+      message: "Author removed from favorites",
+      author
+    });
   } catch (error) {
     res.status(500).json(error);
   }
