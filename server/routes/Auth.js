@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/getMe', authenticationToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user);
+    const user = await User.findById(req.user).populate('favoriteBooks').populate('favoriteAuthors');
     const userRole = await UserRole.findOne({ userId: user._id });
     if (!user) {
       return res.status(404).json({ message: "Couldn't find your account" });
