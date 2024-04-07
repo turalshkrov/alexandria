@@ -182,7 +182,10 @@ router.patch('/add-favorite-books', authenticationToken, async (req, res) => {
     if (user.favoriteBooks.includes(book._id)) return res.status(409).json({ message: "Book is already in favorites" });
     user.favoriteBooks.push(book._id);
     await user.save();
-    res.status(200).json({ message: "Book added to favorites" });
+    res.status(200).json({ 
+      message: "Book added to favorites",
+      book
+    });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -198,7 +201,10 @@ router.patch('/remove-favorite-books', authenticationToken, async (req, res) => 
     if (!user.favoriteBooks.includes(book._id)) return res.status(409).json({ message: "Book not found in favorites" });
     user.favoriteBooks = user.favoriteBooks.filter(id => id.toString() !== bookId);
     await user.save();
-    res.status(200).json({ message: "Book removed from favorites" });
+    res.status(200).json({
+      message: "Book removed from favorites",
+      book
+    });
   } catch (error) {
     res.status(500).json(error);
   }
