@@ -1,7 +1,7 @@
 import { setIsOpen } from '@/redux/slices/ModalSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/hook';
 import { modalIsOpenSelector } from '@/redux/selectors';
-import { setSelectedList } from '@/redux/slices/userSlice';
+import { setSelectedList } from '@/redux/slices/userListsSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { createPortal } from 'react-dom';
@@ -10,7 +10,7 @@ import { deleteList } from '@/redux/slices/userListsSlice';
 export default function ConfirmDeleteList (){
   const navigate = useNavigate();
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, 'confirmDeleteList'));
-  const selectedList = useAppSelector(state => state.userSlice.selectedList);
+  const selectedList = useAppSelector(state => state.userListsSlice.selectedList);
   const dispatch = useAppDispatch();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const hideModal = (e: any) => {
@@ -23,7 +23,7 @@ export default function ConfirmDeleteList (){
   }
   const handleSumbit = async () => {
     dispatch(setIsOpen({ id: 'confirmDeleteList', isOpen: false }));
-    toast.promise(dispatch(deleteList(selectedList || "")), {
+    toast.promise(dispatch(deleteList(selectedList || "")).unwrap(), {
       loading: 'Loading...',
       success: 'List deleted',
       error: 'Somethings get wrong',

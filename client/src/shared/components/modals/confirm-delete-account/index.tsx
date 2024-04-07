@@ -2,7 +2,6 @@
 import { setIsOpen } from '@/redux/slices/ModalSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/hook';
 import { modalIsOpenSelector } from '@/redux/selectors';
-import { setSelectedList } from '@/redux/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { createPortal } from 'react-dom';
@@ -20,7 +19,6 @@ export default function ConfirmDeleteAccount (){
     if (target.classList.contains('modal') ||
       target.classList.contains('hide-modal')) {
       dispatch(setIsOpen({ id: 'confirmDeleteAccount', isOpen: false }));
-      dispatch(setSelectedList(null));
     }
   }
   const handleChange = (e: any) => {
@@ -34,7 +32,7 @@ export default function ConfirmDeleteAccount (){
       dispatch(logOut());
       toast.success('Account deleted');
     } catch (error) {
-      toast.error('Incorrect password')
+      toast.error('Incorrect password');
     }
   }
   return (

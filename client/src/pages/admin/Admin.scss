@@ -9,7 +9,6 @@
     height: 100vh;
     top: 0;
     left: 0;
-    border-right: 1px solid #161d27;
-    box-shadow: 1px 0 10px #070a0d;
+    border-right: 1px solid var(--card-border-color);
   }
 }

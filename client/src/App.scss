@@ -59,9 +59,16 @@ input, textarea {
   text-decoration: underline;
 }
 
-:where([data-sonner-toast][data-styled="true"]) {
+:where([data-sonner-toast]) {
   padding: 16px !important;
 }
+
+[aria-label="Notifications alt+T"] {
+  position: fixed;
+  top: 32px;
+  z-index: 3;
+}
+
 
 .page-vertical-center {
   display: flex;

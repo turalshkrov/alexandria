@@ -27,7 +27,7 @@ export default function CreateListModal() {
   const createList = async () => {
     if (!title.trim()) { toast.error('Title is required') }
     else {
-      toast.promise(dispatch(createNewList(title)), {
+      toast.promise(dispatch(createNewList(title)).unwrap(), {
         loading: 'Loading...',
         success: 'List created',
         error: 'Somethings get wrong'

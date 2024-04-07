@@ -1,12 +1,12 @@
-import Button from "@/shared/components/button";
 import { Link } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useAppDispatch } from "@/hooks/hook";
 import { userRegister } from "@/redux/slices/authSlice";
-import "./index.scss";
+import Button from "@/shared/components/button";
 import http from "@/api/api";
+import "./index.scss";
 
 export type Form = {
   name: string,

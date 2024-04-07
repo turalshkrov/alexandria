@@ -69,7 +69,14 @@ export const removeBook = createAsyncThunk(
 const userListsSlice = createSlice({
   name: 'userList',
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedList: (state, action) => {
+      state.selectedList = action.payload;
+    },
+    setSelectedBook: (state, action) => {
+      state.selectedBook = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getMyLists.pending, (state) => {
@@ -113,3 +120,4 @@ const userListsSlice = createSlice({
 });
 
 export default userListsSlice.reducer;
+export const { setSelectedList, setSelectedBook } = userListsSlice.actions;

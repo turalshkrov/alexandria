@@ -12,10 +12,6 @@
   border: 1px solid var(--card-border-color);
   height: 100%;
 
-  &:hover {
-    box-shadow: 0px 5px 10px var(--box-shadow-color);
-  }
-
   .book-cover-container {
     background-color: lightgray;
     width: 100%;

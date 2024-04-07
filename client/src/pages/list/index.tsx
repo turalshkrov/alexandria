@@ -6,7 +6,7 @@ import { getListById } from "@/api/list";
 import { MdOutlineEdit } from "react-icons/md";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { MdOutlineContentCopy } from "react-icons/md";
-import { setSelectedList } from "@/redux/slices/userSlice";
+import { setSelectedList } from "@/redux/slices/userListsSlice";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
 import { toast } from "sonner";
 import Preloader from "@/shared/components/preloader/Preloader";
@@ -23,6 +23,7 @@ interface ListPageState {
 }
 
 const ListPage = () => {
+  const userId = useAppSelector(state => state.userSlice.user?._id);
   const dispatch = useAppDispatch();
   const [ data, setData ] = useState<ListPageState>({
     list: undefined,
@@ -54,14 +55,15 @@ const ListPage = () => {
         } else {
           setData(state => ({ ...state, isLoading: true }));
           list = await getListById(id);
-          setData({ list, isLoading: false, editPermission: false, error: null, });
+          setData(state => ({ ...state, list, isLoading: false, error: null, }));
+          if (list?.user._id === userId) setData({ list, isLoading: false, editPermission: true, error: null, });
         }
       } catch (error) {
         setData(state => ({ ...state, error, isLoading: false }));
       }
     }
     getList();
-  }, [ id, Lists ]);
+  }, [ id, Lists, userId]);
 
   useEffect(() => {
     if (data.editPermission) { dispatch(setSelectedList(data.list?._id)); }

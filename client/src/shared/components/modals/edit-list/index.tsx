@@ -10,7 +10,7 @@ import { updateList } from "@/redux/slices/userListsSlice";
 
 const EditList = () => {
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, "editList"));
-  const selectedList = useAppSelector(state => state.userSlice.selectedList) || "";
+  const selectedList = useAppSelector(state => state.userListsSlice.selectedList) || "";
   const dispatch = useAppDispatch();
   const [title, setTitle] = useState("");
   const handleTitleChange = (e: any) => {
@@ -28,7 +28,7 @@ const EditList = () => {
   const editList = async () => {
     if (!title.trim()) { toast.error('Title is required') }
     else {
-      toast.promise(dispatch(updateList({ id: selectedList, title})), {
+      toast.promise(dispatch(updateList({ id: selectedList, title})).unwrap(), {
         loading: 'Loading...',
         success: 'List updated',
         error: 'Somethings get wrong'

@@ -2,9 +2,7 @@ import http from "@/api/api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface AuthState {
-  userId: string,
   token: string,
-  role: string,
   isAuth: boolean,
   isLoading: boolean,
   error: string | null,
@@ -19,10 +17,8 @@ type registerForm = {
 }
 
 const initialState: AuthState = {
-  userId: localStorage.getItem('userId') || "",
   token: localStorage.getItem('token') || "",
   isAuth: localStorage.getItem('token') ? true : false,
-  role: localStorage.getItem('role') || "",
   isLoading: false,
   error: null,
 }
@@ -51,8 +47,6 @@ const authSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
       state.token = "";
-      state.role = "";
-      state.userId = "";
     },
   },
   extraReducers(builder) {
@@ -63,12 +57,8 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isAuth = true;
         state.token = action.payload.token;
-        state.userId = action.payload.userId;
-        state.role = action.payload.role;
         state.isLoading = false;
         localStorage.setItem('token', state.token);
-        localStorage.setItem('userId', state.userId);
-        localStorage.setItem('role', state.role);
       })
       .addCase(login.rejected, (state) => {
         state.isLoading = false;

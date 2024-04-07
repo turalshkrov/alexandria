@@ -2,12 +2,13 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BookType, ReviewType } from "@/types";
-import { addBookToFavorites, getBookById, getBookReviews, rateBook, removeBookFromFavorites } from "@/api/book";
+import { getBookById, getBookReviews } from "@/api/book";
 import { IoIosStar } from "react-icons/io";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { Rating } from "react-simple-star-rating";
 import { toast } from "sonner";
-import { addFavoriteBookOnUI, removeFavoriteBookOnUI, setSelectedBook, updateBookReviewOnUI } from "@/redux/slices/userSlice";
+import { addFavoriteBook, removeFavoriteBook, addReview } from "@/redux/slices/userSlice";
+import { setSelectedBook } from "@/redux/slices/userListsSlice";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
 import { BiHeart, BiPlus, BiSolidHeart } from "react-icons/bi";
 import Preloader from "@/shared/components/preloader/Preloader";
@@ -23,7 +24,7 @@ interface BookData {
 
 const BookPage = () => {
   const params = useParams();
-  const id = params.id;
+  const id = params.id || "";
   const isAuth = useAppSelector(state => state.authSlice.isAuth);
   const dispatch = useAppDispatch();
   const [data, setData] = useState<BookData>({
@@ -49,18 +50,18 @@ const BookPage = () => {
     }));
   };
   const handleAddFavorites = async () => {
-    try {
-      if (isFavorite) {
-        await removeBookFromFavorites(id || "");
-        dispatch(removeFavoriteBookOnUI(id));
-        toast.success('Book removed from favorites');
-      } else {
-        await addBookToFavorites(id || "");
-        dispatch(addFavoriteBookOnUI(data.book));
-        toast.success('Book added to favorites');
-      }
-    } catch (error) {
-      toast.error('Somethings get wrong');
+    if (isFavorite) {
+      toast.promise(dispatch(removeFavoriteBook(id)).unwrap(), {
+        loading: 'Loading...',
+        success: 'Book removed from favorites',
+        error: 'Somethings get wrong'
+      })
+    } else {
+      toast.promise(dispatch(addFavoriteBook(id)).unwrap(), {
+        loading: 'Loading...',
+        success: 'Book added to favorites',
+        error: 'Somethings get wrong'
+      });
     }
   }
   const handleReviewChange = (e: any) => {
@@ -70,9 +71,11 @@ const BookPage = () => {
     e.preventDefault();
     try {
       if (newReview.rating) {
-        const review = await rateBook(id || "", newReview.rating, newReview.content, newReview.title);
-        dispatch(updateBookReviewOnUI({ book: id, review } ));
-        toast.success('Review updated');
+        toast.promise(dispatch(addReview({ id, rating: newReview.rating, content: newReview.content, title: newReview.title })).unwrap(), {
+          loading: 'Loading...',
+          success: 'Review updated',
+          error: 'Something get wrong'
+        })
       } else {
         toast.error('Rating is empty');
       }
@@ -239,11 +242,11 @@ const BookPage = () => {
                 </div> :
                 <div className="reviews-container">
                   {
-                    userReview && userReview?.user &&
+                    userReview && userReview?.content &&
                     <Review data={userReview}/>
                   }
                   {
-                    data.reviews?.filter(review => review._id !== userReview?._id).map(review => (
+                    data.reviews?.filter(review => review._id !== userReview?._id && review.content).map(review => (
                       <Review key={review._id} data={review} />
                     ))
                   }

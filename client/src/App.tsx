@@ -27,19 +27,24 @@ const SignIn = lazy(() => import('./pages/signin'));
 const Account = lazy(() => import('./pages/account'));
 const ListPage = lazy(() => import('./pages/list'));
 const BookPage = lazy(() => import('./pages/book'));
+const AuthorPage = lazy(() => import('./pages/author'));
 
 function App() {
   const isAuth = useAppSelector(state => state.authSlice.isAuth);
   const isLoading = useAppSelector(state => state.authSlice.isLoading);
-  const userId = useAppSelector(state => state.authSlice.userId);
+  const userId = useAppSelector(state => state.userSlice.user?._id) || "";
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (isAuth) {
-      dispatch(getMe(userId));
+      dispatch(getMe());
+    }
+  }, [dispatch, isAuth]);
+  useEffect(() => {
+    if (userId) {
       dispatch(getMyLists(userId));
       dispatch(getMyReviews(userId));
     }
-  }, [dispatch, isAuth, userId]);
+  }, [dispatch, userId]);
   return (
     <BrowserRouter>
       <Suspense fallback={<Preloader />}>
@@ -63,6 +68,7 @@ function App() {
               <Route path='/profile' element={isAuth ? <Profile /> : <Navigate to='/login' />} />
               <Route path='/users/:id' element={<User />} />
               <Route path='/books/:id' element={<BookPage />} />
+              <Route path='/authors/:id' element={<AuthorPage />} />
               <Route path='/lists/:id' element={<ListPage />} />
               <Route path='/account' element={isAuth ? <Account /> : <Navigate to='/login' />} />
               <Route path='/login' element={!isAuth ? <Login /> : <Navigate to='/' />} />

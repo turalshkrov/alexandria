@@ -1,15 +1,15 @@
 import { setIsOpen } from '@/redux/slices/ModalSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/hook';
 import { modalIsOpenSelector } from '@/redux/selectors';
-import { setSelectedBook } from '@/redux/slices/userSlice';
+import { setSelectedBook } from '@/redux/slices/userListsSlice';
 import { toast } from 'sonner';
 import { createPortal } from 'react-dom';
 import { removeBook } from '@/redux/slices/userListsSlice';
 
 export default function ConfirmRemoveBook (){
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, 'confirmRemoveBook'));
-  const selectedList = useAppSelector(state => state.userSlice.selectedList) || "";
-  const selectedBook = useAppSelector(state => state.userSlice.selectedBook) || "";
+  const selectedList = useAppSelector(state => state.userListsSlice.selectedList) || "";
+  const selectedBook = useAppSelector(state => state.userListsSlice.selectedBook) || "";
   const dispatch = useAppDispatch();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const hideModal = (e: any) => {
@@ -22,9 +22,10 @@ export default function ConfirmRemoveBook (){
   }
   const handleSubmit = async () => {
     dispatch(setIsOpen({ id: 'confirmDeleteList', isOpen: false }));
-    toast.promise(dispatch(removeBook({ listId: selectedList, bookId: selectedBook })), {
+    toast.promise(dispatch(removeBook({ listId: selectedList, bookId: selectedBook })).unwrap(), {
       loading: 'Loading...',
-      success: 'Book removed from list'
+      success: 'Book removed from list',
+      error: 'Somethings get wrong'
     });
   }
   return (

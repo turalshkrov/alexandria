@@ -5,13 +5,13 @@ import { setIsOpen } from "@/redux/slices/ModalSlice";
 import { createPortal } from "react-dom";
 import { toast } from "sonner";
 import { addBook } from "@/redux/slices/userListsSlice";
-import "./index.scss";
 import { ListType } from "@/types";
+import "./index.scss";
 
 const AddToListModal = () => {
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, "addToList"));
   const lists = useAppSelector(state => state.userListsSlice.lists);
-  const selectedBook = useAppSelector(state => state.userSlice.selectedBook) || "";
+  const selectedBook = useAppSelector(state => state.userListsSlice.selectedBook);
   const dispatch = useAppDispatch();
   const hideModal = (e: any) => {
     const target = e.target;
@@ -24,10 +24,11 @@ const AddToListModal = () => {
     if (lists?.find(list => list._id === selectedList._id)?.books.find(book => book._id === selectedBook)) {
       toast.info(`Book is already in ${selectedList.title}`);
     } else {
-      toast.promise(dispatch(addBook({ listId: selectedList._id, bookId: selectedBook })), {
+      toast.promise(dispatch(addBook({ listId: selectedList._id, bookId: selectedBook })).unwrap(), {
         loading: 'Loading...',
         success: `Book added to ${selectedList.title}`,
-      })
+        error: 'Somethings get wrong'
+      });
     }
   }
   return (

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { updateProfile } from "@/api/user";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
-import { updateProfileOnUI } from "@/redux/slices/userSlice";
+import { updateProfile } from "@/redux/slices/userSlice";
 import { useEffect, useRef, useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { toast } from "sonner";
@@ -14,7 +13,7 @@ const ProfileSection = () => {
     username: user?.username,
     location: user?.location,
     profileImage: user?.profileImage
-  })
+  });
   const dispatch = useAppDispatch();
   const profileImageClcik = (e: any) => {
     e.preventDefault();
@@ -52,11 +51,11 @@ const ProfileSection = () => {
   }, [ user ]);
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const data = await updateProfile(userEditForm);
-    if (data) {
-      dispatch(updateProfileOnUI(data));
-      toast.success('Profile updated');
-    }
+    toast.promise(dispatch(updateProfile(userEditForm)).unwrap(), {
+      loading: 'Loading...',
+      success: 'Profile updated',
+      error: 'Somethings get wrong'
+    });
   }
   return (
     <div className='section mt-md-2 px-1' id="profile">
@@ -76,7 +75,7 @@ const ProfileSection = () => {
             onChange={handleProfileImageChange}/>
         </div>
         <div className="profile-image-item">
-          <div className="profile-image-container br-full" style={{background: `url(${userEditForm.profileImage})`}}>
+          <div className="profile-image-container br-full" style={{background: `url(${userEditForm.profileImage || 'https://rb.gy/mygjaa'})`}}>
           </div>
           <button 
             className="update-image-btn mt-1 br-1"

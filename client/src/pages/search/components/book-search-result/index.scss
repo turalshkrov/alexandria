@@ -24,6 +24,27 @@
       font-size: 14px;
     }
   }
+
+  .book-action {
+    margin-left: auto;
+    .book-action-btn {
+      cursor: pointer;
+    background: var(--card-bg-color);
+    color: var(--primary-text-color);
+    border: none;
+    padding: 12px;
+    font-size: 15px;
+    transition: .3s background-color;
+
+    &:hover {
+      background-color: var(--card-border-color);
+    }
+
+    svg {
+      margin-right: .25rem;
+    }
+    }
+  }
 }
 
 .books-loading {

@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { useAppDispatch } from "@/hooks/hook";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
-import { setSelectedBook } from "@/redux/slices/userSlice";
+import { setSelectedBook } from "@/redux/slices/userListsSlice";
 import { useEffect } from "react";
-import ConfirmRemoveBook from "@/shared/components/modals/confirm-remove-book";
 import Button from "@/shared/components/button";
 import './index.scss';
 
@@ -17,7 +16,7 @@ const BookTable = ({ data, editPermission }: { data: BookType[], editPermission:
   }
   useEffect(() => {
     dispatch(setIsOpen({ id: 'confirmRemoveBook', isOpen: false }));
-  })
+  }, [dispatch]);
   return (
     <table className="book-table w-100 mx-md-2 mx-lg-3">
       <thead>
@@ -59,7 +58,6 @@ const BookTable = ({ data, editPermission }: { data: BookType[], editPermission:
                     <FaRegCircleXmark/>
                     Remove
                   </Button>
-                  <ConfirmRemoveBook />
                 </td>
               }
             </tr>
