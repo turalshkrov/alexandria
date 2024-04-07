@@ -2,11 +2,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "@/hooks/hook";
+import { login } from "@/redux/slices/authSlice";
 import Button from "@/shared/components/button";
 import '../signup/index.scss';
 import './index.scss'
-import { useAppDispatch } from "@/hooks/hook";
-import { login } from "@/redux/slices/authSlice";
 
 type loginForm = {
   email: string,

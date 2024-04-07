@@ -15,7 +15,7 @@ import EmptyLibrary from "./empty-library";
 import "./index.scss";
 
 const User = () => {
-  const authId = useAppSelector(state => state.authSlice.userId);
+  const authId = useAppSelector(state => state.userSlice.user?._id);
   type State = {
     user: UserType | null,
     lists: ListType[],
