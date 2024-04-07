@@ -44,7 +44,7 @@ router.get('/getMe', authenticationToken, async (req, res) => {
       return res.status(404).json({ message: "Couldn't find your account" });
     }
     res.status(200).json({
-      user, userRole
+      user, userRole: userRole.role
     });
   } catch (error) {
     res.status(500).json(error);
