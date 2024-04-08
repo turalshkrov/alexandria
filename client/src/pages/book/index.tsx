@@ -35,12 +35,12 @@ const BookPage = () => {
   });
   const userReview = useAppSelector(state => state.userSlice.reviews?.find(review => review.book === data.book?._id));
   const isFavorite = useAppSelector(state => Boolean(state.userSlice.user?.favoriteBooks?.find(book => book._id === id)));
-  const [ newReview, setNewReview ] = useState({
+  const [newReview, setNewReview] = useState({
     title: userReview?.title,
     content: userReview?.content,
     rating: userReview?.rating,
   });
-  const handleRatingChange =(rate: number) => {
+  const handleRatingChange = (rate: number) => {
     setNewReview(state => ({ ...state, rating: rate }));
   };
   const showAddToListModal = () => {
@@ -65,7 +65,7 @@ const BookPage = () => {
     }
   }
   const handleReviewChange = (e: any) => {
-    setNewReview(state => ({ ...state, [e.target.name]: e.target.value}));
+    setNewReview(state => ({ ...state, [e.target.name]: e.target.value }));
   };
   const handleSubmitReview = async (e: any) => {
     e.preventDefault();
@@ -103,161 +103,172 @@ const BookPage = () => {
       content: userReview?.content,
       rating: userReview?.rating,
     })
-  }, [ userReview?.content, userReview?.rating, userReview?.title ]);
+  }, [userReview?.content, userReview?.rating, userReview?.title]);
   return (
     <>
-    {
-    data.isLoading ? <Preloader /> :
-    <div className="page book-page">
-      <div className="container py-2">
-        <div className="row align-items-start">
-          <div className="col-12 col-md-4 col-lg-3 text-center book-container-left">
-            <div className="book-cover-container" style={{ background: `url(${data.book?.cover})` }}>
-            </div>
-            <div className="book-actions mt-2">
-              <button
-                className="book-action-btn w-75 mt-1"
-                onClick={handleAddFavorites}>
-                <div className="d-f align-items-center justify-center">
+      {
+        data.isLoading ? <Preloader /> :
+          <div className="page book-page">
+            <div className="container py-2">
+              <div className="row align-items-start">
+                <div className="col-12 col-md-4 col-lg-3 text-center book-container-left">
+                  <div className="book-cover-container" style={{ background: `url(${data.book?.cover})` }}>
+                  </div>
                   {
-                    isFavorite ?
-                    <>
-                      <BiSolidHeart color="#dc3545" size={18}/>
-                      Favorite
-                    </> :
-                    <>
-                      <BiHeart color="#dc3545" size={18}/>
-                      Add to favorites
-                    </>
+                    isAuth &&
+                    <div className="book-actions mt-2">
+                      <button
+                        className="book-action-btn w-75 mt-1"
+                        onClick={handleAddFavorites}>
+                        <div className="d-f align-items-center justify-center">
+                          {
+                            isFavorite ?
+                              <>
+                                <BiSolidHeart color="#dc3545" size={18} />
+                                Favorite
+                              </> :
+                              <>
+                                <BiHeart color="#dc3545" size={18} />
+                                Add to favorites
+                              </>
+                          }
+                        </div>
+                      </button>
+                      <button className="book-action-btn w-75 mt-1" onClick={showAddToListModal}>
+                        <div className="d-f align-items-center justify-center">
+                          <BiPlus size={18} />
+                          Add to list
+                        </div>
+                      </button>
+                    </div>
                   }
                 </div>
-              </button>
-              <button className="book-action-btn w-75 mt-1" onClick={showAddToListModal}>
-                <div className="d-f align-items-center justify-center">
-                  <BiPlus size={18}/> 
-                  Add to list
-                </div>
-              </button>
-            </div>
-          </div>
-          <div className="col-12 col-md-8 col-lg-9 mt-2 mt-md-0">
-            <h2>{data.book?.title}</h2>
-            <Link className="link-hover font-md" to={`/authors/${data.book?.author._id}`}>{data.book?.author.name}</Link>
-            <div className="book-rating mt-1">
-              <p className="d-f align-items-center rating-text font-md">
-                Alexandria rating: <IoIosStar color='#f5c518' className="ml-1" /> {data.book?.rating}
-                <span className="ml-2 text-secondary ratings-count">{data.book?.ratingsCount} rating</span>
-              </p>
-            </div>
-            <div className="book-details mt-1">
-              <p className="m-0 text-secondary">First published: {data.book?.published}</p>
-              <p className="m-0 text-secondary">Original language: {data.book?.language}</p>
-              <p className="m-0 text-secondary">Original title: {data.book?.originalTitle}</p>
-              <p className="text-secondary">
-                Genre:
-                {
-                  data.book?.genres.map(genre => (
-                    <Link key={genre} to={`/genres/${genre}`} className="link-hover underline-link ml-1">{genre}</Link>
-                  ))
-                }
-              </p>
-            </div>
-            <div className="book-description mt-1">
-              <p>{data.book?.description}</p>
-            </div>
-            <div className="book-author-info my-2 py-2">
-              <h3 className="fw-regular">About the author</h3>
-              <div className="author-profile mt-2 d-f align-items-center">
-                <div className="author-image-container br-full" style={{ background: `url(${data.book?.author.image})` }}>
-                </div>
-                <div className="ml-1 ml-md-1 author-name book-details">
-                  <h4 className="m-0">
-                    <Link to={`/authors/${data.book?.author._id}`} className="link-hover">
-                      {data.book?.author.name}
-                    </Link>
-                  </h4>
-                  <p className="text-secondary m-0">{data.book?.author.born}</p>
+                <div className="col-12 col-md-8 col-lg-9 mt-2 mt-md-0">
+                  <h2 className="">{data.book?.title}</h2>
+                  {
+                    data.book?.series?._id &&
+                    <p className="book-series-link">
+                      <Link className="link-hover text-secondary" to={`/series/${data.book?.series?._id}`}>
+                        {data.book?.series?.title} {`#${data.book?.series?.books.findIndex(_id => _id === data.book?._id) + 1}`}
+                      </Link>
+                    </p>
+                  }
+                  <Link className="link-hover font-md" to={`/authors/${data.book?.author._id}`}>{data.book?.author.name}</Link>
+                  <div className="book-rating mt-1">
+                    <p className="d-f align-items-center rating-text font-md">
+                      Alexandria rating: <IoIosStar color='#f5c518' className="ml-1" /> {data.book?.rating}
+                      <span className="ml-2 text-secondary ratings-count">{data.book?.ratingsCount} rating</span>
+                    </p>
+                  </div>
+                  <div className="book-details mt-1">
+                    <p className="m-0 text-secondary">First published: {data.book?.published}</p>
+                    <p className="m-0 text-secondary">Original language: {data.book?.language}</p>
+                    <p className="m-0 text-secondary">Original title: {data.book?.originalTitle}</p>
+                    <p className="text-secondary d-f book-genres">
+                      <span className="mr-1">Genre:</span>
+                      {
+                        data.book?.genres.map(genre => (
+                          <Link key={genre} to={`/genres/${genre}`} className="link-hover underline-link mr-1">{genre}</Link>
+                        ))
+                      }
+                    </p>
+                  </div>
+                  <div className="book-description mt-1">
+                    <p>{data.book?.description}</p>
+                  </div>
+                  <div className="book-author-info my-2 py-2">
+                    <h3 className="fw-regular">About the author</h3>
+                    <div className="author-profile mt-2 d-f align-items-center">
+                      <div className="author-image-container br-full" style={{ background: `url(${data.book?.author.image})` }}>
+                      </div>
+                      <div className="ml-1 ml-md-1 author-name book-details">
+                        <h4 className="m-0">
+                          <Link to={`/authors/${data.book?.author._id}`} className="link-hover">
+                            {data.book?.author.name}
+                          </Link>
+                        </h4>
+                        <p className="text-secondary m-0">{data.book?.author.born}</p>
+                      </div>
+                    </div>
+                    <p className="mt-2">
+                      {data.book?.author.authorInfo}
+                    </p>
+                  </div>
+                  {
+                    isAuth &&
+                    <div className="write review">
+                      <h3 className="fw-regular">
+                        {
+                          userReview?._id ?
+                            "Edit your review" :
+                            "Write a review"
+                        }
+                      </h3>
+                      <h4>Your rating</h4>
+                      <Rating
+                        onClick={handleRatingChange}
+                        size={28}
+                        initialValue={userReview?.rating}
+                        allowTitleTag={false}
+                      />
+                      <form className="form-control mt-1 review-form pb-2 mb-2">
+                        <div className="form-item">
+                          <label htmlFor="review-title">Review header</label>
+                          <input
+                            name="title"
+                            type="text"
+                            id="review-title"
+                            className="w-100 w-md-50"
+                            value={newReview.title}
+                            onChange={handleReviewChange} />
+                        </div>
+                        <div className="form-item">
+                          <label htmlFor="review-content">Review content</label>
+                          <textarea
+                            name="content"
+                            id="review-content"
+                            className="w-100 w-md-50"
+                            cols={50}
+                            rows={5}
+                            value={newReview.content}
+                            onChange={handleReviewChange}>
+                          </textarea>
+                        </div>
+                        <button className="book-action-btn w-100 w-md-50" onClick={handleSubmitReview}>
+                          {
+                            userReview?._id ?
+                              "Edit your review" :
+                              "Write a review"
+                          }
+                        </button>
+                      </form>
+                    </div>
+                  }
+                  <div className="rating-and-reviews">
+                    <h3 className="fw-regular">Rating & reviews</h3>
+                    {
+                      (data.reviews?.filter(review => review.content).length === 0) ?
+                        <div className="empty-review d-f justify-center py-2">
+                          <h3 className="fw-regular text-secondary">No review yet</h3>
+                        </div> :
+                        <div className="reviews-container">
+                          {
+                            userReview && userReview?.content &&
+                            <Review data={userReview} />
+                          }
+                          {
+                            data.reviews?.filter(review => review._id !== userReview?._id && review.content).map(review => (
+                              <Review key={review._id} data={review} />
+                            ))
+                          }
+                        </div>
+                    }
+                  </div>
                 </div>
               </div>
-              <p className="mt-2">
-                {data.book?.author.authorInfo}
-              </p>
-            </div>
-            {
-              isAuth &&
-            <div className="write review">
-              <h3 className="fw-regular">
-                {
-                  userReview?._id ?
-                  "Edit your review" :
-                  "Write a review"
-                }
-              </h3>
-              <h4>Your rating</h4>
-              <Rating
-                  onClick={handleRatingChange}
-                  size={28}
-                  initialValue={userReview?.rating}
-                  allowTitleTag={false}
-                />
-              <form className="form-control mt-1 review-form pb-2 mb-2">
-                <div className="form-item">
-                  <label htmlFor="review-title">Review header</label>
-                  <input
-                    name="title"
-                    type="text"
-                    id="review-title"
-                    className="w-100 w-md-50"
-                    value={newReview.title}
-                    onChange={handleReviewChange}/>
-                </div>
-                <div className="form-item">
-                  <label htmlFor="review-content">Review content</label>
-                  <textarea
-                    name="content"
-                    id="review-content"
-                    className="w-100 w-md-50"
-                    cols={50}
-                    rows={5}
-                    value={newReview.content}
-                    onChange={handleReviewChange}>
-                  </textarea>
-                </div>
-                <button className="book-action-btn w-100 w-md-50" onClick={handleSubmitReview}>
-                {
-                  userReview?._id ?
-                  "Edit your review" :
-                  "Write a review"
-                }
-                </button>
-              </form>
-            </div>
-            }
-            <div className="rating-and-reviews">
-              <h3 className="fw-regular">Rating & reviews</h3>
-              {
-                (data.reviews?.filter(review => review.content).length === 0) ?
-                <div className="empty-review d-f justify-center py-2">
-                  <h3 className="fw-regular text-secondary">No review yet</h3>
-                </div> :
-                <div className="reviews-container">
-                  {
-                    userReview && userReview?.content &&
-                    <Review data={userReview}/>
-                  }
-                  {
-                    data.reviews?.filter(review => review._id !== userReview?._id && review.content).map(review => (
-                      <Review key={review._id} data={review} />
-                    ))
-                  }
-                </div>
-              }
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    }
+      }
     </>
   )
 }

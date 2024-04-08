@@ -20,6 +20,7 @@ interface AuthorPageState {
 
 const AuthorPage = () => {
   const params = useParams();
+  const isAuth = useAppSelector(state => state.authSlice.isAuth);
   const id = params.id || "";
   const isFavorite = useAppSelector(state => Boolean(state.userSlice.user?.favoriteAuthors?.find(book => book._id === id)));
   const [data, setData] = useState<AuthorPageState>({
@@ -75,32 +76,35 @@ const AuthorPage = () => {
                 <div className="col-12 col-md-4 col-lg-3 text-center book-container-left">
                   <div className="author-image-container w-50" style={{ background: `url(${data.author?.image})` }}>
                   </div>
-                  <div className="author-actions mt-1">
-                    <button
-                      className="author-action-btn w-75 mt-1"
-                      onClick={handleAddFavorites}>
-                      <div className="d-f align-items-center justify-center">
-                        {
-                          isFavorite ?
-                            <>
-                              <BiSolidHeart color="#dc3545" size={18} />
-                              Favorite
-                            </> :
-                            <>
-                              <BiHeart color="#dc3545" size={18} />
-                              Add to favorites
-                            </>
-                        }
-                      </div>
-                    </button>
-                  </div>
+                  {
+                    isAuth &&
+                    <div className="author-actions mt-1">
+                      <button
+                        className="author-action-btn w-75 mt-1"
+                        onClick={handleAddFavorites}>
+                        <div className="d-f align-items-center justify-center">
+                          {
+                            isFavorite ?
+                              <>
+                                <BiSolidHeart color="#dc3545" size={18} />
+                                Favorite
+                              </> :
+                              <>
+                                <BiHeart color="#dc3545" size={18} />
+                                Add to favorites
+                              </>
+                          }
+                        </div>
+                      </button>
+                    </div>
+                  }
                 </div>
                 <div className="col-12 col-md-8 col-lg-9 mt-2 mt-md-0">
                   <h2>{data.author?.name}</h2>
                   <div className="author-details mt-1">
+                    <p className="m-0 text-secondary">Native name: {data.author?.nativeName}</p>
                     <p className="m-0 text-secondary">Born: {data.author?.born}</p>
                     {data.author?.died && <p className="m-0 text-secondary">Died: {data.author.died}</p>}
-                    <p className="m-0 text-secondary">Native name: {data.author?.nativeName}</p>
                     <p className="text-secondary">
                       Genre:
                       {
@@ -118,7 +122,7 @@ const AuthorPage = () => {
                     <div className="author-books-container my-2">
                       {
                         data.books?.map(book => (
-                          <div className="author-book d-f w-100 align-items-center">
+                          <div key={book._id} className="author-book d-f w-100 align-items-center">
                             <div className="book-cover-container">
                               <img src={book.cover} alt="" className="book-cover" />
                             </div>
@@ -135,11 +139,14 @@ const AuthorPage = () => {
                                 {book.author.name}
                               </p>
                             </div>
-                            <div className="book-action">
-                              <button className="book-action-btn d-f align-items-center" onClick={() => handleBookClick(book._id)}>
-                                <BiPlus /> Add to list
-                              </button>
-                            </div>
+                            {
+                              isAuth &&
+                              <div className="book-action">
+                                <button className="book-action-btn d-f align-items-center" onClick={() => handleBookClick(book._id)}>
+                                  <BiPlus /> Add to list
+                                </button>
+                              </div>
+                            }
                           </div>
                         ))
                       }

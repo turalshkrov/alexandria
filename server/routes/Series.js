@@ -58,7 +58,7 @@ router.patch('/:id/remove-book', authenticationToken, getSeries, checkBookId, as
     if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
     const { bookId } = req.body;
     const book = await Book.findById(bookId);
-    res.series.books = res.series.books.filter(book => book.toString() !== bookId);
+    res.series.books = res.series.books.filter(book => book._id.toString() !== bookId);
     book.series = undefined;
     await res.series.save();
     await book.save();
