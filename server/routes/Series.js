@@ -13,8 +13,8 @@ const router = express.Router();
 router.post('/create', authenticationToken, seriesValidationRules(), validation, getBooks, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
-    const { title, books } = req.body;
-    const series = new Series({ title, books });
+    const { title, description, books } = req.body;
+    const series = new Series({ title, description, books });
     await series.save();
     res.status(200).json({ message: "Series created" });
   } catch (error) {
@@ -22,12 +22,13 @@ router.post('/create', authenticationToken, seriesValidationRules(), validation,
   }
 });
 
-// UPDATE SERIES TITLE
+// UPDATE SERIES
 router.patch('/:id', authenticationToken, getSeries, seriesValidationRules(), validation, getBooks, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
-    const { title } = req.body;
-    res.series.title = title;
+    const { title, description } = req.body;
+    if (title) res.series.title = title;
+    if (description)  res.series.description = description;
     await res.series.save();
     res.status(200).json({ message: "Series updated" });
   } catch (error) {

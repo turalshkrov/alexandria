@@ -5,6 +5,10 @@ const Series = new mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   books: {
     type: [{
       type: mongoose.Types.ObjectId,
