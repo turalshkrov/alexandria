@@ -100,7 +100,7 @@ const AuthorPage = () => {
                   }
                 </div>
                 <div className="col-12 col-md-8 col-lg-9 mt-2 mt-md-0">
-                  <h2>{data.author?.name}</h2>
+                  <h2 className="logo-font">{data.author?.name}</h2>
                   <div className="author-details mt-1">
                     <p className="m-0 text-secondary">Native name: {data.author?.nativeName}</p>
                     <p className="m-0 text-secondary">Born: {data.author?.born}</p>

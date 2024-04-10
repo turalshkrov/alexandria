@@ -64,3 +64,9 @@ export type SeriesType = {
   title: string,
   books: string[],
 }
+
+export type GenreType = {
+  _id: string,
+  name: string,
+  cover: string,
+}

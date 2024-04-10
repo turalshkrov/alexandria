@@ -1,9 +1,15 @@
-import { useAppSelector } from "@/hooks/hook";
-import genres from "./genres.json";
+import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import GenreCard from "@/shared/components/genre card";
+import { useEffect } from "react";
+import { getGenres } from "@/redux/slices/SearchSlice";
 
 export default function BrowseGenres() {
+  const dispatch = useAppDispatch();
   const searchKeyword = useAppSelector(state => state.SearchSlice.searchKeyword);
+  const genres = useAppSelector(state => state.SearchSlice.genres);
+  useEffect(() => {
+    dispatch(getGenres());
+  }, [dispatch]);
   return (
     <>
       {
@@ -15,9 +21,9 @@ export default function BrowseGenres() {
             genres.map(genre => {
               return(
                 <GenreCard
-                  key={genre.id}
-                  id={genre.id}
-                  title={genre.title}
+                  key={genre._id}
+                  id={genre._id}
+                  title={genre.name}
                   cover={genre.cover}
                 />
               )

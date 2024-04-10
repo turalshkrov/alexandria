@@ -144,7 +144,7 @@ const BookPage = () => {
                   }
                 </div>
                 <div className="col-12 col-md-8 col-lg-9 mt-2 mt-md-0">
-                  <h2 className="">{data.book?.title}</h2>
+                  <h2 className="logo-font">{data.book?.title}</h2>
                   {
                     data.book?.series?._id &&
                     <p className="book-series-link">
@@ -153,9 +153,9 @@ const BookPage = () => {
                       </Link>
                     </p>
                   }
-                  <Link className="link-hover font-md" to={`/authors/${data.book?.author._id}`}>{data.book?.author.name}</Link>
+                  <Link className="link-hover" to={`/authors/${data.book?.author._id}`}>{data.book?.author.name}</Link>
                   <div className="book-rating mt-1">
-                    <p className="d-f align-items-center rating-text font-md">
+                    <p className="d-f align-items-center rating-text">
                       Alexandria rating: <IoIosStar color='#f5c518' className="ml-1" /> {data.book?.rating}
                       <span className="ml-2 text-secondary ratings-count">{data.book?.ratingsCount} rating</span>
                     </p>
