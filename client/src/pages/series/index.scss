@@ -1,0 +1,53 @@
+.series-info {
+  border-bottom: 1px solid var(--card-border-color);
+}
+.series-book {
+  padding: 5px;
+  border-bottom: 1px solid var(--card-border-color);
+
+  .book-cover-container {
+    background-color: lightgray;
+    position: relative;
+    width: 55px;
+    height: 82.5px;
+    margin-right: .5rem;
+
+    .book-cover {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .book-info {
+
+    .book-info-published,
+    .book-info-author {
+      font-size: 14px;
+    }
+  }
+
+  .book-action {
+    margin-left: auto;
+
+    .book-action-btn {
+      cursor: pointer;
+      width: max-content;
+      background: var(--card-bg-color);
+      color: var(--primary-text-color);
+      border: none;
+      padding: 12px;
+      font-size: 15px;
+      transition: .3s background-color;
+
+      &:hover {
+        background-color: var(--card-border-color);
+      }
+
+      svg {
+        margin-right: .25rem;
+      }
+    }
+  }
+}

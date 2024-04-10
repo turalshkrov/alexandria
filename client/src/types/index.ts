@@ -62,7 +62,8 @@ export type ReviewType = {
 export type SeriesType = {
   _id: string,
   title: string,
-  books: string[],
+  description: string,
+  books: BookType[],
 }
 
 export type GenreType = {
