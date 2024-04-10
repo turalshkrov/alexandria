@@ -30,8 +30,8 @@ router.post('/register', userValidationRules(), validation, checkEmail, checkUse
     const userRole = new UserRole({ userId: user._id });
     const newUser = await user.save();
     await userRole.save();
-    res.status(201).json({ message: "User created successfully, Please verify email address" });
     sendVerifyMail(newUser.email, newUser._id);
+    res.status(201).json({ message: "User created successfully, Please verify email address" });
   } catch (error) {
     res.status(500).json(error);
   }
