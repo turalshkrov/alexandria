@@ -96,7 +96,7 @@ router.get('/author/:authorId', async (req, res) => {
 });
 
 // GET BOOKS BY GENRE
-router.get('/genre/:genre', async (req, res) => {
+router.get('/genres/:genre', async (req, res) => {
   try {
     const genre = capitalize(req.params.genre);
     const books = await Book.find().populate('author').populate('series');

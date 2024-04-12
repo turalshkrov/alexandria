@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
-import GenreCard from "@/shared/components/genre card";
 import { useEffect } from "react";
 import { getGenres } from "@/redux/slices/SearchSlice";
+import GenreCard from "@/shared/components/genre card";
 
 export default function BrowseGenres() {
   const dispatch = useAppDispatch();

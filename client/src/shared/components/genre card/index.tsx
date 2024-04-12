@@ -10,7 +10,7 @@ type GenreCardProps = {
 export default function GenreCard(props: GenreCardProps) {
   return (
     <div className="genre-card-container">
-      <Link to={`/genres/${props.id}`}>
+      <Link to={`/genres/${props.title}`}>
         <div 
           className="genre-card" 
           id={props.title}>

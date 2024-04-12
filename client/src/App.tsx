@@ -29,6 +29,7 @@ const ListPage = lazy(() => import('./pages/list'));
 const BookPage = lazy(() => import('./pages/book'));
 const AuthorPage = lazy(() => import('./pages/author'));
 const SeriesPage = lazy(() => import('./pages/series'));
+const GenrePage = lazy(() => import('./pages/genre'));
 
 function App() {
   const isAuth = useAppSelector(state => state.authSlice.isAuth);
@@ -72,6 +73,7 @@ function App() {
               <Route path='/authors/:id' element={<AuthorPage />} />
               <Route path='/lists/:id' element={<ListPage />} />
               <Route path='/series/:id' element={<SeriesPage />} />
+              <Route path='/genres/:genre' element={<GenrePage />} />
               <Route path='/account' element={isAuth ? <Account /> : <Navigate to='/login' />} />
               <Route path='/login' element={!isAuth ? <Login /> : <Navigate to='/' />} />
             </Route>
