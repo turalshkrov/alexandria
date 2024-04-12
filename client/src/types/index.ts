@@ -35,7 +35,12 @@ export type BookType = {
   rating: number,
   ratingsCount: number,
   cover: string,
-  series?: SeriesType,
+  series?: {
+    _id: string,
+    title: string,
+    description: string,
+    books: string[],
+  },
 }
 
 export type AuthorType = {
@@ -63,7 +68,7 @@ export type SeriesType = {
   _id: string,
   title: string,
   description: string,
-  books: BookType[] | string[],
+  books: BookType[],
 }
 
 export type GenreType = {

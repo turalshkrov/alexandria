@@ -50,7 +50,7 @@ const AuthorPage = () => {
     dispatch(setIsOpen({
       id: "addToList",
       isOpen: true
-    }))
+    }));
   }
   useEffect(() => {
     const getData = async () => {
