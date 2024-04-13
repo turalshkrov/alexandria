@@ -13,10 +13,6 @@ interface BlogPageState {
   error: unknown,
 }
 
-const content = `
-
-`
-
 const BlogPage = () => {
   const params = useParams();
   const id = params.id || "";
