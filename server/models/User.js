@@ -19,7 +19,7 @@ const User = new mongoose.Schema({
   },
   location: {
     type: String,
-    required: true,
+    default: 'Azerbaijan'
   },
   password: {
     type: String,

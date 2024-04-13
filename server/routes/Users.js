@@ -25,8 +25,8 @@ const cryptr = new Cryptr(process.env.CRYPTR_SECRETKEY);
 // CREATE USER
 router.post('/register', userValidationRules(), validation, checkEmail, checkUsername, async (req, res) => {
   try {
-    const { name, username, email, location, password } = req.body;
-    const user = new User({ name, username, email, location, password });
+    const { name, username, email, password } = req.body;
+    const user = new User({ name, username, email, password });
     const userRole = new UserRole({ userId: user._id });
     const newUser = await user.save();
     await userRole.save();

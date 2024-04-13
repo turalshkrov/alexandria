@@ -13,7 +13,6 @@ type registerForm = {
   username: string,
   email: string,
   password: string,
-  location: string,
 }
 
 const initialState: AuthState = {
@@ -27,7 +26,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async (data: { email: string, password: string }) => {
     const response = await http.post("auth/login", data)
-    .then(response => response )
+    .then(response => response)
     .catch(error => {
       throw new Error(error.response.data.message);
     })
@@ -39,7 +38,7 @@ export const userRegister = createAsyncThunk(
   "auth/resgister",
   async (data: registerForm) => {
     const response = await http.post("users/register", data)
-    .then(response => response )
+    .then(response => response)
     .catch(error => {
       throw new Error(error.response.data.message);
     })

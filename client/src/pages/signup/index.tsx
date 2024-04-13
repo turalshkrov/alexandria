@@ -6,7 +6,6 @@ import { useAppDispatch } from "@/hooks/hook";
 import { userRegister } from "@/redux/slices/authSlice";
 import { toast } from "sonner";
 import Button from "@/shared/components/button";
-import http from "@/api/api";
 import "./index.scss";
 
 export type Form = {
@@ -21,9 +20,7 @@ const SignUp = () => {
   const [ showPassword, setshowPassword ] = useState(false);
   const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<Form> = async (data) => {
-    const response = await http.get('https://geolocation-db.com/json/');
-    const location = response.data.country_name;
-    toast.promise(dispatch(userRegister({ ...data, location })).unwrap(), {
+    toast.promise(dispatch(userRegister({ ...data })).unwrap(), {
       loading: 'Loading...',
       success: (data) => {
         return data.data.message;
