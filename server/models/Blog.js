@@ -6,12 +6,6 @@ const Blog = new mongoose.Schema({
     type: String,
     required: true,
   },
-  subtitles: {
-    type: [{
-      type: String,
-    }],
-    default: [],
-  },
   preview: {
     type: String,
     required: true,
@@ -24,13 +18,6 @@ const Blog = new mongoose.Schema({
     type: Date,
     required: true,
     default: Date.now,
-  },
-  tags: {
-    type: [{
-      type: String,
-    }],
-    required: true,
-    default: [],
   }
 }, { collection: 'Blog', versionKey: false });
 

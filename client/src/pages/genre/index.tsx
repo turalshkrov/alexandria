@@ -1,6 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./index.scss";
 import { AuthorType, BookType } from "@/types";
 import { getBookByGenre } from "@/api/book";
 import { getAuthorByGenre } from "@/api/author";
@@ -39,59 +38,59 @@ const GenrePage = () => {
   return (
     <>
       {
-        data.isLoading ?
-          <Preloader /> :
-          data.error ?
-            <ErrorPage /> :
-            <div className="page genre-page">
-              <div className="container w-lg-75 py-2">
-                <h1 className="logo-font">{genre}</h1>
-                {
-                  (data.books && data.books.length > 0) && <div className="result-container my-2">
-                    {
-                      data.books?.map(book => (
-                        <Link to={`/books/${book._id}`} className="w-100" key={book._id}>
-                          <div className="book-search-result d-f w-100 align-items-center">
-                            <div className="book-cover-container">
-                              <img src={book.cover} alt="" className="book-cover" />
-                            </div>
-                            <div className="book-info m-0">
-                              <p className="link-hover fw-bold m-0">
-                                {book.title}
-                              </p>
-                              <p className="text-secondary book-info-published m-0">
-                                {book.published}
-                              </p>
-                              <p className="text-secondary book-info-author m-0">
-                                {book.author.name}
-                              </p>
-                            </div>
-                          </div>
-                        </Link>
-                      ))
-                    }
-                  </div>
-                }
-                {
-                  (data.authors && data.authors?.length > 0) && <div className="result-container">
-                    {
-                      data.authors.map(author => (
-                        <Link to={`/authors/${author._id}`} className="w-100" key={author._id}>
-                          <div className="author-search-result d-f align-items-center">
-                            <div className="author-image-container">
-                              <img src={author.image} alt="" className="author-image" />
-                            </div>
-                            <div className="ml-1">
-                              <p className="m-0 link-hover fw-bold">{author.name}</p>
-                            </div>
-                          </div>
-                        </Link>
-                      ))
-                    }
-                  </div>
-                }
-              </div>
+      data.isLoading ?
+      <Preloader /> :
+      data.error ?
+      <ErrorPage /> :
+      <div className="page genre-page">
+        <div className="container w-lg-75 py-2">
+          <h1 className="logo-font">{genre}</h1>
+          {
+            (data.books && data.books.length > 0) && <div className="result-container my-2">
+              {
+                data.books?.map(book => (
+                  <Link to={`/books/${book._id}`} className="w-100" key={book._id}>
+                    <div className="book-search-result d-f w-100 align-items-center">
+                      <div className="book-cover-container">
+                        <img src={book.cover} alt="" className="book-cover" />
+                      </div>
+                      <div className="book-info m-0">
+                        <p className="link-hover fw-bold m-0">
+                          {book.title}
+                        </p>
+                        <p className="text-secondary book-info-published m-0">
+                          {book.published}
+                        </p>
+                        <p className="text-secondary book-info-author m-0">
+                          {book.author.name}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              }
             </div>
+          }
+          {
+            (data.authors && data.authors?.length > 0) && <div className="result-container">
+              {
+                data.authors.map(author => (
+                  <Link to={`/authors/${author._id}`} className="w-100" key={author._id}>
+                    <div className="author-search-result d-f align-items-center">
+                      <div className="author-image-container">
+                        <img src={author.image} alt="" className="author-image" />
+                      </div>
+                      <div className="ml-1">
+                        <p className="m-0 link-hover fw-bold">{author.name}</p>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              }
+            </div>
+          }
+        </div>
+      </div>
       }
     </>
   )

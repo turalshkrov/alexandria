@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/create', authenticationToken, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
-    const { title, subtitles, preview, content, tags } = req.body;
+    const { title, preview, content } = req.body;
     const blog = new Blog({ title, subtitles, preview, content, tags });
     await blog.save();
     res.status(201).json({ message: "Blog created" });
@@ -25,7 +25,6 @@ router.patch('/:id', authenticationToken, getBlog, async (req, res) => {
     res.blog.title = title;
     res.blog.preview = preview;
     res.blog.content = content;
-    res.blog.subtitles = subtitles;
     if (tags) res.blog.tags = tags;
     await res.blog.save();
     res.status(200).json({ message: "Blog updated" });
@@ -43,18 +42,6 @@ router.get('/', async (req, res) => {
     const filteredBlogs = blogs.filter(blog => blog.title.toLowerCase().includes(searchKey) ||
     blog.subtitles.includes(searchKey));
     res.status(200).json(filteredBlogs);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-// GET BLOG BY TAG
-router.get('/tags/:tag', async (req, res) => {
-  try {
-    let tag = req.params.tag;
-    const blogs = await Blog.find();
-    const blogsByTag = blogs.filter(blog => blog.tags.includes(tag));
-    res.status(200).json(blogsByTag);
   } catch (error) {
     res.status(500).json(error);
   }

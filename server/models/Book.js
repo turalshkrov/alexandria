@@ -49,12 +49,6 @@ const Book = new mongoose.Schema({
   ratingsCount: {
     type: Number,
     default: 0,
-  },
-  epub: {
-    type: String,
-  },
-  audio: {
-    type: String,
   }
 }, { collection: 'Book', versionKey: false });
 

@@ -1,0 +1,18 @@
+
+.blog-page {
+  .blog-content {
+    margin: auto;
+    p {
+      img {
+        width: 100% !important;
+      }
+    }
+  }
+  a {
+    width: min-content;
+  }
+}
+
+.blog-header {
+  border-bottom: 1px solid var(--card-border-color);
+}

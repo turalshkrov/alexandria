@@ -76,3 +76,11 @@ export type GenreType = {
   name: string,
   cover: string,
 }
+
+export type BlogType = {
+  _id: string,
+  title: string,
+  preview: string,
+  content: string,
+  date: Date,
+}
