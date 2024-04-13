@@ -7,6 +7,7 @@ import { login } from "@/redux/slices/authSlice";
 import Button from "@/shared/components/button";
 import '../signup/index.scss';
 import './index.scss'
+import { toast } from "sonner";
 
 type loginForm = {
   email: string,
@@ -17,8 +18,16 @@ const SignIn = () => {
   const { register, handleSubmit } = useForm<loginForm>();
   const [ showPassword, setshowPassword ] = useState(false);
   const dispatch = useAppDispatch();
-  const onSubmit: SubmitHandler<loginForm> = (data) => { 
-    dispatch(login(data));
+  const onSubmit: SubmitHandler<loginForm> = (data) => {
+    toast.promise(dispatch(login(data)).unwrap(), {
+      loading: 'Loading...',
+      success: (data) => {
+        return data.data.message;
+      },
+      error: (error) => {
+        return error.message;
+      }
+    });
   };
 
   return (

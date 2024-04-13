@@ -54,13 +54,13 @@ function App() {
         <ScrollToTop />
         <ThemeSwitcherComponent>
           <Modals />
+          <Toaster position="top-right" />
           <Routes>
             <Route element={(
               <>
                 <Navbar />
                 <Outlet />
                 <Footer />
-                <Toaster position="top-right" />
               </>
             )}>
               <Route path='/' element={<Home />} />

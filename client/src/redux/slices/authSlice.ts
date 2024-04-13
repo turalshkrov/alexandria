@@ -5,7 +5,7 @@ interface AuthState {
   token: string,
   isAuth: boolean,
   isLoading: boolean,
-  error: string | null,
+  error: unknown,
 }
 
 type registerForm = {
@@ -26,16 +26,24 @@ const initialState: AuthState = {
 export const login = createAsyncThunk(
   "auth/login",
   async (data: { email: string, password: string }) => {
-    const response = await http.post("auth/login", data);
-    return response.data;
+    const response = await http.post("auth/login", data)
+    .then(response => response )
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response;
   }
 );
 
 export const userRegister = createAsyncThunk(
   "auth/resgister",
   async (data: registerForm) => {
-    const response = await http.post("users/register", data);
-    return response.data;
+    const response = await http.post("users/register", data)
+    .then(response => response )
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response;
   }
 );
 
@@ -51,13 +59,9 @@ const authSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(login.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(login.fulfilled, (state, action) => {
         state.isAuth = true;
-        state.token = action.payload.token;
-        state.isLoading = false;
+        state.token = action.payload.data.token;
         localStorage.setItem('token', state.token);
       })
       .addCase(login.rejected, (state) => {
@@ -69,6 +73,10 @@ const authSlice = createSlice({
       })
       .addCase(userRegister.fulfilled, (state) => {
         state.isLoading = false;
+      })
+      .addCase(userRegister.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error;
       })
   },
 });

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { useAppDispatch } from "@/hooks/hook";
 import { userRegister } from "@/redux/slices/authSlice";
+import { toast } from "sonner";
 import Button from "@/shared/components/button";
 import http from "@/api/api";
 import "./index.scss";
@@ -22,7 +23,15 @@ const SignUp = () => {
   const onSubmit: SubmitHandler<Form> = async (data) => {
     const response = await http.get('https://geolocation-db.com/json/');
     const location = response.data.country_name;
-    dispatch(userRegister({...data, location }));
+    toast.promise(dispatch(userRegister({ ...data, location })).unwrap(), {
+      loading: 'Loading...',
+      success: (data) => {
+        return data.data.message;
+      },
+      error: (error) => {
+        return error.message;
+      }
+    });
   };
   return (
     <div className="page page-vertical-center" id="signup-page">
