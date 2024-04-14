@@ -33,7 +33,7 @@ router.post('/create', authenticationToken, bookValidationRules(), validation, g
 router.get('/all', authenticationToken, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const books = await Book.find().populate('Author').populate('Series');
+    const books = await Book.find().populate('author').populate('series');
     res.status(200).json(books);
   } catch (error) {
     res.status(500).json(error);

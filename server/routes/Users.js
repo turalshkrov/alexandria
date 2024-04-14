@@ -96,6 +96,8 @@ router.get('/stats', authenticationToken, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
     const users = await User.find();
+    const reviews = await Review.find();
+    const lists = await List.find();
     const monthlyUsers = users.filter(user => {
       const date  = new Date();
       date.setDate(0);
