@@ -5,6 +5,9 @@ import authSlice from './slices/authSlice';
 import userSlice from './slices/userSlice';
 import ModalSlice from './slices/ModalSlice';
 import userListsSlice from './slices/userListsSlice';
+import usersSlice from '@/admin/redux/slices/usersSlice';
+import booksSlice from '@/admin/redux/slices/booksSlice';
+import statsSlice from '@/admin/redux/slices/statsSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +17,9 @@ const store = configureStore({
     userSlice,
     ModalSlice,
     userListsSlice,
+    statsSlice,
+    usersSlice,
+    booksSlice,
   },
 })
 

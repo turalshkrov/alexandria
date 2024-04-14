@@ -55,7 +55,7 @@ const Account = () => {
               </p>
               {
                 userRole === 'admin' &&
-                <Link to='/admin' className="d-b w-100">
+                <Link to='/admin-dashboard/index' className="d-b w-100">
                   <MdAdminPanelSettings size={18} className="mr-1 text-secondary" />
                   <span>admin dashboard</span>
                 </Link>

@@ -5,6 +5,7 @@ import CreateListModal from './create-list';
 import SignOut from './sign-out';
 import ConfirmDeleteAccount from './confirm-delete-account';
 import AddToListModal from './add-to-list';
+import UserDetails from '@/admin/components/modals/userDetails';
 
 const Modals = () => {
   return (
@@ -16,6 +17,7 @@ const Modals = () => {
       <SignOut />
       <ConfirmDeleteAccount />
       <AddToListModal />
+      <UserDetails />
     </>
   )
 }

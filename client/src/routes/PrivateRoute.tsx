@@ -3,5 +3,5 @@ import { useAppSelector } from "@/hooks/hook";
 
 export default function PrivateRoute() {
   const userRole = useAppSelector(state => state.userSlice.role);
-  return userRole == 'admin' ? <Outlet /> : <Navigate to="/not-found" />;
+  return userRole == 'admin' ? <Outlet /> : <Navigate to="/account" />;
 }

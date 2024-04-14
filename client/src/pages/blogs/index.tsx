@@ -38,10 +38,8 @@ export default function Blogs() {
       data.error ?
       <ErrorPage /> :
       <div className='page'>
-        <div className="container py-1">
-          <div className="blogs-page-header w-lg-75 d-f align-items-center my-1">
-          </div>
-          <div className="blogs pt-2 w-100 w-lg-75">
+        <div className="container py-2">
+          <div className="blogs w-100 w-lg-75">
             <div className="page-title mb-md-2">
               <h1 className='font-xl logo-font'>Blogs from Alexandria</h1>
             </div>

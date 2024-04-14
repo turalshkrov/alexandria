@@ -16,7 +16,7 @@ export default function SignOut (){
       dispatch(setIsOpen({ id: 'signout', isOpen: false }));
     }
   }
-  const deleteList = async () => {
+  const signOut = async () => {
     dispatch(setIsOpen({ id: 'signout', isOpen: false }));
     dispatch(logOut());
     toast.success('Signed out');
@@ -40,7 +40,7 @@ export default function SignOut (){
         <p className='mt-1'>Are you sure want to sign out?</p>
         <div className="modal-footer d-f align-items-center justify-flex-end mt-3">
           <button className="modal-btn cancel-btn hide-modal">Cancel</button>
-          <button className="modal-btn ml-1" onClick={deleteList}>Sign out</button>
+          <button className="modal-btn ml-1" onClick={signOut}>Sign out</button>
         </div>
       </div>
     </div>, document.body)
