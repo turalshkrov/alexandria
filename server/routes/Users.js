@@ -91,6 +91,34 @@ router.get('/all', authenticationToken, async (req, res) => {
   }
 });
 
+// GET USERS STATS
+router.get('/stats', authenticationToken, async (req, res) => {
+  try {
+    if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
+    const users = await User.find();
+    const monthlyUsers = users.filter(user => {
+      const date  = new Date();
+      date.setDate(0);
+      if (new Date(user.createdAt) > date) {
+        return true;
+      }
+    });
+    const newUsers = users.filter(user => {
+      const date  = new Date();
+      const lastWeek = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
+      if (new Date(user.createdAt) > lastWeek) {
+        return true;
+      }
+    });
+    res.status(200).json({
+      totalUsers: users.length,
+      monthlyUsers: monthlyUsers.length,
+      newUsers: newUsers.length,
+    })
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 // GET USER BY ID
 router.get('/:id', getUser, async (req, res) => {
