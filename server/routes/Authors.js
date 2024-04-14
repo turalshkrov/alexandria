@@ -40,6 +40,17 @@ router.patch('/:id', getAuthor, authenticationToken, authorValidationRules(), va
   }
 });
 
+// GET ALL AUTHORS
+router.get('/all', authenticationToken, async (req, res) => {
+  try {
+    if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
+    const authors = await Author.find();
+    res.status(200).json(authors);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 // GET AUTHORS
 router.get('/', async (req, res) => {
   try {

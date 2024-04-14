@@ -80,21 +80,17 @@ router.get('/update-email/verify/:hashEmail', async (req, res) => {
   }
 });
 
-// GET USERS
-router.get('/', async (req, res) => {
+// GET ALL USERS
+router.get('/all', authenticationToken, async (req, res) => {
   try {
-    let searchKey = req.query.search || "";
-    searchKey = searchKey.toLowerCase();
-    const users = await User.find({ active: true }).populate('favoriteBooks').populate('favoriteAuthors');
-    const filteredUsers = users.filter(user =>
-      user.name.toLowerCase().includes(searchKey) ||
-      user.username.toLowerCase().includes(searchKey) ||
-      user.email.toLowerCase().includes(searchKey));
-    res.status(200).json(filteredUsers);
+    if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
+    const users = await User.find();
+    res.status(200).json(users);
   } catch (error) {
     res.status(500).json(error);
   }
 });
+
 
 // GET USER BY ID
 router.get('/:id', getUser, async (req, res) => {

@@ -39,8 +39,7 @@ router.get('/', async (req, res) => {
     let searchKey = req.query.search || "";
     searchKey = searchKey.toLowerCase();
     const blogs = await Blog.find();
-    const filteredBlogs = blogs.filter(blog => blog.title.toLowerCase().includes(searchKey) ||
-    blog.subtitles.includes(searchKey));
+    const filteredBlogs = blogs.filter(blog => blog.title.toLowerCase().includes(searchKey));
     res.status(200).json(filteredBlogs);
   } catch (error) {
     res.status(500).json(error);

@@ -69,6 +69,18 @@ router.patch('/:id/remove-book', authenticationToken, getSeries, checkBookId, as
   }
 });
 
+// GET ALL SERIES
+router.get('/all', authenticationToken, async (req, res) => {
+  try {
+    if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
+    const series = await Series.find();
+    res.status(200).json(series);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+
 // GET SERIES
 router.get('/', async (req, res) => {
   try {
