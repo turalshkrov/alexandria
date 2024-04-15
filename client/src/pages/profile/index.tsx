@@ -9,6 +9,7 @@ import { BiSolidBadgeCheck } from "react-icons/bi";
 import { MdMail, MdLocationOn, MdCalendarMonth } from "react-icons/md";
 import { HiOutlineExternalLink } from 'react-icons/hi';
 import '../user/index.scss';
+import CreateList from "@/shared/components/create-list";
 
 const Profile = () => {
   const userData = useAppSelector(state => state.userSlice);
@@ -53,9 +54,10 @@ const Profile = () => {
           </div>
           <div className="col-12 col-md-9 px-0 px-md-1 px-lg-3 mt-2 mt-md-0">
             {
-              userData.user && listsData.lists && listsData.lists.length > 0 &&
-              <UserLists username={userData.user?.name} lists={listsData.lists} showCreate={true} />
+              userData.user && listsData.lists &&
+              <UserLists username={userData.user?.name} lists={listsData.lists} showCreate={true}/>
             }
+            <CreateList />
             {
               userData.user && userData.user?.favoriteBooks.length > 0 && 
               <UserFavoriteBooks username={userData.user?.name} books={userData.user.favoriteBooks} />
