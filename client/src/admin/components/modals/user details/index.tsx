@@ -17,7 +17,7 @@ export default function UserDetails (){
   }
   return (
     createPortal(<div className={isOpen ? 'modal show' : 'modal'} id='confirm-delete-list' onClick={hideModal}>
-      <div className="modal-dialog" id="user-details-modal">
+      <div className="modal-dialog admin-modal" id="user-details-modal">
         <div className="modal-content">
           <div className="modal-header d-f justify-space-between align-items-center">
             <div className="modal-title">

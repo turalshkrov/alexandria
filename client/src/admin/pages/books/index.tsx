@@ -3,16 +3,16 @@ import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { BookType } from "@/types";
 import { Table } from "antd";
 import Button from "@/shared/components/button";
+import { Link } from "react-router-dom";
 
 const BooksDashboard = () => {
   const booksState = useAppSelector(state => state.booksSlice);
-  const selectedBook = useAppSelector(state => state.booksSlice.selected);
+  // const selectedBook = useAppSelector(state => state.booksSlice.selected);
   const dispatch = useAppDispatch();
 
   const handleClick = (book: BookType) => {
     dispatch(setSelectedBook(book));
   }
-  console.log(selectedBook);
 
   const columns = [
     {
@@ -51,18 +51,19 @@ const BooksDashboard = () => {
         )
       }
     }
-  ]
+  ];
 
   return (
     <div className='dashboard-content p-2'>
-      <div className="dashboard-header d-f align-items-center justify-space-between p-2">
+      <div className="dashboard-header d-f align-items-center justify-space-between">
         <h2>Books</h2>
-        <button className="add-data p-1">
-          + Add Book
-        </button>
+        <Link to="create">
+          <button className="add-data p-1">
+            + Add Book
+          </button>
+        </Link>
       </div>
       <Table dataSource={booksState.books || []} columns={columns} />
-
     </div>
   )
 }

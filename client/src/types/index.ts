@@ -84,3 +84,15 @@ export type BlogType = {
   content: string,
   date: Date,
 }
+
+export type createBookData = {
+  title: string,
+  originalTitle: string,
+  author: string,
+  series?: string,
+  published: string,
+  cover: string,
+  genres: string[],
+  language: string,
+  description: string,
+}

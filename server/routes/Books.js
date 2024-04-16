@@ -5,6 +5,7 @@ const bookValidationRules = require('../validations/book/bookValidationRules');
 const reviewValidationRules = require('../validations/review/reviewValidationRules');
 const validation = require('../middlewares/validation');
 const getBook = require('../middlewares/book/getBook');
+const getAuthor = require('../middlewares/book/getAuthor');
 const checkReview = require('../middlewares/review/checkReview');
 const getSeries = require('../middlewares/book/getSeries');
 const capitalize = require('../helpers/Capitalize');
@@ -23,7 +24,12 @@ router.post('/create', authenticationToken, bookValidationRules(), validation, g
       await res.series.save();
     }
     await book.save();
-    res.status(201).json({ messsage: "Book created" });
+    book.author = res.author;
+    book.series = res.series;
+    res.status(201).json({ 
+      messsage: "Book created",
+      book
+    });
   } catch (error) {
     res.status(500).json(error);
   }

@@ -1,3 +1,4 @@
+import CreateList from "@/shared/components/create-list";
 import ListCard from "@/shared/components/list-card";
 import { ListType } from "@/types";
 import { useState } from "react";
@@ -26,6 +27,9 @@ const UserLists = ({ username, lists, showCreate }: UserListProps) => {
       <div className="list-container row">
         {
           lists.filter((_, i) => i < (collapse ? showCreate ? 3 : 4 : lists.length)).map(list => <ListCard key={list._id} list={list} />)
+        }
+        {
+          showCreate && <CreateList />
         }
       </div>
     </div>

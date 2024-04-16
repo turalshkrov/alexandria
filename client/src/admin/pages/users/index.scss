@@ -28,6 +28,16 @@
   }
 }
 
-#user-details-modal {
-  width: 550px;
+.admin-modal {
+  width: 550px !important;
+  max-height: 583px;
+  overflow-y: scroll;
+}
+.data-create-form {
+  select, input, option {
+    padding: .75rem !important;
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
+    border: 1px solid var(--card-border-color) !important;
+  }
 }

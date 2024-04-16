@@ -1,5 +1,5 @@
 import http from "@/api/api";
-import { BookType } from "@/types";
+import { BookType, createBookData } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface BooksSliceState {
@@ -21,6 +21,18 @@ export const getBooks = createAsyncThunk(
   async () => {
     const response = await http.get('/books/all');
     return response.data;
+  }
+);
+
+export const createBook = createAsyncThunk(
+  'books/create',
+  async (data: createBookData) => {
+    const response = await http.post('/books/create', data)
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response;
   }
 )
 
@@ -44,6 +56,9 @@ const booksSlice = createSlice({
       .addCase(getBooks.rejected, (state, action) => {
         state.error = action.error;
         state.isLoading = false;
+      })
+      .addCase(createBook.fulfilled, (state, action) => {
+        state.books?.push(action.payload.data.book);
       })
   }
 });
