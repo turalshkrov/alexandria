@@ -34,6 +34,7 @@
   overflow-y: scroll;
 }
 .data-create-form {
+  flex-wrap: wrap;
   select, input, option {
     padding: .75rem !important;
     background-color: var(--primary-bg-color);

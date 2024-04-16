@@ -13,7 +13,7 @@ const authenticationToken = require('../middlewares/auth/authenticationToken');
 const router = express.Router();
 
 // CREATE BOOK
-router.post('/create', authenticationToken, bookValidationRules(), validation, getSeries, async (req, res) => {
+router.post('/create', authenticationToken, bookValidationRules(), validation, getAuthor, getSeries, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
     const { title, originalTitle, author, cover, published, genres, language, description, epub, audio } = req.body;
