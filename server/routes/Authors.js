@@ -14,7 +14,10 @@ router.post('/create', authenticationToken, authorValidationRules(), validation,
     const { name, nativeName, image, born, died, genres, authorInfo } = req.body;
     const author = new Author({ name, nativeName, image, born, died, genres, authorInfo });
     await author.save();
-    res.status(201).json({ message: "Author created" });
+    res.status(201).json({ 
+      message: "Author created",
+      author,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -34,7 +37,10 @@ router.patch('/:id', getAuthor, authenticationToken, authorValidationRules(), va
     if (genres) res.author.genres = genres;
     if (authorInfo) res.author.authorInfo = authorInfo;
     await res.author.save();
-    res.status(201).json({ message: "Author updated" });
+    res.status(201).json({ 
+      message: "Author updated",
+      author: res.author,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -99,7 +105,10 @@ router.delete('/:id', authenticationToken, getAuthor, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
     await Author.deleteOne(res.author);
-    res.status(200).json({ message: "Author deleted" });
+    res.status(200).json({ 
+      message: "Author deleted",
+      author: res.author,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
