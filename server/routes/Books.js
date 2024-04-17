@@ -158,7 +158,10 @@ router.delete('/:id', authenticationToken, getBook, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
     await Book.deleteOne(res.book);
-    res.status(200).json({ message: "Book deleted" });
+    res.status(200).json({ 
+      message: "Book deleted",
+      book: res.book,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
