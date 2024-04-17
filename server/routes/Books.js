@@ -16,8 +16,8 @@ const router = express.Router();
 router.post('/create', authenticationToken, bookValidationRules(), validation, getAuthor, getSeries, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const { title, originalTitle, author, cover, published, genres, language, description, epub, audio } = req.body;
-    const book = new Book({ title, originalTitle, author, cover, published, genres, language, description, epub, audio });
+    const { title, originalTitle, author, cover, published, genres, language, description } = req.body;
+    const book = new Book({ title, originalTitle, author, cover, published, genres, language, description });
     if (res.series) {
       res.series.books.push(book._id);
       book.series = res.series._id;
@@ -125,10 +125,10 @@ router.get('/genres/:genre', async (req, res) => {
 });
 
 // UPDATE BOOK
-router.patch('/:id', authenticationToken, getBook, bookValidationRules(), validation, getSeries, async (req, res) => {
+router.patch('/:id', authenticationToken, getBook, bookValidationRules(), validation, getAuthor, getSeries, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const { title, originalTitle, author, cover, published, genres, language, description, epub, audio } = req.body;
+    const { title, originalTitle, author, cover, published, genres, language, description } = req.body;
     res.book.title = title;
     res.book.originalTitle = originalTitle;
     res.book.author = author;
@@ -136,8 +136,6 @@ router.patch('/:id', authenticationToken, getBook, bookValidationRules(), valida
     res.book.genres = genres;
     res.book.language = language;
     res.book.description = description;
-    res.book.epub = epub;
-    res.book.audio = audio;
     if (cover) res.cover = cover;
     if (res.series) {
       res.series.books.push(res.book._id);
@@ -145,7 +143,11 @@ router.patch('/:id', authenticationToken, getBook, bookValidationRules(), valida
       await res.series.save();
     }
     await res.book.save();
-    res.status(200).json({ message: "Book updated" });
+    res.book.author = res.author;
+    res.status(200).json({ 
+      message: "Book updated",
+      book: res.book,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
