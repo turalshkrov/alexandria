@@ -16,7 +16,10 @@ router.post('/create', authenticationToken, seriesValidationRules(), validation,
     const { title, description, books } = req.body;
     const series = new Series({ title, description, books });
     await series.save();
-    res.status(200).json({ message: "Series created" });
+    res.status(200).json({ 
+      message: "Series created",
+      series,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -30,7 +33,10 @@ router.patch('/:id', authenticationToken, getSeries, seriesValidationRules(), va
     if (title) res.series.title = title;
     if (description)  res.series.description = description;
     await res.series.save();
-    res.status(200).json({ message: "Series updated" });
+    res.status(200).json({ 
+      message: "Series updated",
+      series: res.series,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -113,7 +119,10 @@ router.delete('/:id', authenticationToken, getSeries, async (req, res) => {
       await book.save();
     });
     await Series.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: "Series deleted" });
+    res.status(200).json({ 
+      message: "Series deleted",
+      series: res.series,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
