@@ -5,8 +5,9 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { getUsersStats } from "@/admin/redux/slices/statsSlice";
 import { getUsers } from "@/admin/redux/slices/usersSlice";
 import { getBooks } from "@/admin/redux/slices/booksSlice";
-import "./index.scss";
 import { getAuthors } from "@/admin/redux/slices/authorsSlice";
+import { getSeries } from "@/admin/redux/slices/seriesSlice";
+import "./index.scss";
 
 export default function Admin() {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ export default function Admin() {
     dispatch(getUsers());
     dispatch(getBooks());
     dispatch(getAuthors());
+    dispatch(getSeries());
   }, [dispatch]);
   return (
     <div className='dashboard-content p-2'>

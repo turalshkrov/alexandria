@@ -1,5 +1,6 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import http from "@/api/api";
-import { BookType, createBookData } from "@/types";
+import { BookType, CreateBookData } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 interface BooksSliceState {
@@ -26,13 +27,37 @@ export const getBooks = createAsyncThunk(
 
 export const createBook = createAsyncThunk(
   'books/create',
-  async (data: createBookData) => {
+  async (data: CreateBookData) => {
     const response = await http.post('/books/create', data)
     .then(response => response)
     .catch(error => {
       throw new Error(error.response.data.message);
     })
-    return response;
+    return response.data;
+  }
+);
+
+export const updateBook = createAsyncThunk(
+  'books/update',
+  async ({id, data}: { id: string, data: CreateBookData }) => {
+    const response = await http.patch(`/books/${id}`, data)
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response.data;
+  }
+);
+
+export const deleteBook = createAsyncThunk(
+  'books/delete',
+  async (id: string) => {
+    const response = await http.delete(`/books/${id}`)
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response.data;
   }
 )
 
@@ -58,7 +83,17 @@ const booksSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(createBook.fulfilled, (state, action) => {
-        state.books?.push(action.payload.data.book);
+        state.books?.push(action.payload.book);
+      })
+      .addCase(updateBook.fulfilled, (state, action) => {
+        if (state.books) {
+          state.books = [ ...state.books?.filter(book => book._id !== action.payload.book._id), action.payload.book ];
+        }
+      })
+      .addCase(deleteBook.fulfilled, (state, action) => {
+        if (state.books) {
+          state.books = [ ...state.books?.filter(book => book._id !== action.payload.book._id) ];
+        }
       })
   }
 });

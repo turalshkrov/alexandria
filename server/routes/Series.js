@@ -29,9 +29,10 @@ router.post('/create', authenticationToken, seriesValidationRules(), validation,
 router.patch('/:id', authenticationToken, getSeries, seriesValidationRules(), validation, getBooks, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
-    const { title, description } = req.body;
+    const { title, description, books } = req.body;
     if (title) res.series.title = title;
     if (description)  res.series.description = description;
+    if (books.length)  res.series.books = books;
     await res.series.save();
     res.status(200).json({ 
       message: "Series updated",
@@ -41,51 +42,6 @@ router.patch('/:id', authenticationToken, getSeries, seriesValidationRules(), va
     res.status(500).json(error);
   }
 });
-
-// ADD BOOK TO SERIES
-router.patch('/:id/add-book', authenticationToken, getSeries, checkBookId, async (req, res) => {
-  try {
-    if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
-    const { bookId } = req.body;
-    const book = await Book.findById(bookId);
-    if (book.series) return res.status(409).json({ message: "Book is already another series" });
-    res.series.books.push(bookId);
-    book.series = res.series._id;
-    await res.series.save();
-    await book.save();
-    res.status(200).json({ message: "Book added" });
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-// REMOVE BOOK FROM SERIES
-router.patch('/:id/remove-book', authenticationToken, getSeries, checkBookId, async (req, res) => {
-  try {
-    if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
-    const { bookId } = req.body;
-    const book = await Book.findById(bookId);
-    res.series.books = res.series.books.filter(book => book._id.toString() !== bookId);
-    book.series = undefined;
-    await res.series.save();
-    await book.save();
-    res.status(200).json({ message: "Book removed" });
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-// GET ALL SERIES
-router.get('/all', authenticationToken, async (req, res) => {
-  try {
-    if (req.userRole !== 'admin') return res.status(401).json({ message: "Access denied" });
-    const series = await Series.find();
-    res.status(200).json(series);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
 
 // GET SERIES
 router.get('/', async (req, res) => {

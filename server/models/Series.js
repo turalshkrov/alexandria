@@ -13,6 +13,7 @@ const Series = new mongoose.Schema({
     type: [{
       type: mongoose.Types.ObjectId,
       ref: 'Book',
+      unique: true,
     }],
     required: true,
     deffault: [],

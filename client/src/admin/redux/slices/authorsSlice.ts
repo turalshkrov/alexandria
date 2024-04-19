@@ -1,15 +1,16 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import http from "@/api/api";
-import { AuthorType } from "@/types";
+import { AuthorData, AuthorType } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-interface AuthorsSliceState {
+interface BooksSliceState {
   authors: AuthorType[] | null,
   selected: AuthorType | null,
   isLoading: boolean,
   error: unknown,
 }
 
-const initialState: AuthorsSliceState = {
+const initialState: BooksSliceState = {
   authors: null,
   selected: null,
   isLoading: false,
@@ -22,13 +23,49 @@ export const getAuthors = createAsyncThunk(
     const response = await http.get('/authors/all');
     return response.data;
   }
+);
+
+export const createAuthor = createAsyncThunk(
+  'authors/create',
+  async (data: AuthorData) => {
+    const response = await http.post('/authors/create', data)
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response.data;
+  }
+);
+
+export const updateAuthor = createAsyncThunk(
+  'authors/update',
+  async ({id, data}: { id: string, data: AuthorData }) => {
+    const response = await http.patch(`/authors/${id}`, data)
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response.data;
+  }
+);
+
+export const deleteAuthor = createAsyncThunk(
+  'authors/delete',
+  async (id: string) => {
+    const response = await http.delete(`/authors/${id}`)
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response.data;
+  }
 )
 
 const authorsSlice = createSlice({
-  name: 'authors',
+  name: 'books',
   initialState,
   reducers: {
-    setSelectedBook: (state, action) => {
+    setSelectedAuthor: (state, action) => {
       state.selected = action.payload;
     }
   },
@@ -45,8 +82,21 @@ const authorsSlice = createSlice({
         state.error = action.error;
         state.isLoading = false;
       })
+      .addCase(createAuthor.fulfilled, (state, action) => {
+        state.authors?.push(action.payload.author);
+      })
+      .addCase(updateAuthor.fulfilled, (state, action) => {
+        if (state.authors) {
+          state.authors = [ ...state.authors?.filter(author => author._id !== action.payload.author._id), action.payload.author ];
+        }
+      })
+      .addCase(deleteAuthor.fulfilled, (state, action) => {
+        if (state.authors) {
+          state.authors = [ ...state.authors?.filter(author => author._id !== action.payload.author._id) ];
+        }
+      })
   }
 });
 
 export default authorsSlice.reducer;
-export const { setSelectedBook } = authorsSlice.actions;
+export const { setSelectedAuthor } = authorsSlice.actions;

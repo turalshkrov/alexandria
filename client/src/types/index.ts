@@ -85,7 +85,7 @@ export type BlogType = {
   date: Date,
 }
 
-export type createBookData = {
+export type CreateBookData = {
   title: string,
   originalTitle: string,
   author: string,
@@ -95,4 +95,20 @@ export type createBookData = {
   genres: string[],
   language: string,
   description: string,
+}
+
+export type AuthorData = {
+  name: string,
+  nativeName: string,
+  born: string,
+  died?: string,
+  genres: string[],
+  authorInfo: string,
+  image: string,
+}
+
+export type SeriesData = {
+  title: string,
+  description: string,
+  books?: string[],
 }

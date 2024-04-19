@@ -1,25 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createBook } from "@/admin/redux/slices/booksSlice";
+import { createBook, setSelectedBook, updateBook } from "@/admin/redux/slices/booksSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
-import { createBookData } from "@/types";
+import { CreateBookData } from "@/types";
 import { useState } from "react";
 import { toast } from "sonner";
 
-
-const CreateBook = () => {
+const BookForm = () => {
   const dispatch = useAppDispatch();
   const authors = useAppSelector(state => state.authorsSlice.authors);
+  const selectedBook = useAppSelector(state => state.booksSlice.selected);
   const [ genre, setGenre ] = useState("");
-  const [ createBookData, setCreateBookData ] = useState<createBookData>({
-    title: "",
-    originalTitle: "",
-    author: "",
-    series: "",
-    cover: "",
-    published: "",
-    genres: [],
-    language: "",
-    description: "",
+  const [ createBookData, setCreateBookData ] = useState<CreateBookData>({
+    title: selectedBook?.title || "",
+    originalTitle: selectedBook?.originalTitle || "",
+    author: selectedBook?.author._id || "",
+    series: selectedBook?.series?._id || "",
+    cover: selectedBook?.cover || "",
+    published: selectedBook?.published || "",
+    genres: selectedBook?.genres || [],
+    language: selectedBook?.language || "",
+    description: selectedBook?.description || "",
   });
   const handleChange = (e: any) => {
     setCreateBookData(state => ({ ...state, [e.target.name]: e.target.value}));
@@ -34,13 +34,24 @@ const CreateBook = () => {
   }
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    toast.promise(dispatch(createBook(createBookData)).unwrap(), {
-      loading: 'Loading...',
-      success: 'Book created',
-      error: (error) => {
-        return error.message;
-      }
-    });
+    if (selectedBook) {
+      toast.promise(dispatch(updateBook({ id: selectedBook._id, data: createBookData })).unwrap(), {
+        loading: 'Loading...',
+        success: 'Book updated',
+        error: (error) => {
+          return error.message;
+        }
+      });
+      dispatch(setSelectedBook(null));
+    } else {
+      toast.promise(dispatch(createBook(createBookData)).unwrap(), {
+        loading: 'Loading...',
+        success: 'Book created',
+        error: (error) => {
+          return error.message;
+        }
+      });
+    }
     setCreateBookData({
       title: "",
       originalTitle: "",
@@ -55,7 +66,7 @@ const CreateBook = () => {
   }
   return (
     <div className="dashboard-content p-2">
-      <h2>Add Book</h2>
+      <h2>{selectedBook ? 'Edit' : 'Add'} Book</h2>
       <form className="form-control d-f data-create-form mt-2">
         <div className="form-item w-50 px-1">
           <label htmlFor="title">Title</label>
@@ -68,6 +79,7 @@ const CreateBook = () => {
         <div className="form-item w-50 px-1">
           <label htmlFor="author">Author</label>
           <select name="author" id="author" className="w-100" value={createBookData.author} onChange={handleChange}>
+            <option value="">Select Author</option>
             {
               authors?.map(author => (
                 <option key={author._id} value={author._id}>{author.name}</option>
@@ -115,4 +127,4 @@ const CreateBook = () => {
   )
 }
 
-export default CreateBook;
+export default BookForm;

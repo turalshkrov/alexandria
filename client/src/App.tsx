@@ -37,7 +37,9 @@ const BooksDashboard = lazy(() => import('./admin/pages/books'));
 const AuthorsDashboard = lazy(() => import('./admin/pages/authors'));
 const SeriesDashboard = lazy(() => import('./admin/pages/series'));
 const BlogsDashboard = lazy(() => import('./admin/pages/blogs'));
-const CreateBook = lazy(() => import("./admin/pages/create book"));
+const BookForm = lazy(() => import('./admin/pages/book form'));
+const AuthorForm = lazy(() => import('./admin/pages/author form'));
+const SeriesForm = lazy(() => import('./admin/pages/series form'));
 
 function App() {
   const isAuth = useAppSelector(state => state.authSlice.isAuth);
@@ -105,9 +107,11 @@ function App() {
               <Route path='/admin-dashboard/index' element={<Admin />}></Route>
               <Route path='/admin-dashboard/users' element={<UsersDashboard />}></Route>
               <Route path='/admin-dashboard/books' element={<BooksDashboard />}></Route>
-              <Route path='/admin-dashboard/books/create' element={<CreateBook />}></Route>
+              <Route path='/admin-dashboard/books/book-form' element={<BookForm />}></Route>
               <Route path='/admin-dashboard/authors' element={<AuthorsDashboard />}></Route>
+              <Route path='/admin-dashboard/authors/author-form' element={<AuthorForm />}></Route>
               <Route path='/admin-dashboard/series' element={<SeriesDashboard />}></Route>
+              <Route path='/admin-dashboard/series/series-form' element={<SeriesForm />}></Route>
               <Route path='/admin-dashboard/blogs' element={<BlogsDashboard />}></Route>
               </Route>
             </Route>

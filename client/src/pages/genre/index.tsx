@@ -5,6 +5,9 @@ import { getBookByGenre } from "@/api/book";
 import { getAuthorByGenre } from "@/api/author";
 import Preloader from "@/shared/components/preloader/Preloader";
 import ErrorPage from "../error";
+import "../search/components/search result/index.scss";
+import "../search/components/book-search-result/index.scss";
+import "../search/components/author-search-result/index.scss";
 
 interface GenrePageState {
   books: BookType[] | null,

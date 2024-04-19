@@ -9,6 +9,7 @@ import usersSlice from '@/admin/redux/slices/usersSlice';
 import booksSlice from '@/admin/redux/slices/booksSlice';
 import statsSlice from '@/admin/redux/slices/statsSlice';
 import authorsSlice from '@/admin/redux/slices/authorsSlice';
+import seriesSlice from '@/admin/redux/slices/seriesSlice';
 
 const store = configureStore({
   reducer: {
@@ -21,7 +22,8 @@ const store = configureStore({
     statsSlice,
     usersSlice,
     booksSlice,
-    authorsSlice
+    authorsSlice,
+    seriesSlice,
   },
 })
 

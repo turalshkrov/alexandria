@@ -1,52 +1,126 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import http from "@/api/api";
-import { AuthorType } from "@/types";
+import { SeriesData, SeriesType } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-interface AuthorsSliceState {
-  authors: AuthorType[] | null,
-  selected: AuthorType | null,
+interface SeriesSliceState {
+  series: SeriesType[] | null,
+  selected: SeriesType | null,
   isLoading: boolean,
   error: unknown,
 }
 
-const initialState: AuthorsSliceState = {
-  authors: null,
+const initialState: SeriesSliceState = {
+  series: null,
   selected: null,
   isLoading: false,
   error: null,
 }
 
-export const getAuthors = createAsyncThunk(
-  'authors/get',
+export const getSeries = createAsyncThunk(
+  'series/get',
   async () => {
-    const response = await http.get('/authors/all');
+    const response = await http.get('/series/');
     return response.data;
   }
-)
+);
 
-const authorsSlice = createSlice({
-  name: 'authors',
+export const createSeries = createAsyncThunk(
+  'series/create',
+  async (data: SeriesData) => {
+    const response = await http.post('/series/create', data)
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response.data;
+  }
+);
+
+export const updateSeries = createAsyncThunk(
+  'series/update',
+  async ({id, data}: { id: string, data: SeriesData }) => {
+    const response = await http.patch(`/series/${id}`, data)
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response.data;
+  }
+);
+
+export const addBookToSeries = createAsyncThunk(
+  'series/add-book',
+  async ({ id, bookId }: { id: string, bookId: string }) => {
+    const response = await http.patch(`/series/${id}/add-book`, { bookId })
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response.data;
+  }
+);
+
+export const removeBookFromSeries = createAsyncThunk(
+  'series/remove-book',
+  async ({ id, bookId }: { id: string, bookId: string }) => {
+    const response = await http.patch(`/series/${id}/remove-book`, { bookId })
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response.data;
+  }
+);
+
+export const deleteSeries = createAsyncThunk(
+  'series/delete',
+  async (id: string) => {
+    const response = await http.delete(`/series/${id}`)
+    .then(response => response)
+    .catch(error => {
+      throw new Error(error.response.data.message);
+    })
+    return response.data;
+  }
+);
+
+const seriesSlice = createSlice({
+  name: 'series',
   initialState,
   reducers: {
-    setSelectedBook: (state, action) => {
+    setSelectedSeries: (state, action) => {
       state.selected = action.payload;
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAuthors.pending, state => {
+      .addCase(getSeries.pending, state => {
         state.isLoading = true;
       })
-      .addCase(getAuthors.fulfilled, (state, action) => {
-        state.authors = action.payload;
+      .addCase(getSeries.fulfilled, (state, action) => {
+        state.series = action.payload;
         state.isLoading = false;
       })
-      .addCase(getAuthors.rejected, (state, action) => {
+      .addCase(getSeries.rejected, (state, action) => {
         state.error = action.error;
         state.isLoading = false;
+      })
+      .addCase(createSeries.fulfilled, (state, action) => {
+        state.series?.push(action.payload.series);
+      })
+      .addCase(updateSeries.fulfilled, (state, action) => {
+        if (state.series) {
+          state.series = [ ...state.series?.filter(series => series._id !== action.payload.series._id), action.payload.series ];
+        }
+      })
+      .addCase(deleteSeries.fulfilled, (state, action) => {
+        if (state.series) {
+          state.series = [ ...state.series?.filter(series => series._id !== action.payload.series._id) ];
+        }
       })
   }
 });
 
-export default authorsSlice.reducer;
-export const { setSelectedBook } = authorsSlice.actions;
+export default seriesSlice.reducer;
+export const { setSelectedSeries } = seriesSlice.actions;
