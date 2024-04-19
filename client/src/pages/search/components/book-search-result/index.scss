@@ -18,7 +18,7 @@
   }
 
   .book-info {
-
+    width: calc(100% - 65px);
     .book-info-published,
     .book-info-author {
       font-size: 14px;
@@ -49,4 +49,10 @@
 
 .books-loading {
   height: 44px;
+}
+
+.series-book-container, .author-books-container{
+  .book-info {
+    width: calc(100% - 175px);
+  }
 }

@@ -8,6 +8,7 @@ import { toast } from "sonner";
 const BookForm = () => {
   const dispatch = useAppDispatch();
   const authors = useAppSelector(state => state.authorsSlice.authors);
+  const series  = useAppSelector(state => state.seriesSlice.series);
   const selectedBook = useAppSelector(state => state.booksSlice.selected);
   const [ genre, setGenre ] = useState("");
   const [ createBookData, setCreateBookData ] = useState<CreateBookData>({
@@ -89,7 +90,14 @@ const BookForm = () => {
         </div>
         <div className="form-item w-50 px-1">
           <label htmlFor="series">Series</label>
-          <input name="series" type="text" id="series" className="w-100"  value={createBookData.series} onChange={handleChange}/>
+          <select name="series" id="series" className="w-100" value={createBookData.series} onChange={handleChange}>
+            <option value="">Select Series</option>
+            {
+              series?.map(series => (
+                <option key={series._id} value={series._id}>{series.title}</option>
+              ))
+            }
+          </select>
         </div>
         <div className="form-item w-50 px-1">
           <label htmlFor="cover">Cover</label>

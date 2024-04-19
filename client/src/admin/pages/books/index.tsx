@@ -50,7 +50,7 @@ const BooksDashboard = () => {
       key: "action",
       render: (book: BookType) => {
         return (
-          <>
+          <div className="action-td">
             <Button style="link" onClick={() => handleClick(book)}>
               <Link to='book-form' className="book-action-btn">
                 Edit
@@ -59,7 +59,7 @@ const BooksDashboard = () => {
             <Button style="link" className="ml-1" onClick={() => handleDeleteBook(book)}>
               Delete
             </Button>
-          </>
+          </div>
         )
       }
     }
