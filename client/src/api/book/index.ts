@@ -17,7 +17,7 @@ export const getBookReviews = async (id: string) => {
   return response.data;
 }
 
-export const getBookByGenre = async (genre: string) => {
-  const response = await http.get(`/books/genres/${genre}`);
+export const getBookByGenre = async (genre: string, page: number) => {
+  const response = await http.get(`/books/genres/${genre}?page=${page}`);
   return response.data;
 }

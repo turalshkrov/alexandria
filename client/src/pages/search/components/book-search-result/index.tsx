@@ -55,7 +55,6 @@ const BookSearchResult = () => {
   }
   return (
     <>
-      
       {(searchFilter === 'books' || searchFilter === 'all') &&
         <>
           <h2>Books</h2>
