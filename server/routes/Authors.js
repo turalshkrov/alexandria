@@ -91,10 +91,13 @@ router.get('/:id', getAuthor, async (req, res) => {
 // GET AUTHOR BY GENRES
 router.get('/genres/:genre', async (req, res) => {
   try {
+    const limit = parseInt(req.query.limit) || 5;
+    const page = parseInt(req.query.page) || 1;
+    const skip = (page - 1) * limit;
     const genre = capitalize(req.params.genre);
-    const authors = await Author.find();
-    const authorsByGenre = authors.filter(author => author.genres.includes(genre));
-    res.status(200).json(authorsByGenre);
+    const authors = await Author.find({ genre: genre })
+    .skip(skip).limit(limit);
+    res.status(200).json(authors);
   } catch (error) {
     res.status(500).json(error);
   }
