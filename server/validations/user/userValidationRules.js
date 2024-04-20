@@ -8,7 +8,7 @@ const userValidationRules = () => [
   body('username')
     .notEmpty().withMessage('Username is required')
     .isLength({ min: 3, max: 32}).withMessage('Username can be at least 3 and at most 32 characters long')
-    .isAlphanumeric().withMessage('Username can only contain letters of the alphabet and numbers'),
+    .matches(/[\w.]+/).withMessage('Username can only contain letters of the alphabet and numbers'),
   body('email')
     .notEmpty().withMessage('Email is required')
     .matches(
@@ -16,7 +16,7 @@ const userValidationRules = () => [
     ).withMessage('Email is not valid'),
   body('password')
     .notEmpty().withMessage('Password is required')
-    .isLength({ min: 8, max: 32 }).withMessage('Password can be at least 8 and at most 32 characters long')
+    .isLength({ min: 8, max: 64 }).withMessage('Password can be at least 8 and at most 64 characters long')
     .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
     .withMessage(' Password must contain at least one uppercase letter, one lowercase letter, one number and one special character')
 ];
