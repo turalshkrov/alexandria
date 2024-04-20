@@ -115,10 +115,13 @@ router.get('/author/:authorId', async (req, res) => {
 // GET BOOKS BY GENRE
 router.get('/genres/:genre', async (req, res) => {
   try {
+    const limit = parseInt(req.query.limit) || 5;
+    const page = parseInt(req.query.page) || 1;
+    const skip = (page - 1) * limit;
     const genre = capitalize(req.params.genre);
-    const books = await Book.find().populate('author').populate('series');
-    const booksByGenre = books.filter(book => book.genres.includes(genre));
-    res.status(200).json(booksByGenre);
+    const books = await Book.find({ genres: genre })
+    .populate('author').populate('series').skip(skip).limit(limit);
+    res.status(200).json(books);
   } catch (error) {
     res.status(500).json(error);
   }
