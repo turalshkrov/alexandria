@@ -8,6 +8,7 @@ import { getBooks } from "@/admin/redux/slices/booksSlice";
 import { getAuthors } from "@/admin/redux/slices/authorsSlice";
 import { getSeries } from "@/admin/redux/slices/seriesSlice";
 import "./index.scss";
+import { getBlogs } from "@/admin/redux/slices/blogsSlice";
 
 export default function Admin() {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ export default function Admin() {
     dispatch(getBooks());
     dispatch(getAuthors());
     dispatch(getSeries());
+    dispatch(getBlogs());
   }, [dispatch]);
   return (
     <div className='dashboard-content p-2'>

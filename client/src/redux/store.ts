@@ -10,6 +10,7 @@ import booksSlice from '@/admin/redux/slices/booksSlice';
 import statsSlice from '@/admin/redux/slices/statsSlice';
 import authorsSlice from '@/admin/redux/slices/authorsSlice';
 import seriesSlice from '@/admin/redux/slices/seriesSlice';
+import blogsSlice from '@/admin/redux/slices/blogsSlice';
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     booksSlice,
     authorsSlice,
     seriesSlice,
+    blogsSlice,
   },
 })
 

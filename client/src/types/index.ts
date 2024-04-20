@@ -112,3 +112,16 @@ export type SeriesData = {
   description: string,
   books?: string[],
 }
+
+export type BlogData = {
+  title: string,
+  preview: string,
+  content: string,
+}
+
+export type registerData = {
+  name: string,
+  username: string,
+  email: string,
+  password: string,
+}

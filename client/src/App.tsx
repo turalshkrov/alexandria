@@ -14,6 +14,7 @@ import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
 import Modals from './shared/components/modals';
 import './App.scss';
+import { logOut } from './redux/slices/authSlice';
 
 const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs'));
@@ -40,6 +41,7 @@ const BlogsDashboard = lazy(() => import('./admin/pages/blogs'));
 const BookForm = lazy(() => import('./admin/pages/book form'));
 const AuthorForm = lazy(() => import('./admin/pages/author form'));
 const SeriesForm = lazy(() => import('./admin/pages/series form'));
+const BlogForm = lazy(() => import('./admin/pages/blog form'));
 
 function App() {
   const isAuth = useAppSelector(state => state.authSlice.isAuth);
@@ -48,7 +50,10 @@ function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (isAuth) {
-      dispatch(getMe());
+      dispatch(getMe()).unwrap()
+      .catch(() => {
+        dispatch(logOut());
+      });
     }
   }, [dispatch, isAuth]);
   useEffect(() => {
@@ -113,6 +118,7 @@ function App() {
               <Route path='/admin-dashboard/series' element={<SeriesDashboard />}></Route>
               <Route path='/admin-dashboard/series/series-form' element={<SeriesForm />}></Route>
               <Route path='/admin-dashboard/blogs' element={<BlogsDashboard />}></Route>
+              <Route path='/admin-dashboard/blogs/blog-form' element={<BlogForm />}></Route>
               </Route>
             </Route>
           </Routes>

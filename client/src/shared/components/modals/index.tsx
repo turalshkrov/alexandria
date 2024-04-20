@@ -8,6 +8,8 @@ import AddToListModal from './add-to-list';
 import UserDetails from '@/admin/components/modals/user details';
 import ConfirmDeleteBook from '@/admin/components/modals/confirm delete book';
 import ConfirmDeleteAuthor from '@/admin/components/modals/confirm delete author';
+import ConfirmDeleteSeries from '@/admin/components/modals/confirm delete series';
+import ConfirmDeleteBlog from '@/admin/components/modals/confirm delete blog';
 
 const Modals = () => {
   return (
@@ -22,6 +24,8 @@ const Modals = () => {
       <UserDetails />
       <ConfirmDeleteBook />
       <ConfirmDeleteAuthor />
+      <ConfirmDeleteSeries />
+      <ConfirmDeleteBlog />
     </>
   )
 }
