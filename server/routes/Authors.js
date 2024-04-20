@@ -95,7 +95,7 @@ router.get('/genres/:genre', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const skip = (page - 1) * limit;
     const genre = capitalize(req.params.genre);
-    const authors = await Author.find({ genre: genre })
+    const authors = await Author.find({ genres: genre })
     .skip(skip).limit(limit);
     res.status(200).json(authors);
   } catch (error) {
