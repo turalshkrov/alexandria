@@ -1,8 +1,10 @@
-import { useAppSelector } from '@/hooks/hook';
+import { useAppDispatch, useAppSelector } from '@/hooks/hook';
 import { Link } from 'react-router-dom';
 import { IoIosStar, IoIosStarOutline } from "react-icons/io";
 import { IoIosAdd } from "react-icons/io";
 import { BookType } from '@/types';
+import { setSelectedBook } from '@/redux/slices/userListsSlice';
+import { setIsOpen } from '@/redux/slices/ModalSlice';
 import "./index.scss";
 
 interface bookCardProps {
@@ -10,15 +12,20 @@ interface bookCardProps {
 }
 
 const BookCard: React.FC<bookCardProps> = ({ data }) => {
+  const dispatch = useAppDispatch();
   const reviews = useAppSelector(state => state.userSlice.reviews);
   const userRating = reviews?.find(review => review.book === data._id)?.rating;
   const theme = useAppSelector(state => state.ThemeSlice.theme);
   const clickHandle: (id: string) => void = (id) => {
-    console.log(id);
+    dispatch(setSelectedBook(id));
+    dispatch(setIsOpen({
+      id: 'addToList',
+      isOpen: true,
+    }));
   }
   return (
     <div className="book-item col-6 col-md-4 col-lg-2 p-md-1">
-      <div className="book-card p-md-1 w-100">
+      <div className="book-card w-100">
         <Link to={`/books/${data._id}`}>
           <div className="book-cover-container">
             <img src={data.cover} alt={data.title} className="book-cover w-100" />

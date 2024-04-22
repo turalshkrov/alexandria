@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="container">
         <ul className="footer-links d-f align-items-end">
           <li>
-            <span>{year} Alexandria</span>
+            <span>© {year} Alexandria</span>
           </li>
           <li className="ml-1 ml-md-2">
             <Link to='/about'>About</Link>

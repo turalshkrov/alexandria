@@ -22,7 +22,7 @@ const AboutSection = () => {
       </p>
       <h3 className="mt-2">Coockies</h3>
       <p>
-        Manage your <Link className="underline-link" to='/coockies'>cookie preferences</Link>
+        Manage your <Link className="underline-link" to='/cookies'>cookie preferences</Link>
       </p>
       <h4 className="mt-2">Version</h4>
       <div className="br"></div>

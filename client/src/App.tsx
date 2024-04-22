@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from './hooks/hook';
 import { getMe, getMyReviews } from './redux/slices/userSlice';
 import { getMyLists } from './redux/slices/userListsSlice';
 import { Toaster } from 'sonner';
+import { logOut } from './redux/slices/authSlice';
 import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
 import Navbar from '@/shared/layout/navbar';
 import Home from '@/pages/home';
@@ -14,13 +15,17 @@ import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
 import Modals from './shared/components/modals';
 import './App.scss';
-import { logOut } from './redux/slices/authSlice';
 
 const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs'));
 const User = lazy(() => import('./pages/user'));
 const Login = lazy(() => import('./pages/login'));
 const About = lazy(() => import('./pages/about/About'));
+const Privacy = lazy(() => import('./pages/privacy'));
+const Cookies = lazy(() => import('./pages/cookies'));
+const Contact = lazy(() => import('./pages/contact'));
+const Faq = lazy(() => import('./pages/faq'));
+const Terms = lazy(() => import('./pages/terms'));
 const ErrorPage = lazy(() => import('./pages/error'));
 const SignUp = lazy(() => import('./pages/signup'));
 const SignIn = lazy(() => import('./pages/signin'));
@@ -82,6 +87,11 @@ function App() {
               <Route path='/search' element={<Search />} />
               <Route path='/blogs' element={<Blogs />} />
               <Route path='/about' element={<About />} />
+              <Route path='/privacy' element={<Privacy />} />
+              <Route path='/contact' element={<Contact />} />
+              <Route path='/cookies' element={<Cookies />} />
+              <Route path='/faq' element={<Faq />} />
+              <Route path='/terms' element={<Terms />} />
               <Route path='/profile' element={isAuth ? <Profile /> : <Navigate to='/login' />} />
               <Route path='/users/:id' element={<User />} />
               <Route path='/books/:id' element={<BookPage />} />

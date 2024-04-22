@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import { AuthorType } from "@/types";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/hooks/hook";
-import "./index.scss";
 import { getAuthors } from "@/api/author";
 import { PulseLoader } from "react-spinners";
 import { IoIosArrowDown } from "react-icons/io";
+import "./index.scss";
 
 
 interface AuthorsResultState {

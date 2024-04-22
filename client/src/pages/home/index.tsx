@@ -1,23 +1,28 @@
-import Button from '@/shared/components/button';
-import { useAppDispatch } from '@/hooks/hook';
-import { toggleTheme } from '@/redux/slices/ThemeSlice';
+import { useAppSelector } from "@/hooks/hook";
 import "./index.scss";
-
+import BookCard from "@/shared/components/book-card";
 
 export default function Home() {
-  // const theme = useAppSelector(state => state.ThemeSlice.theme);
-  const dispatch = useAppDispatch();
+  const books = useAppSelector(state => state.booksSlice.books);
   return (
     <div className='page' id='home'>
-      <div className="container py-1 p-b-3">
-      
-        <Button size='sm' color='primary' style='solid' onClick={() => dispatch(toggleTheme())}>Theme</Button>
-        <h1>Home</h1>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum accusantium fuga aliquam sunt repudiandae voluptate tempore illum eius maxime veritatis fugiat atque quisquam sapiente voluptas laboriosam repellendus eaque, sint molestias.</p>
-        <h2 className='mt-3'>Subtitle</h2>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum iure eveniet odio nobis quaerat libero voluptatibus sapiente adipisci culpa, cupiditate velit, repellat omnis quisquam distinctio alias perferendis nam ex in?</p>
-        <h2 className='mt-3'>Subtitle</h2>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum iure eveniet odio nobis quaerat libero voluptatibus sapiente adipisci culpa, cupiditate velit, repellat omnis quisquam distinctio alias perferendis nam ex in?</p>
+      <div className="container py-2">
+        <div className="home-page-hero d-f align-items-center">
+          <img className="home-page-hero-books" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1639948376l/59109077.jpg" alt="" />
+          <img className="home-page-hero-books" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1689947880l/6708.jpg" alt="" />
+          <img className="home-page-hero-books" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1598823299l/42844155._SY475_.jpg" alt="" />
+          <img className="home-page-hero-books" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347350403l/817791.jpg" alt="" />
+          <img className="home-page-hero-books" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1655988385l/40121378.jpg" alt="" />
+        </div>
+        <h1 className="mt-md-2">The best-selling books of all time</h1>
+        <h2 className="mt-2 mt-md-3">Books from Alexandria</h2>
+        <div className="row books-container">
+          {
+            books?.map(book => (
+              <BookCard data={book}/>
+            ))
+          }
+        </div>
       </div>
     </div>
   )

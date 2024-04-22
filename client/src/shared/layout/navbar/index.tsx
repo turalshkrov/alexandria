@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { MdHomeFilled, MdSearch, MdArticle, MdPerson } from "react-icons/md";
 import "./index.scss";
 import { useAppSelector } from "@/hooks/hook";
@@ -9,7 +9,9 @@ export default function Navbar() {
     <header className='navbar navbar-mobile' id="header">
       <div className="container">
         <div className="nav-logo">
-          <span>Alexandria</span>
+          <Link to='/'>
+            <span>Alexandria</span>
+          </Link>
         </div>
         <nav className="nav-menu nav-menu-mobile">
           <ul className="nav-list-mobile">

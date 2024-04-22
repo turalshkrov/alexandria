@@ -28,8 +28,9 @@ export default function ConfirmDeleteAccount (){
     dispatch(setIsOpen({ id: 'confirmDeleteAccount', isOpen: false }));
     try {
       await deleteAccount(password);
-      navigate('/');
       dispatch(logOut());
+      navigate('/');
+      location.reload();
       toast.success('Account deleted');
     } catch (error) {
       toast.error('Incorrect password');
@@ -53,7 +54,7 @@ export default function ConfirmDeleteAccount (){
             <div className="form-item m-0">
               <label htmlFor="password">Confirm your password</label>
               <input
-                className='w-75 delete-modal-input'
+                className='w-100 delete-modal-input'
                 type="password"
                 value={password} 
                 onChange={handleChange}/>

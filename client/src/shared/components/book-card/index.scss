@@ -1,9 +1,11 @@
 .book-item {
   padding: .5rem;
+  flex: 0 0 auto
 }
 
 .book-card {
   position: relative;
+  width: 100% !important;
   padding: .5rem;
   padding-top: .75rem !important;
   padding-bottom: 2.5rem !important;
@@ -11,6 +13,8 @@
   transition: .4s;
   border: 1px solid var(--card-border-color);
   height: 100%;
+  margin-bottom: .5rem;
+  flex: none;
 
   .book-cover-container {
     background-color: lightgray;
@@ -20,6 +24,8 @@
 
     .book-cover {
       position: absolute;
+      width: 100%;
+      height: 100%;
       top: 0;
       left: 0;
     }
@@ -72,6 +78,6 @@
   }
 
   &:hover {
-    background-color: var(--box-shadow-color);
+    background-color: var(--active-link-bg-color);
   }
 }
