@@ -15,6 +15,8 @@ import Footer from '@/shared/layout/footer';
 import Preloader from '@/shared/components/preloader/Preloader';
 import Modals from './shared/components/modals';
 import './App.scss';
+import { getData } from './redux/slices/homePageSlice';
+import { getGenres } from './redux/slices/SearchSlice';
 
 const Search = lazy(() => import('./pages/search'));
 const Blogs = lazy(() => import('./pages/blogs'));
@@ -54,6 +56,10 @@ function App() {
   const isLoading = useAppSelector(state => state.authSlice.isLoading);
   const userId = useAppSelector(state => state.userSlice.user?._id) || "";
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getData());
+    dispatch(getGenres());
+  }, [dispatch]);
   useEffect(() => {
     if (isAuth) {
       dispatch(getMe()).unwrap()

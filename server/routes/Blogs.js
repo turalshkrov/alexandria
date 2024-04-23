@@ -8,10 +8,13 @@ const router = express.Router();
 router.post('/create', authenticationToken, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
-    const { title, preview, content } = req.body;
-    const blog = new Blog({ title, preview, content, tags });
+    const { title, preview, content, cover } = req.body;
+    const blog = new Blog({ title, preview, content, cover });
     await blog.save();
-    res.status(201).json({ message: "Blog created" });
+    res.status(201).json({ 
+      message: "Blog created",
+      blog,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -21,13 +24,16 @@ router.post('/create', authenticationToken, async (req, res) => {
 router.patch('/:id', authenticationToken, getBlog, async (req, res) => {
   try {
     if (req.userRole !== 'admin') return res.status(409).json({ message: "Access denied" });
-    const { title, preview, content, tags } = req.body;
+    const { title, preview, content, cover } = req.body;
     res.blog.title = title;
     res.blog.preview = preview;
     res.blog.content = content;
-    if (tags) res.blog.tags = tags;
+    res.blog.cover = cover;
     await res.blog.save();
-    res.status(200).json({ message: "Blog updated" });
+    res.status(200).json({ 
+      message: "Blog updated",
+      blog: res.blog,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -36,11 +42,8 @@ router.patch('/:id', authenticationToken, getBlog, async (req, res) => {
 // GET BLOGS
 router.get('/', async (req, res) => {
   try {
-    let searchKey = req.query.search || "";
-    searchKey = searchKey.toLowerCase();
     const blogs = await Blog.find();
-    const filteredBlogs = blogs.filter(blog => blog.title.toLowerCase().includes(searchKey));
-    res.status(200).json(filteredBlogs);
+    res.status(200).json(blogs);
   } catch (error) {
     res.status(500).json(error);
   }

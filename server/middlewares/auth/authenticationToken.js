@@ -9,7 +9,9 @@ const authenticationToken = async (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRETKEY, async (err, data) => {
     if (err) return res.status(401).json({ message: 'Unauthorized' });
+    const userRole = await UserRole.findOne({ userId: data.id });
     req.user = data.id;
+    req.userRole = userRole.role;
     return next();
   });
 }

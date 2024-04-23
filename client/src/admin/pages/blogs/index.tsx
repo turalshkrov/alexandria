@@ -1,10 +1,11 @@
 import { setSelectedBlog } from "@/admin/redux/slices/blogsSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
-import Button from "@/shared/components/button";
 import { BlogType } from "@/types";
 import { Table } from "antd";
 import { Link } from "react-router-dom";
+import Button from "@/shared/components/button";
+import "../users/index.scss";
 
 const BlogsDashboard = () => {
   const blogs = useAppSelector(state => state.blogsSlice.blogs);

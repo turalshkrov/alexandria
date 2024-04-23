@@ -124,7 +124,7 @@ const userSlice = createSlice({
       .addCase(getMe.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
-        state.role = action.payload.userRole;
+        state.role = action.payload.role;
         state.error = null;
       })
       .addCase(getMe.rejected, (state, action) => {

@@ -46,6 +46,7 @@ const BlogPage = () => {
           <div className="blog-content w-md-75 w-xl-50">
             <h2 className="logo-font">{data.blog?.title}</h2>
             <p className="text-secondary mt-1 pb-2 mb-2 blog-header">{date} By Alexandria</p>
+            <img src={data.blog?.cover} alt="" />
             <ReactMarkdown children={data.blog?.content}/>
           </div>
         </div>

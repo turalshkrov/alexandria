@@ -27,6 +27,7 @@ const authorRouter = require('./routes/Authors');
 const seriesRouter = require('./routes/Series');
 const blogRouter = require('./routes/Blogs');
 const genreRouter = require('./routes/Genres');
+const recommendRouter = require('./routes/Recommends');
 
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
@@ -36,6 +37,7 @@ app.use('/authors', authorRouter);
 app.use('/series', seriesRouter);
 app.use('/blogs', blogRouter);
 app.use('/genres', genreRouter);
+app.use('/recommends', recommendRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => { console.log(`server running on port ${PORT}`) });

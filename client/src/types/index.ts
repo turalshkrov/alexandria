@@ -82,6 +82,7 @@ export type BlogType = {
   title: string,
   preview: string,
   content: string,
+  cover: string,
   date: Date,
 }
 
@@ -117,4 +118,5 @@ export type BlogData = {
   title: string,
   preview: string,
   content: string,
+  cover: string,
 }

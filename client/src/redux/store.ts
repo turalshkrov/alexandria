@@ -11,6 +11,7 @@ import statsSlice from '@/admin/redux/slices/statsSlice';
 import authorsSlice from '@/admin/redux/slices/authorsSlice';
 import seriesSlice from '@/admin/redux/slices/seriesSlice';
 import blogsSlice from '@/admin/redux/slices/blogsSlice';
+import homePageSlice from './slices/homePageSlice';
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     userSlice,
     ModalSlice,
     userListsSlice,
+    homePageSlice,
     statsSlice,
     usersSlice,
     booksSlice,

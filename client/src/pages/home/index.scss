@@ -1,11 +1,7 @@
 #home {
-  .home-page-hero {
-    position: relative;
-    padding: 2rem 10%;
-    .home-page-hero-books {
-      width: 12%;
-      margin: 0 4%;
-      transform: rotate(15deg);
+  .home-page-blog {
+    img {
+      margin: 0 25%;
     }
   }
   .books-container {
@@ -21,23 +17,5 @@
 }
 
 @media (max-width: 767px) {
-  #home {
-    .home-page-hero {
-      position: relative;
-      overflow: hidden;
-      padding: 2rem 0;
-      .home-page-hero-books {
-        width: 14%;
-        margin: 0 3%;
-        transform: rotate(15deg);
-      }
-    }
-    .books-container {
-      &::-webkit-scrollbar {
-        width: auto;
-        height: 5px;
-        display: block;
-      }
-    }
-  }
+
 }

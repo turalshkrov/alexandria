@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAppDispatch, useAppSelector } from "@/hooks/hook";
-import '../users/index.scss';
 import { useState } from "react";
 import { BlogData } from "@/types";
 import { toast } from "sonner";
 import { createBLog, updateBlog } from "@/admin/redux/slices/blogsSlice";
+import '../users/index.scss';
 
 const BlogForm = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +12,8 @@ const BlogForm = () => {
   const [blogData, setBlogData] = useState<BlogData>({
     title: selectedBlog?.title || "",
     preview: selectedBlog?.preview || "",
-    content: selectedBlog?.content || ""
+    content: selectedBlog?.content || "",
+    cover: selectedBlog?.cover || "",
   });
   const handleChange = (e: any) => {
     setBlogData(state => ({ ...state, [e.target.name]: e.target.value }));
@@ -36,7 +37,8 @@ const BlogForm = () => {
       title: "",
       preview: "",
       content:"",
-    })
+      cover: "",
+    });
   }
   return (
     <div className='dashboard-content p-2'>
@@ -49,11 +51,15 @@ const BlogForm = () => {
           <input name="title" type="text" id="title" className="w-100" value={blogData.title} onChange={handleChange} />
         </div>
         <div className="form-item w-50 px-1">
+          <label htmlFor="cover">Cover</label>
+          <input name="cover" type="text" id="cover" className="w-100" value={blogData.cover} onChange={handleChange} />
+        </div>
+        <div className="form-item w-50 px-1">
           <label htmlFor="preview">Preview</label>
           <textarea name="preview" id="preview" className="w-100 p-1" value={blogData.preview} onChange={handleChange} />
         </div>
         <div className="form-item w-50 px-1">
-          <label htmlFor="content">Preview</label>
+          <label htmlFor="content">Content</label>
           <textarea name="content" id="content" className="w-100 p-1" rows={10} value={blogData.content} onChange={handleChange} />
         </div>
         <div className="form-item w-50 px-1">
