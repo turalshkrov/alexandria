@@ -10,43 +10,37 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select('+password');
-    if (!user) {
-      return res.status(404).json({ message: "Incorrect email or password" });
-    }
-    if (!(await bcrypt.compare(password, user.password))) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "Incorrect email or password" });
     }
     if (!user.active) {
       return res.status(401).json({ message: "Please verify your email address" });
     }
-    const userRole = await UserRole.findOne({ userId: user._id });
     
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: '1d'});
-    const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: '7d'});
+    const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: '1h'});
+    const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: '30d'});
 
-    res.cookie('refreshToken', refreshToken, { httpOnly: true });
-    res.status(200).json({ 
+    res.status(200).json({
       message: "Login success",
-      token,
-      role: userRole.role,
+      accessToken,
+      refreshToken,
     });
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
-app.post('/token', (req, res) => {
+router.post('/token', (req, res) => {
   try {
-    const refreshToken = req.cookies.refreshToken;
+    const refreshToken = req.body.refreshToken;
     if (!refreshToken) return res.sendStatus(401);
   
-    jwt.verify(refreshToken, secretKey, (err, user) => {
+    jwt.verify(refreshToken, process.env.JWT_SECRETKEY, (err, user) => {
       if (err) return res.sendStatus(403);
-      const accessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRETKEY, { expiresIn: '1d' });
+      const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRETKEY, { expiresIn: '1h' });
       res.status(200).json({ 
         message: "Login success",
-        token,
-        role: userRole.role,
+        accessToken,
       });
     });
   } catch (error) {
@@ -57,12 +51,13 @@ app.post('/token', (req, res) => {
 router.get('/getMe', authenticationToken, async (req, res) => {
   try {
     const user = await User.findById(req.user).populate('favoriteBooks').populate('favoriteAuthors');
-    const userRole = await UserRole.findOne({ userId: user._id });
     if (!user) {
-      return res.status(404).json({ message: "Couldn't find your account" });
+      return res.status(401);
     }
+    const userRole = await UserRole.findOne({ userId: user._id });
     res.status(200).json({
-      user, userRole: userRole.role
+      user,
+      role: userRole.role,
     });
   } catch (error) {
     res.status(500).json(error);

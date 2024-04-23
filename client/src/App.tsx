@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from './hooks/hook';
 import { getMe, getMyReviews } from './redux/slices/userSlice';
 import { getMyLists } from './redux/slices/userListsSlice';
 import { Toaster } from 'sonner';
-import { logOut } from './redux/slices/authSlice';
+import { getNewToken } from './redux/slices/authSlice';
 import ThemeSwitcherComponent from '@/shared/components/theme switcher/ThemeSwitcherComponent';
 import Navbar from '@/shared/layout/navbar';
 import Home from '@/pages/home';
@@ -50,6 +50,7 @@ const BlogForm = lazy(() => import('./admin/pages/blog form'));
 
 function App() {
   const isAuth = useAppSelector(state => state.authSlice.isAuth);
+  const token = useAppSelector(state => state.authSlice.token);
   const isLoading = useAppSelector(state => state.authSlice.isLoading);
   const userId = useAppSelector(state => state.userSlice.user?._id) || "";
   const dispatch = useAppDispatch();
@@ -57,11 +58,12 @@ function App() {
     if (isAuth) {
       dispatch(getMe()).unwrap()
       .catch((error) => {
-        console.log(error);
-        // dispatch(logOut());
+        if (error.message === 'Request failed with status code 401') {
+          dispatch(getNewToken());
+        }
       });
     }
-  }, [dispatch, isAuth]);
+  }, [dispatch, isAuth, token]);
   useEffect(() => {
     if (userId) {
       dispatch(getMyLists(userId));

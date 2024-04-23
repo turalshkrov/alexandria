@@ -26,22 +26,35 @@ export const login = createAsyncThunk(
   "auth/login",
   async (data: { email: string, password: string }) => {
     const response = await http.post("auth/login", data)
-    .then(response => response)
-    .catch(error => {
-      throw new Error(error.response.data.message);
-    })
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
     return response;
   }
 );
+
+export const getNewToken = createAsyncThunk(
+  "auth/getNewToken",
+  async () => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    const response = await http.post("auth/token", { refreshToken })
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
+    return response;
+  }
+)
 
 export const userRegister = createAsyncThunk(
   "auth/resgister",
   async (data: registerForm) => {
     const response = await http.post("users/register", data)
-    .then(response => response)
-    .catch(error => {
-      throw new Error(error.response.data.message);
-    })
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
     return response;
   }
 );
@@ -60,12 +73,25 @@ const authSlice = createSlice({
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.isAuth = true;
-        state.token = action.payload.data.token;
+        state.token = action.payload.data.accessToken;
         localStorage.setItem('token', state.token);
+        localStorage.setItem('refreshToken', action.payload.data.refreshToken);
       })
       .addCase(login.rejected, (state) => {
         state.isLoading = false;
         state.error = 'Somethings get wrong';
+      })
+      .addCase(getNewToken.fulfilled, (state, action) => {
+        state.isAuth = true;
+        state.error = null;
+        state.token = action.payload.data.accessToken;
+        localStorage.setItem('token', state.token);
+      })
+      .addCase(getNewToken.rejected, (state) => {
+        state.isLoading = false;
+        localStorage.removeItem('token');
+        localStorage.removeItem('accessToken');
+        state.token = "";
       })
       .addCase(userRegister.pending, (state) => {
         state.isLoading = true;
