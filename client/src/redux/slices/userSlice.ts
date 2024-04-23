@@ -35,7 +35,11 @@ const initialState: UserState = {
 export const getMe = createAsyncThunk(
   'user/getMe',
   async () => {
-    const response = await http.get(`auth/getMe`);
+    const response = await http.get(`auth/getMe`)
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
     return response.data;
   }
 );
@@ -43,7 +47,11 @@ export const getMe = createAsyncThunk(
 export const getMyReviews = createAsyncThunk(
   'user/getMyReviews',
   async (userId: string) => {
-    const response = await http.get(`users/${userId}/reviews`);
+    const response = await http.get(`users/${userId}/reviews`)
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
     return response.data;
   }
 );
@@ -51,7 +59,11 @@ export const getMyReviews = createAsyncThunk(
 export const updateProfile = createAsyncThunk(
   'user/updateProfile',
   async (data: UpdateProfileData) => {
-    const response = await http.patch(`/users/update`, data);
+    const response = await http.patch(`/users/update`, data)
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
     return response.data;
   }
 );
@@ -60,7 +72,11 @@ export const addFavoriteBook = createAsyncThunk(
   'user/addFavoriteBook',
   async (bookId: string) => {
     if (bookId.length !== 24) throw new Error('Id is not valid');
-    const response = await http.patch(`/users/add-favorite-books`, { bookId });
+    const response = await http.patch(`/users/add-favorite-books`, { bookId })
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
     return response.data;
   }
 );
@@ -69,7 +85,11 @@ export const removeFavoriteBook = createAsyncThunk(
   'user/removeFavoriteBook',
   async (bookId: string) => {
     if (bookId.length !== 24) throw new Error('Id is not valid');
-    const response = await http.patch(`/users/remove-favorite-books`, { bookId });
+    const response = await http.patch(`/users/remove-favorite-books`, { bookId })
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
     return response.data;
   }
 );
@@ -78,7 +98,11 @@ export const addFavoriteAuthor = createAsyncThunk(
   'user/addFavoriteAuthor',
   async (authorId: string) => {
     if (authorId.length !== 24) throw new Error('Id is not valid');
-    const response = await http.patch(`/users/add-favorite-authors`, { authorId });
+    const response = await http.patch(`/users/add-favorite-authors`, { authorId })
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
     return response.data;
   }
 );
@@ -87,7 +111,11 @@ export const removeFavoriteAuthor = createAsyncThunk(
   'user/removeFavoriteAuthor',
   async (authorId: string) => {
     if (authorId.length !== 24) throw new Error('Id is not valid');
-    const response = await http.patch(`/users/remove-favorite-authors`, { authorId });
+    const response = await http.patch(`/users/remove-favorite-authors`, { authorId })
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
     return response.data;
   }
 );
@@ -95,7 +123,11 @@ export const removeFavoriteAuthor = createAsyncThunk(
 export const addReview = createAsyncThunk(
   'user/addReview',
   async (data: AddReviewData) => {
-    const response = await http.post(`/books/${data.id}/reviews/add`, data);
+    const response = await http.post(`/books/${data.id}/reviews/add`, data)
+      .then(response => response)
+      .catch(error => {
+        throw new Error(error.response.data.message);
+      })
     return response.data.review;
   }
 )

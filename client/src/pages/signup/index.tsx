@@ -34,8 +34,8 @@ const SignUp = () => {
     <div className="page page-vertical-center" id="signup-page">
       <div className="container mb-md-0">
         <div className="register-content py-4 py-md-3 text-center">
-          <h1 className="logo-title">Alexandria</h1>
-          <h1 className="mt-2">Create Account</h1>
+          <h1 className="logo-font">Alexandria</h1>
+          <h1 className="mt-3">Create Account</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="register-form form-control mt-2" autoComplete="off">
             <div className="form-item">
               <label htmlFor="name">Your Name</label>

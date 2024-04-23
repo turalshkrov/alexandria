@@ -34,8 +34,8 @@ const SignIn = () => {
     <div className='page page-vertical-center' id='login-page'>
       <div className="container">
         <div className="login-content text-center py-4 py-md-3">
-          <h1 className="logo-title">Alexandria</h1>
-          <h1 className="mt-2">Sign in</h1>
+          <h1 className="logo-font">Alexandria</h1>
+          <h1 className="mt-3">Sign in</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="register-form form-control mt-2">
             <div className="form-item">
               <label htmlFor="email">Email</label>
