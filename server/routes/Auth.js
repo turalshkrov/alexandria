@@ -11,25 +11,43 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
-      return res.status(404).json({ message: "Couldn't find your account" });
-    }
-    const userRole = await UserRole.findOne({ userId: user._id });
-    if (!user.active) {
-      if (userRole.role === 'user') return res.status(401).json({ message: "Please verify your email address" });
+      return res.status(404).json({ message: "Incorrect email or password" });
     }
     if (!(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: "Incorrect password" });
+      return res.status(401).json({ message: "Incorrect email or password" });
     }
-
-    const tokenOptions = {
-      expiresIn: '7d',
+    if (!user.active) {
+      return res.status(401).json({ message: "Please verify your email address" });
     }
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRETKEY, tokenOptions);
+    const userRole = await UserRole.findOne({ userId: user._id });
+    
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: '1d'});
+    const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: '7d'});
 
+    res.cookie('refreshToken', refreshToken, { httpOnly: true });
     res.status(200).json({ 
       message: "Login success",
-      token: token,
+      token,
       role: userRole.role,
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+app.post('/token', (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) return res.sendStatus(401);
+  
+    jwt.verify(refreshToken, secretKey, (err, user) => {
+      if (err) return res.sendStatus(403);
+      const accessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRETKEY, { expiresIn: '1d' });
+      res.status(200).json({ 
+        message: "Login success",
+        token,
+        role: userRole.role,
+      });
     });
   } catch (error) {
     res.status(500).json(error);

@@ -56,8 +56,9 @@ function App() {
   useEffect(() => {
     if (isAuth) {
       dispatch(getMe()).unwrap()
-      .catch(() => {
-        dispatch(logOut());
+      .catch((error) => {
+        console.log(error);
+        // dispatch(logOut());
       });
     }
   }, [dispatch, isAuth]);
