@@ -57,7 +57,7 @@ const BookCard: React.FC<bookCardProps> = ({ data }) => {
             </Link>
           </h3>
           <p className='book-card-author'>
-            <Link className='link-hover text-secondary' to={`/writers/${data.author._id}`}>
+            <Link className='link-hover text-secondary' to={`/authors/${data.author._id}`}>
               {data.author.name}
             </Link>
           </p>
