@@ -18,6 +18,7 @@ const checkUsername = require('../middlewares/user/checkUsername');
 const authenticationToken = require('../middlewares/auth/authenticationToken');
 const emailValidationRules = require('../validations/user/emailValidationRules');
 const sendVerifyUpdateMail = require('../services/mail/verifyUpdateMail');
+const emailVerifySuccess = require('../services/html template');
 const router = express.Router();
 require('dotenv').config();
 const cryptr = new Cryptr(process.env.CRYPTR_SECRETKEY);
@@ -30,7 +31,7 @@ router.post('/register', userValidationRules(), validation, checkEmail, checkUse
     const userRole = new UserRole({ userId: user._id });
     const newUser = await user.save();
     await userRole.save();
-    sendVerifyMail(newUser.email, newUser._id);
+    sendVerifyMail(newUser.email, newUser._id, newUser.name);
     res.status(201).json({ message: "Verify mail sent, please verify email address" });
   } catch (error) {
     res.status(500).json(error);
@@ -45,7 +46,7 @@ router.get('/register/verify/:hashid', async (req, res) => {
     await User.findByIdAndUpdate(id, {
       active: true,
     });
-    res.status(200).json({ message: "Email verifed successfully" });
+    res.status(200).send(emailVerifySuccess);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -59,7 +60,7 @@ router.patch('/update-email', authenticationToken, emailValidationRules(), check
     user.newEmail = email;
     await user.save();
     res.status(200).json({ message: "Verify link sent email, please check your email" });
-    sendVerifyUpdateMail(email, email);
+    sendVerifyUpdateMail(email, email, user.name);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -74,7 +75,7 @@ router.get('/update-email/verify/:hashEmail', async (req, res) => {
     user.email = email;
     user.newEmail = undefined;
     await user.save();
-    res.status(200).json({ message: "Email verifed successfully" });
+    res.status(200).send(emailVerifySuccess);
   } catch (error) {
     res.status(500).send(error);
   }
