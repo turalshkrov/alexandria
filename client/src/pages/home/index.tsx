@@ -13,7 +13,8 @@ export default function Home() {
       <Preloader /> :
       <div className='page' id='home'>
         <div className="container py-2">
-          <h1>Top Categories</h1>
+          <h1 className="m-0">For you</h1>
+          <p className="text-secondary">Here are some books we think you'll love.</p>
           <h2 className="mt-3">Classics</h2>
           <div className="row books-container">
             {

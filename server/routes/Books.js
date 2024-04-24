@@ -139,9 +139,11 @@ router.patch('/:id', authenticationToken, getBook, bookValidationRules(), valida
     res.book.genres = genres;
     res.book.language = language;
     res.book.description = description;
-    if (cover) res.cover = cover;
+    res.book.cover = cover;
     if (res.series) {
-      res.series.books.push(res.book._id);
+      if (!res.series.books.includes(res.book._id)) {
+        res.series.books.push(res.book._id);
+      }
       res.book.series = res.series._id;
       await res.series.save();
     }

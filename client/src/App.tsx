@@ -64,7 +64,7 @@ function App() {
     if (isAuth) {
       dispatch(getMe()).unwrap()
       .catch((error) => {
-        if (error.message === 'Request failed with status code 401') {
+        if (error.message === 'Unauthorized') {
           dispatch(getNewToken());
         }
       });

@@ -12,7 +12,7 @@ const AboutSection = () => {
       </p>
       <h3 className="mt-2">Contact us</h3>
       <p>
-        Feel free to share your thoughts and suggestions through our <Link className="underline-link" to="/contact">contact page</Link>, <Link className="underline-link" to="/community">community forum</Link>, or social media channels.
+        Feel free to share your thoughts and suggestions through our <Link className="underline-link" to="/contact">contact page</Link>, or social media channels.
       </p>
       <h3 className="mt-2">
         Privacy

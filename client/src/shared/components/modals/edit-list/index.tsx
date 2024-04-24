@@ -5,8 +5,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { modalIsOpenSelector } from "@/redux/selectors";
 import { createPortal } from "react-dom";
-import "./index.scss";
 import { updateList } from "@/redux/slices/userListsSlice";
+import "./index.scss";
 
 const EditList = () => {
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, "editList"));
