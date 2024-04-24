@@ -43,9 +43,9 @@ router.get('/register/verify/:hashid', async (req, res) => {
   try {
     const hashId = req.params.hashid;
     const id = cryptr.decrypt(hashId);
-    await User.findByIdAndUpdate(id, {
-      active: true,
-    });
+    const user = await User.findById(id);
+    user.active = true;
+    await user.save();
     res.status(200).send(emailVerifySuccess);
   } catch (error) {
     res.status(500).send(error);

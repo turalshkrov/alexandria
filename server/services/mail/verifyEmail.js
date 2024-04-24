@@ -13,7 +13,6 @@ const sendVerifyMail = async (to, id, name) => {
       pass: process.env.MAIL_PASS,
     }
   });
-  
   const encryptedId = cryptr.encrypt(id);
   const link = `${process.env.BASE_API_URL}/users/register/verify/${encryptedId}`;
   const mailTemplate = new MailTemplate(name, link);
