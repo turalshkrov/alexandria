@@ -59,16 +59,6 @@
   display: block;
 }
 
-@keyframes modal-hide-animation {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
 @keyframes modal-animation {
   from {
     opacity: 0;

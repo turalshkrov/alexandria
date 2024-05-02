@@ -6,22 +6,28 @@ import { BookType } from '@/types';
 import { setSelectedBook } from '@/redux/slices/userListsSlice';
 import { setIsOpen } from '@/redux/slices/ModalSlice';
 import "./index.scss";
+import { toast } from 'sonner';
 
 interface bookCardProps {
   data: BookType
 }
 
 const BookCard: React.FC<bookCardProps> = ({ data }) => {
+  const isAuth = useAppSelector(state => state.authSlice.isAuth);
   const dispatch = useAppDispatch();
   const reviews = useAppSelector(state => state.userSlice.reviews);
   const userRating = reviews?.find(review => review.book === data._id)?.rating;
   const theme = useAppSelector(state => state.ThemeSlice.theme);
   const clickHandle: (id: string) => void = (id) => {
-    dispatch(setSelectedBook(id));
-    dispatch(setIsOpen({
-      id: 'addToList',
-      isOpen: true,
-    }));
+    if (isAuth) {
+      dispatch(setSelectedBook(id));
+      dispatch(setIsOpen({
+        id: 'addToList',
+        isOpen: true,
+      }));
+    } else {
+      toast.info('Please sign in to continue');
+    }
   }
   return (
     <div className="book-item col-6 col-md-4 col-lg-2 p-md-1">
@@ -62,12 +68,14 @@ const BookCard: React.FC<bookCardProps> = ({ data }) => {
             </Link>
           </p>
         </div>
-        <div
-          onClick={() => clickHandle(data._id)}
-          className="add-to-library">
-          <IoIosAdd size={18} />
-          <span>Add to library</span>
-        </div>
+        {
+          <div
+            onClick={() => clickHandle(data._id)}
+            className="add-to-library">
+            <IoIosAdd size={18} />
+            <span>Add to library</span>
+          </div>
+        }
       </div>
     </div>
   )

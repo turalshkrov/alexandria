@@ -6,10 +6,10 @@ import { useAppDispatch, useAppSelector } from "@/hooks/hook";
 import { BiHeart, BiPlus, BiSolidHeart } from "react-icons/bi";
 import { toast } from "sonner";
 import { addFavoriteAuthor, removeFavoriteAuthor } from "@/redux/slices/userSlice";
-import Preloader from "@/shared/components/preloader/Preloader";
-import "./index.scss";
 import { setSelectedBook } from "@/redux/slices/userListsSlice";
 import { setIsOpen } from "@/redux/slices/ModalSlice";
+import Preloader from "@/shared/components/preloader/Preloader";
+import "./index.scss";
 
 interface AuthorPageState {
   author: AuthorType | null,
@@ -114,8 +114,8 @@ const AuthorPage = () => {
                       }
                     </p>
                   </div>
-                  <div className="author-info mt-1">
-                    <p>{data.author?.authorInfo}</p>
+                  <div className="mt-1">
+                    <p className="author-info">{data.author?.authorInfo}</p>
                   </div>
                   <div className="author-books mt-3">
                     <h3 className="text-secondary">{data.author?.name}'s books</h3>
@@ -132,9 +132,6 @@ const AuthorPage = () => {
                                   {book.title}
                                 </p>
                               </Link>
-                              <p className="text-secondary book-info-published m-0">
-                                {book.published}
-                              </p>
                               <p className="text-secondary book-info-author m-0">
                                 {book.author.name}
                               </p>

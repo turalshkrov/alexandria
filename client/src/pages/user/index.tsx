@@ -57,7 +57,7 @@ const User = () => {
               </h3>
               <p className="username text-secondary mb-md-1">{data.user?.username}</p>
             </div>
-            <div className="col-12 user-details">
+            <div className="col-12 user-details mt-2">
               <ul>
                 <li className="d-f align-items-center text-secondary user-details-item">
                   <MdMail />

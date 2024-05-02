@@ -190,7 +190,7 @@ const BookPage = () => {
                         <p className="text-secondary m-0">{data.book?.author.born}</p>
                       </div>
                     </div>
-                    <p className="mt-2">
+                    <p className="mt-2 author-info">
                       {data.book?.author.authorInfo}
                     </p>
                   </div>

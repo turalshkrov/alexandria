@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { addBook } from "@/redux/slices/userListsSlice";
 import { ListType } from "@/types";
 import "./index.scss";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const AddToListModal = () => {
   const isOpen = useAppSelector(state => modalIsOpenSelector(state, "addToList"));
@@ -31,6 +32,10 @@ const AddToListModal = () => {
       });
     }
   }
+  const handleCreateList = () => {
+    dispatch(setIsOpen({ id: 'addToList', isOpen: false }));
+    dispatch(setIsOpen({ id: 'createList', isOpen: true }));
+  }
   return (
     createPortal(<>
       <div className={isOpen ? 'modal show' : 'modal'} id='create-list-modal' onClick={hideModal}>
@@ -48,24 +53,30 @@ const AddToListModal = () => {
             </div>
             <div className="modal-body py-1">
               <div className="modal-list-container w-100">
-              {
-                lists?.map(list => (
-                  <div key={list._id} className="add-to-list-modal-item d-f align-items-center" onClick={() => handleAddToList(list)}>
-                    <div className="list-cover-container">
-                    <div className="list-cover-container p-relative br-1">
-                        {
-                          list?.books.length ?
-                            <img src={list.books[0].cover} className="list-cover-main-img" /> :
-                            <div className="list-cover-main-img-empty"></div>
-                        }
-                        <div className="list-cover-bg-book-1"></div>
-                        <div className="list-cover-bg-book-2"></div>
-                      </div>
-                    </div>
-                    {list.title}
+                <div className="add-to-list-modal-item d-f align-items-center" onClick={() => handleCreateList()}>
+                  <div className="create-list-cover-container d-f align-items-center justify-center">
+                      <AiOutlinePlus size={22} />
                   </div>
-                ))
-              }
+                  Create New List
+                </div>
+                {
+                  lists?.map(list => (
+                    <div key={list._id} className="add-to-list-modal-item d-f align-items-center" onClick={() => handleAddToList(list)}>
+                      <div className="list-cover-container">
+                        <div className="list-cover-container p-relative br-1">
+                          {
+                            list?.books.length ?
+                              <img src={list.books[0].cover} className="list-cover-main-img" /> :
+                              <div className="list-cover-main-img-empty"></div>
+                          }
+                          <div className="list-cover-bg-book-1"></div>
+                          <div className="list-cover-bg-book-2"></div>
+                        </div>
+                      </div>
+                      {list.title}
+                    </div>
+                  ))
+                }
               </div>
             </div>
             <div className="modal-footer d-f align-items-center justify-flex-end">

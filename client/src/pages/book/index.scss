@@ -30,6 +30,9 @@
       cursor: pointer;
     }
   }
+  .book-description p, .author-info {
+    text-align: justify;
+  }
 
   .book-action-btn {
     cursor: pointer;

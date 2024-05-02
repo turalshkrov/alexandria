@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from 'react-router-dom';
 import { useRef, useState } from 'react';
+import { toast } from 'sonner';
 import emailjs from '@emailjs/browser';
 import './index.scss';
-import { toast } from 'sonner';
 
 const Contact = () => {
   const form = useRef<HTMLFormElement>(null);
