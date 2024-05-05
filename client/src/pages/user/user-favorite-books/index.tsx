@@ -27,7 +27,8 @@ const UserFavoriteBooks = ({ username, books }: UserFavoriteBooksProps) => {
           books.filter((_, i) => i < (collapse ? 6 : books.length)).map(book => (
             <div className="book col-4 col-md-2 p-1" key={book._id}>
               <Link to={`/books/${book._id}`}>
-                <img className="w-100" src={book.cover} alt="" />
+                <div className="favorite-book-cover-container" style={{ background: `url(${book.cover})`}}>
+                </div>
               </Link>
             </div>
           ))

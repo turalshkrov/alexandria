@@ -56,6 +56,20 @@
   height: 100%;
 }
 
+.favorite-book-cover-container {
+  width: 100%;
+  padding-top: 150%;
+  background-size: cover !important;
+  background-position: center !important;
+}
+.favorite-author-image-container {
+  width: 100%;
+  padding-top: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+  border-radius: 50%;
+}
+
 .empty-library-content {
   width: fit-content;
   flex-direction: column;

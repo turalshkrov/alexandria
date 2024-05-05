@@ -10,7 +10,7 @@ interface listCardProps {
 
 const ListCard = ({ list, type } : listCardProps) => {
   return (
-    <div className={type === 'home' ? 'list-item col-6 col-md-2 p-1 p-xxl-2' : 'list-item col-6 col-md-3 p-1 p-xxl-2'}>
+    <div className={type === 'home' ? 'list-item col-6 col-md-4 col-lg-2 p-1 p-xxl-2' : 'list-item col-6 col-md-3 p-1 p-xxl-2'}>
       <div className="list-card">
         <Link className='list-title link-hover' to={`/lists/${list._id}`}>
           <div className="list-cover-container w-100 p-relative">

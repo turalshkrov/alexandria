@@ -59,7 +59,7 @@ const ProfileSection = () => {
   }
   return (
     <div className='section mt-md-2 px-1' id="profile">
-      <h2 className='fw-regular'>Prfoile Settings</h2>
+      <h2 className='fw-regular'>Profile Settings</h2>
       <div className="br"></div>
       <form className="form-control profile-edit-form">
         <div className="form-item">
